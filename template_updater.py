@@ -53,10 +53,10 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
                 sys.exit(1)
             try:
                 template_dic[temp] = float(i)
-                test = True
                 if float(i) > 20 or float(i) < 0:
                     raise ValueError
                 print('\n\n')
+                test = True
             
             except:
                 print('올바르지 않는 입력입니다... 1~20에 해당하는 숫자를 입력해주세요.')

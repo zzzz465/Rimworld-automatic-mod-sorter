@@ -1,5 +1,4 @@
 import pickle
-
 import os
 import xml.etree.ElementTree as ET
 import json
@@ -94,6 +93,9 @@ if __name__ == '__main__':
     dir = os.environ['HOMEPATH']
     os.chdir(dir)
     os.chdir('./desktop')
+    if os.path.isfile('db_template.json'):
+        os.remove('db_template.json')
+        
     with open('db_template.json', 'w') as f:
         f.write(json_val)
         f.close()

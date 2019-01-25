@@ -4,6 +4,7 @@ import shutil
 import pickle
 import Parse
 from time import sleep
+import downloader
 
 temp = os.environ['userprofile']
 rimsavedir = '{}/appdata/locallow/Ludeon Studios\RimWorld by Ludeon Studios\Config'.format(temp)
@@ -16,15 +17,9 @@ if os.path.exists('ModsConfig.xml.backup') == True:
 else:
     shutil.copy('ModsConfig.xml', 'ModsConfig.xml.backup') #백업라인
 
+print('template를 받아오는 중입니다...')
 
-dir = os.environ['HOMEPATH']
-dir = str(dir) + '/desktop'
-os.chdir(dir)
-print('template 파일을 바탕화면에서 읽어옵니다...')
-sleep(2)
-
-with open('template.bin', 'rb') as f:
-    data = pickle.load(f) # template
+data = downloader.update()
 
 mod_dic = {} # 모드와 번호 연결, 번호 : 이름
 mod_list_workshop = [] # 모드 리스트(이름만)

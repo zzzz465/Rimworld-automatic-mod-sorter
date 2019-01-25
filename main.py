@@ -25,6 +25,7 @@ sleep(2)
 mod_dic = {} # 모드와 번호 연결, 번호 : 이름
 mod_list_workshop = [] # 모드 리스트(이름만)
 mod_dic_num = {} #이름 : 번호
+mod_nlist = []
 
 Parse.Parser(mod_dic,mod_dic_num, mod_list_workshop)
 print('현재 구독중인 모드 리스트를 불러옵니다...')
@@ -45,6 +46,11 @@ for mod in config_num:
         modname = mod_dic[mod] #mod는 숫자
         mod_list_sorted = mod_list_sorted + [[data[modname], mod]]
 
+    else:
+        modname = mod_dic[mod]
+        mod_nlist.append(modname)
+        
+
 mod_list_sorted.sort()
 
 Parse.setconfig(mod_list_sorted)
@@ -55,6 +61,12 @@ for i in config_num:
         print(mod_dic[i])
     else:
         print(i)
+
+if mod_nlist == True:
+    print('다음 모드는 로드 목록에 있었으나, template에 없어서 로드가 해제된 모드입니다. 인-게임에서 수동으로 모드를 배열해주세요.')
+    for x in mod_nlist:
+        print(x)
+
 
 print('배열이 끝났습니다.')
 

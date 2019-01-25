@@ -18,8 +18,9 @@ else:
     shutil.copy('ModsConfig.xml', 'ModsConfig.xml.backup') #백업라인
 
 print('template를 받아오는 중입니다...')
-
 data = downloader.update()
+print('현재 다운받은 파일은 마지막으로 {} 시각에 업데이트 된 파일입니다. 잠시만 기다려 주세요...'.format(data['time']))
+sleep(2)
 
 mod_dic = {} # 모드와 번호 연결, 번호 : 이름
 mod_list_workshop = [] # 모드 리스트(이름만)

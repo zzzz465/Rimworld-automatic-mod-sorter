@@ -5,6 +5,7 @@ import json
 import sys
 from time import sleep
 import downloader
+import time
 def Listhandler(template_list): #구독한 모드 리스트 불러오기, template_list에 모드 이름 저장
     rimmoddir = 'C:/Program Files (x86)\Steam\steamapps/workshop/content/294100'
     moddir = os.listdir('C:\Program Files (x86)\Steam\steamapps/workshop/content/294100')
@@ -76,18 +77,20 @@ if __name__ == '__main__':
     template_dic = {}
     temp = False
     while temp == False:
-        a = input('Y를 입력하면 모드 번호를 설정하고, N을 입력하면 모드 template를 업데이트합니다. Y/N : ')
+        a = input('Y를 입력하면 모드 번호를 설정하고, N을 입력하면 프로그램을 종료합니다. Y/N : ')
         if a == 'Y' or a == 'y' :   
             sort_num_update(template_dic, downloaded_list)
             temp = True
 
         elif a == 'N' or a == 'n':
+            sys.exit(0)
             temp = True
 
         else:
             print('잘못 입력하였습니다. Y 또는 N만 입력해주세요.')
 
     downloaded_list.update(template_dic)
+    downloaded_list.update({'time' : time.ctime()})
     json_val = json.dumps(downloaded_list) #string 형식
     
     dir = os.environ['HOMEPATH']

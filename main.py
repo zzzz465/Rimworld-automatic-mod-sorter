@@ -22,6 +22,7 @@ dir = str(dir) + '/desktop'
 os.chdir(dir)
 print('template 파일을 바탕화면에서 읽어옵니다...')
 sleep(2)
+
 with open('template.bin', 'rb') as f:
     data = pickle.load(f) # template
 

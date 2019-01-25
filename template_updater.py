@@ -4,7 +4,8 @@ import xml.etree.ElementTree as ET
 import json
 import sys
 from time import sleep
-def file_check():
+import downloader
+def file_check(): # 필요가 없어짐
     dir = os.environ['homepath']
     os.chdir(dir)
     os.chdir('./desktop')
@@ -36,7 +37,7 @@ def file_check():
     return 
 
 
-def Listhandler(template_list):
+def Listhandler(template_list): #구독한 모드 리스트 불러오기, template_list에 모드 이름 저장
     rimmoddir = 'C:/Program Files (x86)\Steam\steamapps/workshop/content/294100'
     moddir = os.listdir('C:\Program Files (x86)\Steam\steamapps/workshop/content/294100')
     for mod in moddir: # mod는 모드 번호
@@ -48,14 +49,15 @@ def Listhandler(template_list):
         name = root.find('name').text # 이름을 저장
         template_list.append(name)
 
-def sort_num_update(template_dic):
+def sort_num_update(template_dic, overlap_list):
     template_list = []
     Listhandler(template_list)
 
-    print('현재 로드된 모드의 개수는 {}개 입니다.'.format(len(template_list)))
+    print('현재 확인된 모드의 개수는 {}개 입니다.'.format(len(template_list)))
     sleep(0.1)
     
     #중복되는 모드를 제거하는 라인
+    '''
     dir = os.environ['homepath']
     os.chdir(dir)
     os.chdir('./desktop')
@@ -64,12 +66,16 @@ def sort_num_update(template_dic):
         overlap_list = json.loads(f.read())
     except:
         pass
+    '''
     
     print('중복되는 모드를 리스트에서 제거하는 중...')
     sleep(0.4)
     for val in overlap_list:
-        indexnum = template_list.index(val)
-        del template_list[indexnum]
+        try:
+            indexnum = template_list.index(val)
+            del template_list[indexnum]
+        except:
+            pass
 
     
     print(len(template_list), ' 개의 모드가 확인되었습니다...')
@@ -109,13 +115,13 @@ def sort_num_update(template_dic):
 #print (os.path.dirname(os.path.realpath(__file__)))
 
 if __name__ == '__main__':
-    file_check()
+    overlap_list = downloader.update()
     template_dic = {}
     temp = False
     while temp == False:
         a = input('Y를 입력하면 모드 번호를 설정하고, N을 입력하면 모드 template를 업데이트합니다. Y/N : ')
         if a == 'Y' or a == 'y' :   
-            sort_num_update(template_dic)
+            sort_num_update(template_dic, overlap_list)
             temp = True
 
         elif a == 'N' or a == 'n':

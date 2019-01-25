@@ -5,38 +5,6 @@ import json
 import sys
 from time import sleep
 import downloader
-def file_check(): # 필요가 없어짐
-    dir = os.environ['homepath']
-    os.chdir(dir)
-    os.chdir('./desktop')
-    #print(os.getcwd())
-    if os.path.isfile('./db_template.json'):
-        print('json 파일을 바탕화면에서 발견하였습니다.')
-
-        f = open('db_template.json', 'r')
-            
-        try:
-            template_num = len(json.loads(f.read()))
-            
-        except:
-            f.close()
-            f = open('db_template.json', 'w')
-            temp_1 = {}
-            temp_1 = json.dumps(temp_1)
-            f.write(temp_1)
-            f.close()
-                
-
-        print(template_num,' 개의 모드를 template.json에서 발견하였습니다.')
-    
-    else:
-        with open('db_template.json', 'w') as f:
-            f.write('{}')
-            f.close() #파일 없으면 만들기
-        print('파일을 발견하지 못했습니다. 비어있는 json 파일을 바탕화면에 생성중...')
-    return 
-
-
 def Listhandler(template_list): #구독한 모드 리스트 불러오기, template_list에 모드 이름 저장
     rimmoddir = 'C:/Program Files (x86)\Steam\steamapps/workshop/content/294100'
     moddir = os.listdir('C:\Program Files (x86)\Steam\steamapps/workshop/content/294100')
@@ -49,7 +17,7 @@ def Listhandler(template_list): #구독한 모드 리스트 불러오기, templa
         name = root.find('name').text # 이름을 저장
         template_list.append(name)
 
-def sort_num_update(template_dic, overlap_list):
+def sort_num_update(template_dic, overlap_list): #template_dic는 template에 모드이름 : 번호로 추가, overlap_list는 기존의 template 받아오기
     template_list = []
     Listhandler(template_list)
 
@@ -57,17 +25,6 @@ def sort_num_update(template_dic, overlap_list):
     sleep(0.1)
     
     #중복되는 모드를 제거하는 라인
-    '''
-    dir = os.environ['homepath']
-    os.chdir(dir)
-    os.chdir('./desktop')
-    f = open('db_template.json', 'r')
-    try:
-        overlap_list = json.loads(f.read())
-    except:
-        pass
-    '''
-    
     print('중복되는 모드를 리스트에서 제거하는 중...')
     sleep(0.4)
     for val in overlap_list:
@@ -115,13 +72,13 @@ def sort_num_update(template_dic, overlap_list):
 #print (os.path.dirname(os.path.realpath(__file__)))
 
 if __name__ == '__main__':
-    overlap_list = downloader.update()
+    downloaded_list = downloader.update() # 
     template_dic = {}
     temp = False
     while temp == False:
         a = input('Y를 입력하면 모드 번호를 설정하고, N을 입력하면 모드 template를 업데이트합니다. Y/N : ')
         if a == 'Y' or a == 'y' :   
-            sort_num_update(template_dic, overlap_list)
+            sort_num_update(template_dic, downloaded_list)
             temp = True
 
         elif a == 'N' or a == 'n':
@@ -130,30 +87,12 @@ if __name__ == '__main__':
         else:
             print('잘못 입력하였습니다. Y 또는 N만 입력해주세요.')
 
-    dic_old = {}
-    try:
-        f = open('db_template.json', 'r')
-        dic_old = json.loads(f.read())
-        if dic_old == None:
-            dic_old = {}
+    downloaded_list.update(template_dic)
+    json_val = json.dumps(downloaded_list) #string 형식
     
-    except:
-        with open('db_template.json', 'w') as f:
-            f.close() # 이 코드를 지워도 되나?
-
-    dic_old.update(template_dic)
-    json_val = json.dumps(dic_old) #string 형식
-
+    dir = os.environ['HOMEPATH']
+    os.chdir(dir)
+    os.chdir('./desktop')
     with open('db_template.json', 'w') as f:
         f.write(json_val)
         f.close()
-    
-'''    
-    #data.update(template_dic)
-
-    #print(template_dic)
-    
-    with open('template.bin', 'wb') as f:
-        pickle.dump(template_dic, f)
-'''
-

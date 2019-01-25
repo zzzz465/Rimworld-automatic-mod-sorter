@@ -23,7 +23,7 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
     Listhandler(template_list)
 
     print('현재 확인된 모드의 개수는 {}개 입니다.'.format(len(template_list)))
-    sleep(0.1)
+    sleep(0.2)
     
     #중복되는 모드를 제거하는 라인
     print('중복되는 모드를 리스트에서 제거하는 중...')
@@ -39,21 +39,22 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
     print(len(template_list), ' 개의 모드가 확인되었습니다...')
     sleep(0.2)
     print('중단하려면 숫자 대신 X 키를 입력해주세요')
+    print('모드 배열의 순서는 Dcinside Rimworld 갤러리의 닉네임 개념글에서 닉네임 "forge"를 찾아보세요.')
     sleep(0.2)
     for temp in template_list: # 모드 리스트를 불러줌
         print('Mod name : {}'.format(temp))
         test = False
         while test == False:
-            i = (input('번호는 1~16번입니다. : '))
+            i = (input('번호는 1~20번입니다. : '))
             #import random
             #i = random.randrange(1,16)
             if i == 'X' or i == 'x':
                 print('작업이 중단되었습니다.')
                 sys.exit(1)
             try:
-                template_dic[temp] = int(i)
+                template_dic[temp] = float(i)
                 test = True
-                if int(i) > 20 or int(i) < 0:
+                if float(i) > 20 or float(i) < 0:
                     raise ValueError
                 print('\n\n')
             
@@ -66,7 +67,7 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
             print(temp,' : ', template_dic[temp]) 
 
     else:
-        print('이미 로드한 모든 모드가 template에 저장되어있습니다. 프로그램을 종료합니다...')
+        print('이미 Load한 모든 모드가 template에 저장되어있습니다. 프로그램을 종료합니다...')
         sys.exit(0)
 
         

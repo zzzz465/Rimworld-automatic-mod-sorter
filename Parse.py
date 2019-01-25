@@ -25,7 +25,7 @@ def Parser(mod_dic,mod_dic_num, mod_list_workshop): #mod_dic : 모드 이름과 
         mod_dic_num[name] = num
 
 
-def setconfig(m_s,): # 소팅된 모드를 받아오기, 세팅 xml을 수정, config은 사용중인 모드 리스트 출력        
+def setconfig(m_s): # 소팅된 모드를 받아오기, 세팅 xml을 수정, config은 사용중인 모드 리스트 출력        
         os.chdir(rimsavedir)
         doc = ET.parse('ModsConfig.xml')
         root = doc.getroot()

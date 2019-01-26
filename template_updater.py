@@ -122,11 +122,7 @@ if __name__ == '__main__':
         with open('db_template.json', 'w') as f:
             f.write(json_val)
             f.close()
-        
-        trynum = 0
-        while trynum != 3:
-            input('press any key : ')
-            trynum = trynum + 1
+            
     except Exception as ex:
         print('에러가 발생 ', ex)
         

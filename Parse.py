@@ -1,28 +1,37 @@
 import xml.etree.ElementTree as ET
 import os
 from lxml import etree
+import tkinter as tk
+from tkinter import filedialog
 #파이썬에서 환경변수를 지원 안함? 아니다. os.environ 사용
 #mod_dic = {} # 테스트용
 #mod_list = [] # 테스트용
 
-rimmoddir = 'C:/Program Files (x86)\Steam\steamapps/workshop/content/294100'
-os.chdir(rimmoddir)
-moddir = os.listdir('C:\Program Files (x86)\Steam\steamapps/workshop/content/294100')
 temp = os.environ['userprofile']
 rimsavedir = '{}/appdata/locallow/Ludeon Studios\RimWorld by Ludeon Studios\Config'.format(temp)
 
 def Parser(mod_dic,mod_dic_num, mod_list_workshop): #mod_dic : 모드 이름과 번호를 연결, mod_list는 실제 가지고있는 모드 리스트(이름으로)
         #mod_list_workshop는 창작마당에 있는 모드 리스트 불러오기
-    for num in moddir: # mod는 모드 번호
-        temp = '{}/{}/About'.format(rimmoddir,num)
-        os.chdir(temp) #각 모드의 About 폴더로 이동
-        doc = ET.parse('About.Xml') #About.Xml 파싱
-        root = doc.getroot()
-        name = root.find('name').text # 이름을 저장
-        mod_list_workshop.append(name)
-        #print(name)
-        mod_dic[num] = name #번호 : 이름
-        mod_dic_num[name] = num
+        root = tk.Tk()
+        rim64win_path = filedialog.askopenfilename(initialdir = 'C:/', title = 'Select rimworldwin64.exe', filetype = [('RimworldWin64.exe', 'RimWorldWin64.exe')])
+        rim64win_path = os.path.dirname(rim64win_path)
+        os.chdir('../')
+        os.chdir('../')
+        os.chdir('./workshop/content/294100')
+        rimmoddir = os.getcwd()
+        moddir = os.listdir('./')   
+        mod_dic_num['Core'] = 'Core'    
+        for num in moddir: # mod는 모드 번호
+                temp = '{}/{}/About'.format(rimmoddir,num)
+                os.chdir(temp) #각 모드의 About 폴더로 이동
+                doc = ET.parse('About.Xml') #About.Xml 파싱
+                root = doc.getroot()
+                name = root.find('name').text # 이름을 저장
+                mod_list_workshop.append(name)
+                #print(name)
+                mod_dic[num] = name #번호 : 이름
+                mod_dic_num[name] = num
+
 
 
 def setconfig(m_s): # 소팅된 모드를 받아오기, 세팅 xml을 수정, config은 사용중인 모드 리스트 출력        

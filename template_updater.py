@@ -8,6 +8,9 @@ import downloader
 import time
 import tkinter as tk
 from tkinter import filedialog
+
+breakloop = False
+
 def Listhandler(template_list): #구독한 모드 리스트 불러오기, template_list에 모드 이름 저장
     root = tk.Tk()
     rim64win_path = filedialog.askopenfilename(initialdir = 'C:/', title = 'Select rimworldwin64.exe', filetype = [('RimworldWin64.exe', 'RimWorldWin64.exe')])
@@ -55,7 +58,6 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
     for temp in template_list: # 모드 리스트를 불러줌
         print('Mod name : {}'.format(temp))
         test = False
-        breakloop = False
         while test == False:
             i = (input('번호는 1~20번입니다. : '))
             #import random
@@ -83,8 +85,11 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
             print(temp,' : ', template_dic[temp]) 
 
     else:
-        print('이미 Load한 모든 모드가 template에 저장되어있습니다. 프로그램을 종료합니다...')
-        sys.exit(0)
+        if breakloop == False:
+            print('이미 Load한 모든 모드가 template에 저장되어있습니다. 프로그램을 종료합니다...')
+            sys.exit(0)
+        if breakloop == True:
+            print('작업을 중단하였습니다. 지금까지 한 작업물을 저장합니다...')
 
         
 #print (os.path.dirname(os.path.realpath(__file__)))

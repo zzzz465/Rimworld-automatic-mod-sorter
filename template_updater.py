@@ -9,15 +9,6 @@ import time
 import tkinter as tk
 from tkinter import filedialog
 
-breakloop = False
-class exitError(Exception):
-    trynum = 0
-    print('프로그램을 종료합니다. 아무 키나 3번 눌러주세요.')
-    print('press any key 3 times to exit program')
-    while trynum != 3:       
-        input('Press any Key. : ')
-        trynum = trynum + 1
-
 def Listhandler(template_list): #구독한 모드 리스트 불러오기, template_list에 모드 이름 저장
     root = tk.Tk()
     rim64win_path = filedialog.askopenfilename(initialdir = 'C:/', title = 'Select rimworldwin64.exe', filetype = [('RimworldWin64.exe', 'RimWorldWin64.exe')])
@@ -64,6 +55,7 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
     sleep(0.2)
     for temp in template_list: # 모드 리스트를 불러줌
         print('Mod name : {}'.format(temp))
+        breakloop = False
         test = False
         while test == False:
             i = (input('번호는 1~20번입니다. : '))
@@ -100,33 +92,41 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
 #print (os.path.dirname(os.path.realpath(__file__)))
 
 if __name__ == '__main__':
-    downloaded_list = downloader.update() # 
-    template_dic = {}
-    temp = False
-    while temp == False:
-        a = input('Y를 입력하면 모드 번호를 설정하고, N을 입력하면 프로그램을 종료합니다. Y/N : ')
-        if a == 'Y' or a == 'y' :   
-            sort_num_update(template_dic, downloaded_list)
-            temp = True
+    try:
+        downloaded_list = downloader.update() # 
+        template_dic = {}
+        temp = False
+        while temp == False:
+            a = input('Y를 입력하면 모드 번호를 설정하고, N을 입력하면 프로그램을 종료합니다. Y/N : ')
+            if a == 'Y' or a == 'y' :   
+                sort_num_update(template_dic, downloaded_list)
+                temp = True
 
-        elif a == 'N' or a == 'n':
-            temp = True
+            elif a == 'N' or a == 'n':
+                temp = True
 
-        else:
-            print('잘못 입력하였습니다. Y 또는 N만 입력해주세요.')
+            else:
+                print('잘못 입력하였습니다. Y 또는 N만 입력해주세요.')
 
-    downloaded_list.update(template_dic)
-    downloaded_list.update({'time' : time.ctime()})
-    json_val = json.dumps(downloaded_list) #string 형식
-    
-    homedir = os.environ['HOMEPATH']
-    os.chdir('C:/')
-    os.chdir(homedir)
-    os.chdir('./desktop')
-    if os.path.isfile('db_template.json'):
-        os.remove('db_template.json')
+        downloaded_list.update(template_dic)
+        downloaded_list.update({'time' : time.ctime()})
+        json_val = json.dumps(downloaded_list) #string 형식
         
-    with open('db_template.json', 'w') as f:
-        f.write(json_val)
-        f.close()
-    raise(exitError)
+        homedir = os.environ['HOMEPATH']
+        os.chdir('C:/')
+        os.chdir(homedir)
+        os.chdir('./desktop')
+        if os.path.isfile('db_template.json'):
+            os.remove('db_template.json')
+            
+        with open('db_template.json', 'w') as f:
+            f.write(json_val)
+            f.close()
+        
+        trynum = 0
+        while trynum != 3:
+            input('press any key : ')
+            trynum = trynum + 1
+    except Exception as ex:
+        print('에러가 발생 ', ex)
+        

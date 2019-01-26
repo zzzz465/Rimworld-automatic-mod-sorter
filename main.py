@@ -4,6 +4,7 @@ import shutil
 import Parse
 from time import sleep
 import downloader
+import time
 
 #백업라인
 #------------------------------------------------
@@ -11,13 +12,7 @@ temp = os.environ['userprofile']
 rimsavedir = '{}/appdata/locallow/Ludeon Studios\RimWorld by Ludeon Studios\Config'.format(temp)
 os.chdir(rimsavedir)
 print('기존 컨픽 파일을 백업하는 중...')
-for i in range(99):
-    if os.path.exists('ModsConfig.xml.backup{}'.format(i)) == True:
-        continue
-
-    else:
-        shutil.copy('ModsConfig.xml', 'ModsConfig.xml.backup{}'.format(i))
-        break
+shutil.copy('ModsConfig.xml', 'ModsConfig.xml.backup{}'.format(time.ctime()))
 #------------------------------------------------
 
 print('template를 받아오는 중입니다...')

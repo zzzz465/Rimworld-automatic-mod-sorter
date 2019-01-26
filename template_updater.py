@@ -55,13 +55,14 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
     for temp in template_list: # 모드 리스트를 불러줌
         print('Mod name : {}'.format(temp))
         test = False
+        breakloop = False
         while test == False:
             i = (input('번호는 1~20번입니다. : '))
             #import random
             #i = random.randrange(1,16)
             if i == 'X' or i == 'x':
                 print('작업이 중단되었습니다.')
-                break
+                breakloop = True
             try:
                 template_dic[temp] = float(i)
                 if float(i) > 20 or float(i) < 0:
@@ -71,6 +72,9 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
             
             except:
                 print('올바르지 않는 입력입니다... 1~20에 해당하는 숫자를 입력해주세요.')
+        
+        if breakloop == True:
+            break
 
     print('다음과 같은 template를 입력하였습니다.\n')
     if len(template_dic) != 0:

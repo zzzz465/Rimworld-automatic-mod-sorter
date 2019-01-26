@@ -15,6 +15,8 @@ def Parser(mod_dic,mod_dic_num, mod_list_workshop): #mod_dic : 모드 이름과 
         root = tk.Tk()
         rim64win_path = filedialog.askopenfilename(initialdir = 'C:/', title = 'Select rimworldwin64.exe', filetype = [('RimworldWin64.exe', 'RimWorldWin64.exe')])
         rim64win_path = os.path.dirname(rim64win_path)
+        root.destroy()
+        
         os.chdir('../')
         os.chdir('../')
         os.chdir('./workshop/content/294100')

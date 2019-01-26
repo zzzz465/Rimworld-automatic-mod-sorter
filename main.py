@@ -12,7 +12,8 @@ temp = os.environ['userprofile']
 rimsavedir = '{}/appdata/locallow/Ludeon Studios\RimWorld by Ludeon Studios\Config'.format(temp)
 os.chdir(rimsavedir)
 print('기존 컨픽 파일을 백업하는 중...')
-shutil.copy('ModsConfig.xml', 'ModsConfig.xml.backup{}'.format(time.ctime()))
+now_time = time.strftime('%d_%H_%M', time.localtime(time.time()))
+shutil.copy('ModsConfig.xml', 'ModsConfig.xml.backup{}'.format(now_time))
 #------------------------------------------------
 
 print('template를 받아오는 중입니다...')

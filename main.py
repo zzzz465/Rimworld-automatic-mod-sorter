@@ -1,7 +1,6 @@
 
 import os
 import shutil
-import pickle
 import Parse
 from time import sleep
 import downloader

@@ -58,8 +58,8 @@ for mod in config_num: #mod는 숫자
     except:
         mod_nlist.append(mod)
         print(mod_dic[mod],' 모드는 template에 없어 제외되었습니다.')
-        sleep(0.2)
-    print('\n')    
+        print('\n')
+        sleep(0.2)    
 
 mod_list_sorted.sort()
 

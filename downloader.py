@@ -23,7 +23,6 @@ def update():
     f = open('db_template.json', 'r')
     return_dict = json.loads(f.read())
     f.close()
-    os.chdir(dir)
     shutil.rmtree(tempdir)
     
     #print(return_dict)

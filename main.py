@@ -8,6 +8,9 @@ import time
 import sys
 
 Version = 0.1
+print('현재 버전은 v' + str(Version) + '입니다.')
+print('\n')
+time.sleep(1)
 
 #백업라인
 #------------------------------------------------

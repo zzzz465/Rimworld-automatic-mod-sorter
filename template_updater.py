@@ -105,9 +105,9 @@ if __name__ == '__main__':
     downloaded_list.update({'time' : time.ctime()})
     json_val = json.dumps(downloaded_list) #string 형식
     
-    dir = os.environ['HOMEPATH']
+    homedir = os.environ['HOMEPATH']
     os.chdir('C:/')
-    os.chdir(dir)
+    os.chdir(homedir)
     os.chdir('./desktop')
     if os.path.isfile('db_template.json'):
         os.remove('db_template.json')

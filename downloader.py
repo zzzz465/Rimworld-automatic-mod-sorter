@@ -23,7 +23,6 @@ def update():
     f = open('db_template.json', 'r')
     return_dict = json.loads(f.read())
     f.close()
-    os.chdir(dir)
     
     #print(return_dict)
     return return_dict #return_dict로 다운받은 최신 dictionary를 받아옴

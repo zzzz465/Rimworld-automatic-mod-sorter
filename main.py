@@ -7,7 +7,7 @@ import downloader
 import time
 import sys
 
-Version = 0.1
+Version = 0.2
 print('현재 버전은 v' + str(Version) + '입니다.')
 print('current program version is' + str(Version))
 print('\n')
@@ -22,7 +22,7 @@ try:
     os.chdir(rimsavedir)
 except:
     print('림월드 SAVE 폴더를 찾을 수 없습니다. 림월드를 설치하신 게 맞나요?')
-    raise(exitError)
+    print('프로그램을 종료합니다.')
 
 print('기존 컨픽 파일을 백업하는 중...')
 print('saving old config files...')

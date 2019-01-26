@@ -44,7 +44,6 @@ sleep(1)
 
 mod_list_sorted = list()
 for mod in config_num: #mod는 숫자
-    print(mod)
     if mod == 'Core':
         continue
     try:
@@ -53,6 +52,7 @@ for mod in config_num: #mod는 숫자
     except:
         mod_nlist.append(mod)
         print(mod_dic[mod],' 모드는 template에 없어 제외되었습니다.')
+        sleep(0.2)
     print('\n')    
 
 mod_list_sorted.sort()
@@ -67,13 +67,17 @@ for i in mod_list_sorted:
         print(i)
 
 if len(mod_nlist) != 0:
+    print('\n')
+    print('\n')
     print('다음 모드는 로드 목록에 있었으나, template에 없어서 로드가 해제된 모드입니다. 인-게임에서 수동으로 모드를 배열해주세요.')
+    print('\n')
     for x in mod_nlist:
+        sleep(0.05)
         print(mod_dic[x])
 
-
+print('\n')
 print('배열이 끝났습니다.')
-
+print('\n')
 print('림월드를 실행합니다.')
 os.startfile(rim64win_path)
 

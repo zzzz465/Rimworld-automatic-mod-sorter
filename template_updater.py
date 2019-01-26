@@ -12,7 +12,7 @@ def Listhandler(template_list): #구독한 모드 리스트 불러오기, templa
     root = tk.Tk()
     rim64win_path = filedialog.askopenfilename(initialdir = 'C:/', title = 'Select rimworldwin64.exe', filetype = [('RimworldWin64.exe', 'RimWorldWin64.exe')])
     rim64win_path = os.path.dirname(rim64win_path)
-    root.destory()
+    root.destroy()
 
     os.chdir(rim64win_path)
     os.chdir('../')
@@ -106,6 +106,7 @@ if __name__ == '__main__':
     json_val = json.dumps(downloaded_list) #string 형식
     
     dir = os.environ['HOMEPATH']
+    os.chdir('C:/')
     os.chdir(dir)
     os.chdir('./desktop')
     if os.path.isfile('db_template.json'):

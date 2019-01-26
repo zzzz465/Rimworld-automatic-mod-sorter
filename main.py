@@ -7,14 +7,6 @@ import downloader
 import time
 import sys
 
-class exitError(Exception):
-    trynum = 0
-    print('프로그램을 종료합니다. 아무 키나 3번 눌러주세요.')
-    print('press any key 3 times to exit program')
-    while trynum != 3:       
-        input('Press any Key. : ')
-        trynum = trynum + 1
-
 Version = 0.1
 print('현재 버전은 v' + str(Version) + '입니다.')
 print('current program version is' + str(Version))
@@ -116,9 +108,7 @@ os.startfile(rim64win_path)
 print('로그를 확인해주세요.')
 sleep(1)
 
-print('아무 키를 3번 누르면 프로그램을 종료합니다...')
-print('press any key 3 times to exit program...')
-raise(exitError)
+
 
 
 

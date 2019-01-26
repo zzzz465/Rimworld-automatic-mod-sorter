@@ -5,6 +5,9 @@ import Parse
 from time import sleep
 import downloader
 import time
+import sys
+
+Version = 0.1
 
 #백업라인
 #------------------------------------------------
@@ -19,6 +22,11 @@ shutil.copy('ModsConfig.xml', 'ModsConfig.xml.backup{}'.format(now_time))
 print('template를 받아오는 중입니다...')
 data = downloader.update()
 print('현재 다운받은 파일은 마지막으로 {} 시각에 업데이트 된 파일입니다. 잠시만 기다려 주세요...'.format(data['time']))
+lastest_Version = data['Version']
+if Version < lastest_Version:
+    print('업데이트 버전이 발견되었습니다. Discord에서 업데이트를 확인해주세요.')
+    sys.exit(0)
+
 sleep(2)
 
 mod_dic = {} # 모드와 번호 연결, 번호 : 이름

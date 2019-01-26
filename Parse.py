@@ -12,6 +12,7 @@ rimsavedir = '{}/appdata/locallow/Ludeon Studios\RimWorld by Ludeon Studios\Conf
 
 def Parser(mod_dic,mod_dic_num, mod_list_workshop): #mod_dic : 모드 이름과 번호를 연결, mod_list는 실제 가지고있는 모드 리스트(이름으로)
         #mod_list_workshop는 창작마당에 있는 모드 리스트 불러오기
+        print('please select your rimworld exe file.')
         root = tk.Tk()
         rim64win_path = filedialog.askopenfilename(initialdir = 'C:/', title = 'Select rimworldwin64.exe', filetype = [('RimworldWin64.exe', 'RimWorldWin64.exe')])
         rim64win_folder = os.path.dirname(rim64win_path)

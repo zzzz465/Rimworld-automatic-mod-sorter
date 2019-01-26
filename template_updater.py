@@ -6,13 +6,24 @@ import sys
 from time import sleep
 import downloader
 import time
+import tkinter as tk
+from tkinter import filedialog
 def Listhandler(template_list): #구독한 모드 리스트 불러오기, template_list에 모드 이름 저장
-    rimmoddir = 'C:/Program Files (x86)\Steam\steamapps/workshop/content/294100'
-    moddir = os.listdir('C:\Program Files (x86)\Steam\steamapps/workshop/content/294100')
-    for mod in moddir: # mod는 모드 번호
-        temp = '{}/{}/About'.format(rimmoddir,mod)
+    root = tk.Tk()
+    rim64win_path = filedialog.askopenfilename(initialdir = 'C:/', title = 'Select rimworldwin64.exe', filetype = [('RimworldWin64.exe', 'RimWorldWin64.exe')])
+    rim64win_path = os.path.dirname(rim64win_path)
+    root.destory()
+
+    os.chdir(rim64win_path)
+    os.chdir('../')
+    os.chdir('../')
+    os.chdir('./workshop/content/294100')
+    moddir = os.listdir('./')
+    rimmoddir = os.getcwd() 
+
+    for num in moddir: # num은 모드 번호
+        temp = '{}/{}/About'.format(rimmoddir,num)
         os.chdir(temp) #각 모드의 About 폴더로 이동
-        #print(temp)
         doc = ET.parse('About.Xml') #About.Xml 파싱
         root = doc.getroot()
         name = root.find('name').text # 이름을 저장

@@ -14,9 +14,10 @@ def Parser(mod_dic,mod_dic_num, mod_list_workshop): #mod_dic : 모드 이름과 
         #mod_list_workshop는 창작마당에 있는 모드 리스트 불러오기
         root = tk.Tk()
         rim64win_path = filedialog.askopenfilename(initialdir = 'C:/', title = 'Select rimworldwin64.exe', filetype = [('RimworldWin64.exe', 'RimWorldWin64.exe')])
-        rim64win_path = os.path.dirname(rim64win_path)
+        rim64win_folder = os.path.dirname(rim64win_path)
+        os.chdir(rim64win_folder)
         root.destroy()
-        
+
         os.chdir('../')
         os.chdir('../')
         os.chdir('./workshop/content/294100')
@@ -33,6 +34,10 @@ def Parser(mod_dic,mod_dic_num, mod_list_workshop): #mod_dic : 모드 이름과 
                 #print(name)
                 mod_dic[num] = name #번호 : 이름
                 mod_dic_num[name] = num
+        
+        mod_dic['Core'] = 'Core'
+        return rim64win_path # 림월드 실행을 위해 파일 경로를 반환
+        
 
 
 

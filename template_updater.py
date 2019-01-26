@@ -10,6 +10,13 @@ import tkinter as tk
 from tkinter import filedialog
 
 breakloop = False
+class exitError(Exception):
+    trynum = 0
+    print('프로그램을 종료합니다. 아무 키나 3번 눌러주세요.')
+    print('press any key 3 times to exit program')
+    while trynum != 3:       
+        input('Press any Key. : ')
+        trynum = trynum + 1
 
 def Listhandler(template_list): #구독한 모드 리스트 불러오기, template_list에 모드 이름 저장
     root = tk.Tk()
@@ -60,8 +67,6 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
         test = False
         while test == False:
             i = (input('번호는 1~20번입니다. : '))
-            #import random
-            #i = random.randrange(1,16)
             if i == 'X' or i == 'x':
                 print('작업이 중단되었습니다.')
                 breakloop = True
@@ -124,4 +129,4 @@ if __name__ == '__main__':
     with open('db_template.json', 'w') as f:
         f.write(json_val)
         f.close()
-    print('프로그램을 종료합니다.')
+    raise(exitError)

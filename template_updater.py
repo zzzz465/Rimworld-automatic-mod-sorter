@@ -95,7 +95,6 @@ if __name__ == '__main__':
             temp = True
 
         elif a == 'N' or a == 'n':
-            sys.exit(0)
             temp = True
 
         else:
@@ -115,3 +114,4 @@ if __name__ == '__main__':
     with open('db_template.json', 'w') as f:
         f.write(json_val)
         f.close()
+    print('프로그램을 종료합니다.')

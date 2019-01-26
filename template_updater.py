@@ -63,6 +63,7 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
             if i == 'X' or i == 'x':
                 print('작업이 중단되었습니다.')
                 breakloop = True
+                test = True
             try:
                 template_dic[temp] = float(i)
                 if float(i) > 20 or float(i) < 0:

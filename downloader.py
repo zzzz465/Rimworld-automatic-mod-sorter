@@ -3,19 +3,11 @@ import os
 import zipfile
 import json
 import shutil
+import tempfile
 def update():
-    dir = os.environ['HOMEPATH']
-    dir = str(dir) + '/desktop'
-
-
-    os.chdir(dir)
-    os.mkdir('temp folder')
-    os.chdir('./temp folder')
-
-
+    tempdir = tempfile.mkdtemp()
+    os.chdir(tempdir)
     url = 'https://github.com/zzzz465/Rimworld-automatic-mod-sorter/archive/master.zip'
-
-
     with urlopen(url) as res:
         res_data = res.read()
 
@@ -32,7 +24,7 @@ def update():
     return_dict = json.loads(f.read())
     f.close()
     os.chdir(dir)
-    shutil.rmtree('temp folder')
+    shutil.rmtree(tempdir)
     
     #print(return_dict)
     return return_dict #return_dict로 다운받은 최신 dictionary를 받아옴

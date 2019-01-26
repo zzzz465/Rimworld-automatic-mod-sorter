@@ -1,0 +1,7 @@
+모드 배열 순서
+0. RKTP
+1. Core
+2. RuntimeGC
+3. Hugslib
+4. 다른 모드의 기본이 되는 Core 모드들
+5. 

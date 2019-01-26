@@ -7,6 +7,14 @@ import downloader
 import time
 import sys
 
+class exitError(Exception):
+    trynum = 0
+    print('프로그램을 종료합니다. 아무 키나 3번 눌러주세요.')
+    print('press any key 3 times to exit program')
+    while trynum != 3:       
+        input('Press any Key. : ')
+        trynum = trynum + 1
+
 Version = 0.1
 print('현재 버전은 v' + str(Version) + '입니다.')
 print('current program version is' + str(Version))
@@ -15,9 +23,15 @@ time.sleep(1)
 
 #백업라인
 #------------------------------------------------
-temp = os.environ['userprofile']
-rimsavedir = '{}/appdata/locallow/Ludeon Studios\RimWorld by Ludeon Studios\Config'.format(temp)
-os.chdir(rimsavedir)
+#VM 머신에선 여기가 없어서 오류가 남...
+try:
+    temp = os.environ['userprofile']
+    rimsavedir = '{}/appdata/locallow/Ludeon Studios\RimWorld by Ludeon Studios\Config'.format(temp)
+    os.chdir(rimsavedir)
+except:
+    print('림월드 SAVE 폴더를 찾을 수 없습니다. 림월드를 설치하신 게 맞나요?')
+    raise(exitError)
+
 print('기존 컨픽 파일을 백업하는 중...')
 print('saving old config files...')
 now_time = time.strftime('%d_%H_%M', time.localtime(time.time()))
@@ -93,12 +107,18 @@ if len(mod_nlist) != 0:
 
 print('\n')
 print('배열이 끝났습니다.')
-print('sorted complete.')
+print('sort complete.')
 print('\n')
 print('림월드를 실행합니다.')
 print('launching Rimworld...')
 os.startfile(rim64win_path)
 
+print('로그를 확인해주세요.')
+sleep(1)
+
+print('아무 키를 3번 누르면 프로그램을 종료합니다...')
+print('press any key 3 times to exit program...')
+raise(exitError)
 
 
 

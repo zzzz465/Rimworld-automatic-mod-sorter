@@ -1,21 +1,24 @@
-#백업라인
+
 import os
 import shutil
 import pickle
 import Parse
 from time import sleep
 import downloader
-
+#백업라인
+#------------------------------------------------
 temp = os.environ['userprofile']
 rimsavedir = '{}/appdata/locallow/Ludeon Studios\RimWorld by Ludeon Studios\Config'.format(temp)
 os.chdir(rimsavedir)
 print('기존 컨픽 파일을 백업하는 중...')
-sleep(1)
-if os.path.exists('ModsConfig.xml.backup') == True:
-    pass
+for i in range(99):
+    if os.path.exists('ModsConfig.xml.backup{}'.format(i)) == True:
+        continue
 
-else:
-    shutil.copy('ModsConfig.xml', 'ModsConfig.xml.backup') #백업라인
+    else:
+        shutil.copy('ModsConfig.xml', 'ModsConfig.xml.backup{}'.format(i))
+        break
+#------------------------------------------------
 
 print('template를 받아오는 중입니다...')
 data = downloader.update()
@@ -47,8 +50,13 @@ for mod in config_num:
         mod_list_sorted = mod_list_sorted + [[data[modname], mod]]
 
     else:
-        modname = mod_dic[mod]
-        mod_nlist.append(modname)
+        if mod == 'Core':
+            print('Core')
+
+        else:
+            modname = mod_dic[mod]
+            mod_nlist.append(modname)
+
         
 
 mod_list_sorted.sort()

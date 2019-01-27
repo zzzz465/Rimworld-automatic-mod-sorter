@@ -53,6 +53,8 @@ def Listhandler(template_list): #구독한 모드 리스트 불러오기, templa
 def sort_num_update(template_dic, overlap_list): #template_dic는 template에 모드이름 : 번호로 추가, overlap_list는 기존의 template 받아오기
     template_list = []
     Listhandler(template_list)
+    len_list = len(template_list)
+    len_list = str(len_list)
 
     print('현재 확인된 모드의 개수는 ' + Color.LIGHTGREEN_EX + '{}'.format(str(len(template_list))) + Color.WHITE + '개 입니다.')
     sleep(0.2)
@@ -66,9 +68,12 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
             del template_list[indexnum]
         except:
             pass
+        
+    len_list = len(template_list)
+    len_list = str(len_list)
 
     
-    print(Color.LIGHTGREEN_EX + str(len(template_list)), + Color.LIGHTGREEN_EX + ' 개의 모드가 확인되었습니다...')
+    print(Color.LIGHTGREEN_EX + len_list + Color.WHITE + ' 개의 모드가 확인되었습니다...')
     sleep(0.2)
     print('중단하려면 숫자 대신 X 키를 입력해주세요')
     print('모드 배열의 순서는 Dcinside Rimworld 갤러리의 닉네임 개념글에서 닉네임 "forge"를 찾아주세요.')

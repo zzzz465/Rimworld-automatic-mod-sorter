@@ -90,7 +90,7 @@ def setconfig(m_s): # 소팅된 모드를 받아오기, 세팅 xml을 수정
         doc.write('ModsConfig.xml', encoding='UTF-8', xml_declaration='false')
 
 
-def mod_sort(): #config 파일에서 active된 모드 리스트 가져오는 함수
+def find_activate_mod(): #config 파일에서 active된 모드 리스트 가져오는 함수
         '''template는 이름 : 번호
            config는 컨픽파일에 있는 모드 리스트 불러오기
         '''

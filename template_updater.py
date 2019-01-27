@@ -9,6 +9,9 @@ import time
 import tkinter as tk
 from tkinter import filedialog
 import logging
+from colorama import init
+from colorama import Fore as Color
+init(autoreset=True)
 
 def Listhandler(template_list): #구독한 모드 리스트 불러오기, template_list에 모드 이름 저장
     root = tk.Tk()
@@ -40,7 +43,7 @@ def Listhandler(template_list): #구독한 모드 리스트 불러오기, templa
             pass
 
     for num in localmod_moddir:
-        temp = '{}/{}/About'.format(rim64win_folder,num)
+        temp = '{}/Mods/{}/About'.format(rim64win_folder,num)
         os.chdir(temp)
         doc = ET.parse('About.xml')
         root = doc.getroot()
@@ -51,7 +54,7 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
     template_list = []
     Listhandler(template_list)
 
-    print('현재 확인된 모드의 개수는 {}개 입니다.'.format(len(template_list)))
+    print('현재 확인된 모드의 개수는 ' + Color.LIGHTGREEN_EX + '{}'.format(len(template_list)) + Color.WHITE + '개 입니다.')
     sleep(0.2)
     
     #중복되는 모드를 제거하는 라인
@@ -65,10 +68,10 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
             pass
 
     
-    print(len(template_list), ' 개의 모드가 확인되었습니다...')
+    print(Color.LIGHTGREEN_EX + len(template_list), + Color.LIGHTGREEN_EX + ' 개의 모드가 확인되었습니다...')
     sleep(0.2)
     print('중단하려면 숫자 대신 X 키를 입력해주세요')
-    print('모드 배열의 순서는 Dcinside Rimworld 갤러리의 닉네임 개념글에서 닉네임 "forge"를 찾아보세요.')
+    print('모드 배열의 순서는 Dcinside Rimworld 갤러리의 닉네임 개념글에서 닉네임 "forge"를 찾아주세요.')
     sleep(0.2)
     for temp in template_list: # 모드 리스트를 불러줌
         print('Mod name : {}'.format(temp))
@@ -109,7 +112,7 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
 #print (os.path.dirname(os.path.realpath(__file__)))
 
 if __name__ == '__main__':
-    try:
+
         downloaded_list = downloader.update() # 
         template_dic = {}
         temp = False
@@ -139,7 +142,5 @@ if __name__ == '__main__':
         with open('db_template.json', 'w') as f:
             f.write(json_val)
             f.close()
-            
-    except Exception as ex:
-        print('에러가 발생 ', ex)
+
         

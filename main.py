@@ -35,12 +35,13 @@ shutil.copy('ModsConfig.xml', 'ModsConfig.xml.backup{}'.format(now_time))
 #------------------------------------------------
 
 print('template를 받아오는 중입니다...')
-print('downloading mod DB from github...')
+print('downloading mod DB from github... \n')
 data = downloader.update()
 data_len = len(data)
 print('현재 DB에 등록된 모드의 개수는 ' + Color.GREEN + '{}'.format(data_len) + Color.WHITE + '개 입니다.')
-print('현재 다운받은 파일은 마지막으로 {} 시각에 업데이트 된 파일입니다. 잠시만 기다려 주세요...'.format(data['time']))
-print('DB last updated time : {}'.format(data['time']))
+print('DB mod count : ' + Color.GREEN + '{}'.format(data_len))
+print('현재 다운받은 파일은 마지막으로 {} 시각에 업데이트 된 파일입니다. 잠시만 기다려 주세요... \n'.format(data['time']))
+print('DB last updated time : {} \n'.format(data['time']))
 lastest_Version = data['Version']
 if Version < lastest_Version:
     print('업데이트 버전이 발견되었습니다. Discord에서 업데이트를 확인해주세요.')
@@ -60,12 +61,20 @@ print('현재 구독중인 모드 리스트를 불러옵니다...')
 print('Loading workshop mods...')
 
 for x in mod_list_workshop:
-    sleep(0.1)
-    print(x)
+    sleep(0.05)
+    print(Color.LIGHTGREEN_EX + x)
+    print('\n')
+
+print('Local 모드 리스트를 불러옵니다...')
+
+for x in mod_list_local:
+    sleep(0.05)
+    print(Color.LIGHTYELLOW_EX + x)
+    print('\n')
 
 config_num = Parse.find_activate_mod() # config 리스트에 현재 로딩중인 모드를 리스트로 저장
 print('모드 세팅에서 로딩한 모드를 재배열 합니다...')
-print('sorting mods....')
+print('sorting activated mods....')
 sleep(1)
 
 mod_list_sorted = list()
@@ -99,8 +108,8 @@ for mod in config_num: #mod는 숫자, 영문이름, 또는 __Localcopy
 
 
     except:
-        print(modname, Color.RED + ' 은 template에 없어 제외되었습니다.')
-        print(modname, Color.RED + "is not supported yet")
+        print(Color.LIGHTRED_EX + modname + ' 은 template에 없어 제외되었습니다.')
+        print(Color.LIGHTRED_EX + modname + "is not supported yet")
         mod_nlist.append(modname)
 
 
@@ -139,7 +148,7 @@ if len(mod_nlist) != 0:
     print('\n')
     for x in mod_nlist:
         sleep(0.05)
-        print(mod_dic[x])
+        print(x)
 
 print('\n')
 print('배열이 끝났습니다.')

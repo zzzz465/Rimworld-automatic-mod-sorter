@@ -11,7 +11,7 @@ from colorama import init
 from colorama import Fore as Color
 init(autoreset=True) # colroama 초기화
 
-Version = 0.3
+Version = 0.31
 print('현재 버전은 v.' + str(Version) + '입니다.')
 print('current program version is v.' + str(Version))
 print('\n')

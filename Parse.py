@@ -54,7 +54,7 @@ def Parser(mod_dic,mod_dic_num, mod_list_workshop, mod_list_local, data): #mod_d
                         os.chdir(temp)
                         doc = ET.parse('About.xml')
                         root = doc.getroot()
-                        name = root.find('name'.text)
+                        name = root.find('name').text
                         mod_list_local.append(name)
                         mod_dic[num] = name
                 except Exception as e:

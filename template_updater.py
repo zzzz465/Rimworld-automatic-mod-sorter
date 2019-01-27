@@ -54,7 +54,7 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
     template_list = []
     Listhandler(template_list)
 
-    print('현재 확인된 모드의 개수는 ' + Color.LIGHTGREEN_EX + '{}'.format(len(template_list)) + Color.WHITE + '개 입니다.')
+    print('현재 확인된 모드의 개수는 ' + Color.LIGHTGREEN_EX + '{}'.format(str(len(template_list))) + Color.WHITE + '개 입니다.')
     sleep(0.2)
     
     #중복되는 모드를 제거하는 라인
@@ -68,7 +68,7 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
             pass
 
     
-    print(Color.LIGHTGREEN_EX + len(template_list), + Color.LIGHTGREEN_EX + ' 개의 모드가 확인되었습니다...')
+    print(Color.LIGHTGREEN_EX + str(len(template_list)), + Color.LIGHTGREEN_EX + ' 개의 모드가 확인되었습니다...')
     sleep(0.2)
     print('중단하려면 숫자 대신 X 키를 입력해주세요')
     print('모드 배열의 순서는 Dcinside Rimworld 갤러리의 닉네임 개념글에서 닉네임 "forge"를 찾아주세요.')

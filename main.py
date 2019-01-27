@@ -7,10 +7,13 @@ import downloader
 import time
 import sys
 import re
+from colorama import init
+from colorama import Fore as Color
+init(autoreset=True) # colroama 초기화
 
 Version = 0.3
-print('현재 버전은 v' + str(Version) + '입니다.')
-print('current program version is' + str(Version))
+print('현재 버전은 v.' + str(Version) + '입니다.')
+print('current program version is v.' + str(Version))
 print('\n')
 time.sleep(1)
 
@@ -34,6 +37,8 @@ shutil.copy('ModsConfig.xml', 'ModsConfig.xml.backup{}'.format(now_time))
 print('template를 받아오는 중입니다...')
 print('downloading mod DB from github...')
 data = downloader.update()
+data_len = len(data)
+print('현재 DB에 등록된 모드의 개수는 ' + Color.GREEN + '{}'.format(data_len) + Color.WHITE + '개 입니다.')
 print('현재 다운받은 파일은 마지막으로 {} 시각에 업데이트 된 파일입니다. 잠시만 기다려 주세요...'.format(data['time']))
 print('DB last updated time : {}'.format(data['time']))
 lastest_Version = data['Version']
@@ -42,7 +47,7 @@ if Version < lastest_Version:
     print('newer version available!, please upgrade.')
     sys.exit(0)
 
-sleep(2)
+sleep(3)
 
 mod_dic = dict() # 모드와 번호 연결, 번호 : 이름
 mod_list_workshop = list() # 모드 리스트(이름만)
@@ -73,26 +78,29 @@ for mod in config_num: #mod는 숫자, 영문이름, 또는 __Localcopy
         if m: #만약 config파일에서 불러온 모드의 이름이 __LocalCopy로 시작하면
             modname = mod.split('_')[3]
             mod_list_sorted = mod_list_sorted + [[data[modname], mod, True]]
-            print('Localcopy {} 모드를 리스트에 추가'.format(modname))
-            print('Add Localcopy {} Mod to list'.format(modname))
+            print(Color.LIGHTBLUE_EX + 'Localcopy {} 모드를 리스트에 추가'.format(modname))
+            print(Color.LIGHTBLUE_EX + 'Add Localcopy {} Mod to list'.format(modname))
             continue
 
 
         elif mod.isdigit() == False: #Local인데 __Localcopy가 아니라면
             modname = mod
             mod_list_sorted = mod_list_sorted + [[data[modname], mod, True]]
-            print('local 모드를 리스트에 추가')
+            print(Color.LIGHTYELLOW_EX + 'local {} 모드를 리스트에 추가'.format(modname))
+            print(Color.LIGHTYELLOW_EX + 'Add local {} Mod to list'.format(modname))
             continue
 
         elif mod.isdigit():
             modname = mod_dic[mod] #mod는 숫자
             mod_list_sorted = mod_list_sorted + [[data[modname], mod, False]]
-            print('workshop 모드를 리스트에 추가')
+            print(Color.LIGHTGREEN_EX + 'workshop {} 모드를 리스트에 추가'.format(modname))
+            print(Color.LIGHTGREEN_EX + 'add workshop {} mod to list'.format(modname))
+            continue
 
 
     except:
-        print(modname, ' 은 template에 없어 제외되었습니다.')
-        print(modname, "is not supported yet")
+        print(modname, Color.RED + ' 은 template에 없어 제외되었습니다.')
+        print(modname, Color.RED + "is not supported yet")
         mod_nlist.append(modname)
 
 
@@ -108,14 +116,17 @@ print('mods will be loaded in the following order')
 print('\n')
 for i in mod_list_sorted:
     sleep(0.1)
-    if i[1].isdigit():
-        print(mod_dic[i[1]])
-    elif type(i) == list:
-        x = i[3].split('_')
-        print('localcopy mod {}'.format(x[3]))
-    
+    if i[2] == False:
+        print(Color.LIGHTGREEN_EX + mod_dic[i[1]]) #
+
     else:
-        print('local mod {}'.format(i))
+        x = re.match('__Local', i[1])
+        if x:
+            x = i[1].split('_')
+            print(Color.LIGHTBLUE_EX + 'Localcopy {}'.format(x[3]))
+        
+        else:
+            print(Color.LIGHTGREEN_EX + x)
 
     
         

@@ -49,7 +49,9 @@ def Parser(mod_dic,mod_dic_num, mod_list_workshop, mod_list_local, data): #mod_d
                 m = re.match('__LocalCopy', num)
                 try:
                         if m:
-                                folder_name = num.split('_')[3]                        
+                                folder_name = num.split('_')[3] 
+                        else:
+                                folder_name = num                       
                         temp = '{}/{}/About'.format(localmod_path,num)
                         os.chdir(temp)
                         doc = ET.parse('About.xml')
@@ -57,6 +59,7 @@ def Parser(mod_dic,mod_dic_num, mod_list_workshop, mod_list_local, data): #mod_d
                         name = root.find('name').text
                         mod_list_local.append(name)
                         mod_dic[num] = name
+
                 except Exception as e:
                         print('Error occur! ', e)
 

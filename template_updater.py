@@ -78,9 +78,10 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
     print('중단하려면 숫자 대신 X 키를 입력해주세요')
     print('모드 배열의 순서는 Dcinside Rimworld 갤러리의 닉네임 개념글에서 닉네임 "forge"를 찾아주세요.')
     sleep(0.2)
+    breakloop = False
     for temp in template_list: # 모드 리스트를 불러줌
         print('Mod name : {}'.format(temp))
-        breakloop = False
+
         test = False
         while test == False:
             i = (input('번호는 1~20번입니다. : '))

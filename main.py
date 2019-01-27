@@ -83,42 +83,41 @@ for mod in config_num: #mod는 숫자, 영문이름, 또는 __Localcopy
     if mod == 'Core':
         continue
 
-    #try:
-    if m: #만약 config파일에서 불러온 모드의 이름이 __LocalCopy로 시작하면
-        modname = mod.split('_')[3]
-        mod_list_sorted = mod_list_sorted + [[data[modname], mod, True]]
-        print(Color.LIGHTBLUE_EX + 'Localcopy {} 모드를 리스트에 추가'.format(modname))
-        print(Color.LIGHTBLUE_EX + 'Add Localcopy {} Mod to list'.format(modname))
-        continue
+    try:
+        if m: #만약 config파일에서 불러온 모드의 이름이 __LocalCopy로 시작하면
+            modname = mod.split('_')[3]
+            mod_list_sorted = mod_list_sorted + [[data[modname], mod, True]]
+            print(Color.LIGHTBLUE_EX + 'Localcopy {} 모드를 리스트에 추가'.format(modname))
+            print(Color.LIGHTBLUE_EX + 'Add Localcopy {} Mod to list'.format(modname))
+            continue
 
 
-    elif mod.isdigit() == False: #Local인데 __Localcopy가 아니라면
-        print('test')
-        modname = mod_dic[mod]
-        mod_list_sorted = mod_list_sorted + [[data[modname], mod, True]]
-        print(Color.LIGHTYELLOW_EX + 'local {} 모드를 리스트에 추가'.format(modname))
-        print(Color.LIGHTYELLOW_EX + 'Add local {} Mod to list'.format(modname))
-        continue
+        elif mod.isdigit() == False: #Local인데 __Localcopy가 아니라면
+            print('test')
+            modname = mod_dic[mod]
+            mod_list_sorted = mod_list_sorted + [[data[modname], mod, True]]
+            print(Color.LIGHTYELLOW_EX + 'local {} 모드를 리스트에 추가'.format(modname))
+            print(Color.LIGHTYELLOW_EX + 'Add local mod {}  to list'.format(modname))
+            continue
 
-    elif mod.isdigit():
-        modname = mod_dic[mod] #mod는 숫자
-        mod_list_sorted = mod_list_sorted + [[data[modname], mod, False]]
-        print(Color.LIGHTGREEN_EX + 'workshop {} 모드를 리스트에 추가'.format(modname))
-        print(Color.LIGHTGREEN_EX + 'add workshop {} mod to list'.format(modname))
-        continue
+        elif mod.isdigit():
+            modname = mod_dic[mod] #mod는 숫자
+            mod_list_sorted = mod_list_sorted + [[data[modname], mod, False]]
+            print(Color.LIGHTGREEN_EX + 'workshop {} 모드를 리스트에 추가'.format(modname))
+            print(Color.LIGHTGREEN_EX + 'add workshop mod {} to list'.format(modname))
+            continue
 
-'''
+
     except Exception as e:
         print(Color.LIGHTRED_EX + modname + ' 은 template에 없어 제외되었습니다.')
         print(Color.LIGHTRED_EX + modname + "is not supported yet")
         mod_nlist.append(modname)
-        raise(e)
-'''
 
 
-#    finally:
-#        print('\n')
-#       sleep(0.2)   
+
+    finally:
+        print('\n')
+        sleep(0.2)   
 
 
 mod_list_sorted.sort()

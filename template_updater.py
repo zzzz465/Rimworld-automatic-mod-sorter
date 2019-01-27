@@ -8,14 +8,19 @@ import downloader
 import time
 import tkinter as tk
 from tkinter import filedialog
+import logging
 
 def Listhandler(template_list): #구독한 모드 리스트 불러오기, template_list에 모드 이름 저장
     root = tk.Tk()
     rim64win_path = filedialog.askopenfilename(initialdir = 'C:/', title = 'Select rimworldwin64.exe', filetype = [('RimworldWin64.exe', 'RimWorldWin64.exe')])
-    rim64win_path = os.path.dirname(rim64win_path)
+    rim64win_folder = os.path.dirname(rim64win_path)
     root.destroy()
 
-    os.chdir(rim64win_path)
+    localmod_path = '{}/Mods'.format(rim64win_folder) #림월드 내 Mods 폴더 경로
+    localmod_moddir = os.listdir(localmod_path)
+
+
+    os.chdir(rim64win_folder)
     os.chdir('../')
     os.chdir('../')
     os.chdir('./workshop/content/294100')
@@ -23,11 +28,23 @@ def Listhandler(template_list): #구독한 모드 리스트 불러오기, templa
     rimmoddir = os.getcwd() 
 
     for num in moddir: # num은 모드 번호
-        temp = '{}/{}/About'.format(rimmoddir,num)
-        os.chdir(temp) #각 모드의 About 폴더로 이동
-        doc = ET.parse('About.Xml') #About.Xml 파싱
+        try:
+            temp = '{}/{}/About'.format(rimmoddir,num)
+            os.chdir(temp) #각 모드의 About 폴더로 이동
+            doc = ET.parse('About.Xml') #About.Xml 파싱
+            root = doc.getroot()
+            name = root.find('name').text # 이름을 저장
+            template_list.append(name)
+        
+        except:
+            pass
+
+    for num in localmod_moddir:
+        temp = '{}/{}/About'.format(rim64win_folder,num)
+        os.chdir(temp)
+        doc = ET.parse('About.xml')
         root = doc.getroot()
-        name = root.find('name').text # 이름을 저장
+        name = root.find('name').text
         template_list.append(name)
 
 def sort_num_update(template_dic, overlap_list): #template_dic는 template에 모드이름 : 번호로 추가, overlap_list는 기존의 template 받아오기

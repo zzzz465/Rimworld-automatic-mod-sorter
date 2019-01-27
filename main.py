@@ -124,7 +124,7 @@ print('배열한 모드 순서는 다음과 같습니다.')
 print('mods will be loaded in the following order')
 print('\n')
 for i in mod_list_sorted:
-    sleep(0.1)
+    sleep(0.05)
     if i[2] == False:
         print(Color.LIGHTGREEN_EX + mod_dic[i[1]]) #
 

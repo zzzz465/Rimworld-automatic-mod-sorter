@@ -8,7 +8,7 @@ import time
 import sys
 import re
 
-Version = 0.2
+Version = 0.3
 print('현재 버전은 v' + str(Version) + '입니다.')
 print('current program version is' + str(Version))
 print('\n')

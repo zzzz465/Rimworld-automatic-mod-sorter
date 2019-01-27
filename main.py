@@ -44,10 +44,13 @@ if Version < lastest_Version:
 
 sleep(2)
 
-mod_dic, mod_dic_num = dict() #mod_dic 번호:이름 // mod_dic_num 이름:번호
-mod_list_workshop, mod_list_local, mod_nlist = list() # 모드 리스트(이름만) // 워크샵 / 로컬 / 로드 리스트에 있었으나 미입력
+mod_dic = dict() # 모드와 번호 연결, 번호 : 이름
+mod_list_workshop = list() # 모드 리스트(이름만)
+mod_dic_num = dict() #이름 : 번호
+mod_nlist = list()
+mod_list_local = list()
 
-rim64win_path = Parse.Parser(mod_dic,mod_dic_num, mod_list_workshop,mod_list_local, data) # 파싱 작업을 수행 후, 림월드 실행을 위한 파일 경로를 return
+rim64win_path = Parse.Parser(mod_dic,mod_dic_num, mod_list_workshop, mod_list_local, data) # 파싱 작업을 수행 후, 림월드 실행을 위한 파일 경로를 return
 print('현재 구독중인 모드 리스트를 불러옵니다...')
 print('checking available workshop mods...')
 

@@ -27,23 +27,32 @@ def Parser(mod_dic,mod_dic_num, mod_list_workshop, mod_list_local, data): #mod_d
         os.chdir(rim64win_folder)
         os.chdir('../')
         os.chdir('../')
-        os.chdir('./workshop/content/294100')
-        rimmoddir = os.getcwd()
-        moddir = os.listdir('./')  # 모드 번호 (폴더로)  
-        mod_dic_num['Core'] = 'Core'    
-        for num in moddir: # mod는 모드 번호, workshop 파일 불러오기
-                try:
-                        temp = '{}/{}/About'.format(rimmoddir,num)
-                        os.chdir(temp) #각 모드의 About 폴더로 이동
-                        doc = ET.parse('About.Xml') #About.Xml 파싱
-                        root = doc.getroot()
-                        name = root.find('name').text # 이름을 저장
-                        mod_list_workshop.append(name)
-                        #print(name)
-                        mod_dic[num] = name #번호(config 파일용) : 이름
-                        mod_dic_num[name] = num # 이름 : 번호(config 파일용)
-                except Exception as e:
-                        print('Error appear! ', e)
+        skipworkshop = False
+        if os.path.isdir('./workshop/content/294100'):
+                skipworkshop = True
+
+        
+
+        if skipworkshop == False:
+                os.chdir('./workshop/content/294100')
+                rimmoddir = os.getcwd()
+                moddir = os.listdir('./')  # 모드 번호 (폴더로)  
+                mod_dic_num['Core'] = 'Core'    
+                for num in moddir: # mod는 모드 번호, workshop 파일 불러오기
+                        try:
+                                temp = '{}/{}/About'.format(rimmoddir,num)
+                                os.chdir(temp) #각 모드의 About 폴더로 이동
+                                doc = ET.parse('About.Xml') #About.Xml 파싱
+                                root = doc.getroot()
+                                name = root.find('name').text # 이름을 저장
+                                mod_list_workshop.append(name)
+                                #print(name)
+                                mod_dic[num] = name #번호(config 파일용) : 이름
+                                mod_dic_num[name] = num # 이름 : 번호(config 파일용)
+                        except Exception as e:
+                                print('Error appear! ', e)
+        else:
+                pass
 
         for num in local_moddir:
                 m = re.match('__LocalCopy', num)

@@ -11,7 +11,7 @@ from colorama import init
 from colorama import Fore as Color
 init(autoreset=True) # colroama 초기화
 
-Version = 0.34
+Version = 0.35
 print('현재 버전은 v.' + str(Version) + '입니다.')
 print('current program version is v.' + str(Version))
 print('\n')
@@ -103,7 +103,7 @@ for mod in config_num: #mod는 숫자, 영문이름, 또는 __Localcopy
             print(Color.LIGHTYELLOW_EX + 'Add local mod {}  to list'.format(modname))
             continue
 
-        elif mod.isdigit():
+        else:
             modname = mod_dic[mod] #mod는 숫자
             mod_list_sorted = mod_list_sorted + [[data[modname], mod, False]]
             print(Color.LIGHTGREEN_EX + 'workshop {} 모드를 리스트에 추가'.format(modname))

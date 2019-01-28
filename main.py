@@ -117,7 +117,7 @@ for mod in config_num: #mod는 숫자, 영문이름, 또는 __Localcopy
 
     finally:
         print('\n')
-        sleep(0.2)   
+        sleep(0.1)   
 
 
 mod_list_sorted.sort()
@@ -159,6 +159,7 @@ os.chdir('./desktop')
 with open('Mod_not_in_the_db.txt', 'w') as f:
     for x in mod_nlist:
         f.write(x)
+        f.write('\n')
 
 
 

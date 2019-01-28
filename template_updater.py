@@ -20,14 +20,16 @@ def add_dic(template_list, template_dic, template_):
 
         test = False
         while test == False:
-            i = (input('번호는 1~20번입니다. : '))
+            i = (input('번호는 1~20번입니다. input number 1 to 20 : '))
             if i == 'X' or i == 'x':
                 print('작업이 중단되었습니다.')
+                print('updating DB inturrpted.')
                 breakloop = True
                 test = True
 
             elif i.lower() == 'p':
                 print(temp, ' 모드는 보류합니다.')
+                print('pass this mod :', temp)
                 continue
 
             try:
@@ -39,6 +41,7 @@ def add_dic(template_list, template_dic, template_):
             
             except:
                 print('올바르지 않는 입력입니다... 1~20에 해당하는 숫자를 입력해주세요. P or p를 입력하면 패스합니다.')
+                print('wrong input... please type 1~20 or X or P')
         
         if breakloop == True:
             break
@@ -56,21 +59,22 @@ def Listhandler(template_list): #구독한 모드 리스트 불러오기, templa
     os.chdir(rim64win_folder)
     os.chdir('../')
     os.chdir('../')
-    os.chdir('./workshop/content/294100')
-    moddir = os.listdir('./')
-    rimmoddir = os.getcwd() 
+    if os.path.isdir('./workshop/content/294100'):
+        os.chdir('./workshop/content/294100')
+        moddir = os.listdir('./')
+        rimmoddir = os.getcwd() 
 
-    for num in moddir: # num은 모드 번호
-        try:
-            temp = '{}/{}/About'.format(rimmoddir,num)
-            os.chdir(temp) #각 모드의 About 폴더로 이동
-            doc = ET.parse('About.Xml') #About.Xml 파싱
-            root = doc.getroot()
-            name = root.find('name').text # 이름을 저장
-            template_list.append(name)
-        
-        except:
-            pass
+        for num in moddir: # num은 모드 번호
+            try:
+                temp = '{}/{}/About'.format(rimmoddir,num)
+                os.chdir(temp) #각 모드의 About 폴더로 이동
+                doc = ET.parse('About.Xml') #About.Xml 파싱
+                root = doc.getroot()
+                name = root.find('name').text # 이름을 저장
+                template_list.append(name)
+            
+            except:
+                pass
 
     for num in localmod_moddir: #num은 모드 번호, local 모드
         temp = '{}/Mods/{}/About'.format(rim64win_folder,num)
@@ -87,10 +91,12 @@ def sort_num_update(template_dic, overlap_list, nlist): #template_dic는 templat
     len_list = str(len_list)
 
     print('현재 확인된 모드의 개수는 ' + Color.LIGHTGREEN_EX + '{}'.format(str(len(template_list))) + Color.WHITE + '개 입니다.')
+    print('The number of currently identified Mod : ' + Color.LIGHTGREEN_EX + '{}'.format(str(len(template_list))) + Color.WHITE + ' .')
     sleep(0.2)
     
     #중복되는 모드를 제거하는 라인
     print('중복되는 모드를 리스트에서 제거하는 중...')
+    print('removing overlap mods...')
     sleep(0.4)
     for val in overlap_list:
         try:
@@ -129,8 +135,10 @@ def sort_num_update(template_dic, overlap_list, nlist): #template_dic는 templat
 
     
     print(Color.LIGHTGREEN_EX + len_list + Color.WHITE + ' 개의 모드가 확인되었습니다...')
+    print(Color.LIGHTGREEN_EX + len_list + Color.WHITE + ' mod need DB update...')
     sleep(0.2)
-    print('중단하려면 숫자 대신 X 키를 입력해주세요')
+    print('중단하려면 숫자 대신 X 키를 입력해주세요. P를 입력하면 패스합니다.')
+    print('type X to stop updating DB, type P to skip mod. \n')
     print('모드 배열의 순서는 Dcinside Rimworld 갤러리의 닉네임 개념글에서 닉네임 "forge"를 찾아주세요.')
     sleep(0.2)
     breakloop = False
@@ -140,14 +148,16 @@ def sort_num_update(template_dic, overlap_list, nlist): #template_dic는 templat
 
         test = False
         while test == False:
-            i = (input('번호는 1~20번입니다. : '))
+            i = (input('번호는 1~20번입니다. input number 1 to 20. : '))
             if i == 'X' or i == 'x':
                 print('작업이 중단되었습니다.')
+                print('Operation aborted.')
                 breakloop = True
                 test = True
 
             elif i.lower() == 'p':
                 print(temp, ' 모드는 보류합니다.')
+                print('pass this mod : ', temp)
                 nlist.append(temp)
                 test = True
                 continue
@@ -161,12 +171,14 @@ def sort_num_update(template_dic, overlap_list, nlist): #template_dic는 templat
             
             except:
                 print('올바르지 않는 입력입니다... 1~20에 해당하는 숫자를 입력해주세요. P or p를 입력하면 패스합니다.')
+                print('wrong input... please type 1~20 or X or P')
         
         if breakloop == True:
             break
              
 
-    print('다음과 같은 template를 입력하였습니다.\n')
+    print('다음과 같은 template를 입력하였습니다.')
+    print('you have entered the following template. \n')
     if len(template_dic) != 0:
         for temp in template_dic:
             print(temp,' : ', template_dic[temp]) 
@@ -174,9 +186,11 @@ def sort_num_update(template_dic, overlap_list, nlist): #template_dic는 templat
     else:
         if breakloop == False:
             print('이미 Load한 모든 모드가 template에 저장되어있습니다. 프로그램을 종료합니다...')
+            print('All the mods you have already loaded are stored in the DB. Quit the program ...')
             sys.exit(0)
         if breakloop == True:
             print('작업을 중단하였습니다. 지금까지 한 작업물을 저장합니다...')
+            print('You have stopped working. save db...')
 
         
 #print (os.path.dirname(os.path.realpath(__file__)))
@@ -187,7 +201,7 @@ if __name__ == '__main__':
         template_dic = {}
         temp = False
         while temp == False:
-            a = input('Y를 입력하면 모드 번호를 설정하고, N을 입력하면 프로그램을 종료합니다. Y/N : ')
+            a = input('Y를 입력하면 모드 번호를 설정하고, N을 입력하면 프로그램을 종료합니다.\n type Y to update DB, N to close the program. Y/N : ')
             if a == 'Y' or a == 'y' :   
                 sort_num_update(template_dic, downloaded_dic, nlist)
                 temp = True
@@ -196,7 +210,7 @@ if __name__ == '__main__':
                 temp = True
 
             else:
-                print('잘못 입력하였습니다. Y 또는 N만 입력해주세요.')
+                print('잘못 입력하였습니다. Y 또는 N만 입력해주세요.\n wrong input. please type Y or N')
 
         downloaded_dic.update(template_dic)
         #downloaded_dic.update({'time' : '{}'.format(time.ctime())})

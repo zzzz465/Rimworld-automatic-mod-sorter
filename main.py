@@ -11,7 +11,7 @@ from colorama import init
 from colorama import Fore as Color
 init(autoreset=True) # colroama 초기화
 
-Version = 0.33
+Version = 0.34
 print('현재 버전은 v.' + str(Version) + '입니다.')
 print('current program version is v.' + str(Version))
 print('\n')
@@ -27,6 +27,8 @@ try:
 except:
     print('림월드 SAVE 폴더를 찾을 수 없습니다. 림월드를 설치하신 게 맞나요?')
     print('프로그램을 종료합니다.')
+    print("can't find rimworld save folder... close program")
+    sys.exit(0)
 
 print('기존 컨픽 파일을 백업하는 중...')
 print('saving old config files...')
@@ -66,6 +68,7 @@ for x in mod_list_workshop:
     print('\n')
 
 print('Local 모드 리스트를 불러옵니다...')
+print('Loading Local mods...')
 
 for x in mod_list_local:
     sleep(0.05)
@@ -110,7 +113,7 @@ for mod in config_num: #mod는 숫자, 영문이름, 또는 __Localcopy
 
     except Exception as e:
         print(Color.LIGHTRED_EX + modname + ' 은 template에 없어 제외되었습니다.')
-        print(Color.LIGHTRED_EX + modname + "is not supported yet")
+        print(Color.LIGHTRED_EX + modname + " is not supported yet")
         mod_nlist.append(modname)
 
 

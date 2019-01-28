@@ -183,13 +183,13 @@ def sort_num_update(template_dic, overlap_list, nlist): #template_dic는 templat
 
 if __name__ == '__main__':
         nlist = list()
-        downloaded_list = downloader.update() # 
+        downloaded_dic = downloader.update() # 
         template_dic = {}
         temp = False
         while temp == False:
             a = input('Y를 입력하면 모드 번호를 설정하고, N을 입력하면 프로그램을 종료합니다. Y/N : ')
             if a == 'Y' or a == 'y' :   
-                sort_num_update(template_dic, downloaded_list, nlist)
+                sort_num_update(template_dic, downloaded_dic, nlist)
                 temp = True
 
             elif a == 'N' or a == 'n':
@@ -198,10 +198,29 @@ if __name__ == '__main__':
             else:
                 print('잘못 입력하였습니다. Y 또는 N만 입력해주세요.')
 
-        downloaded_list.update(template_dic)
-        downloaded_list.update({'time' : time.ctime()})
-        json_val = json.dumps(downloaded_list) #string 형식
+        downloaded_dic.update(template_dic)
+        #downloaded_dic.update({'time' : '{}'.format(time.ctime())})
+        json_val = json.dumps(downloaded_dic) #string 형식
+
+        #테스트 중
+        string = str()
+        test = json_val.split(',')
+
+        for x in downloaded_dic:
+            if x == 'time':
+                ctime = time.ctime()
+                line =  '\n"{}" : "{}",'.format(x, ctime)
+            
+            else:
+                line = '\n"{}" : {},'.format(x,downloaded_dic[x])
+
+            string = string + line
         
+        string = string[:len(string)]
+
+        string = '{' + string + '\n}'
+
+        #테스트 중
         homedir = os.environ['HOMEPATH']
         os.chdir('C:/')
         os.chdir(homedir)
@@ -210,7 +229,7 @@ if __name__ == '__main__':
             os.remove('db_template.json')
             
         with open('db_template.json', 'w') as f:
-            f.write(json_val)
+            f.write(string)
             f.close()
 
         with open('nlist.json', 'w') as f:

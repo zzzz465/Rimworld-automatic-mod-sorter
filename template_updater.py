@@ -216,7 +216,7 @@ if __name__ == '__main__':
 
             string = string + line
         
-        string = string[:len(string)]
+        string = string[:len(string) - 1]
 
         string = '{' + string + '\n}'
 

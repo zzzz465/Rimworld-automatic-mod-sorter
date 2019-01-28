@@ -77,12 +77,15 @@ def Listhandler(template_list): #구독한 모드 리스트 불러오기, templa
                 pass
 
     for num in localmod_moddir: #num은 모드 번호, local 모드
-        temp = '{}/Mods/{}/About'.format(rim64win_folder,num)
-        os.chdir(temp)
-        doc = ET.parse('About.xml')
-        root = doc.getroot()
-        name = root.find('name').text
-        template_list.append(name)
+        try:
+            temp = '{}/Mods/{}/About'.format(rim64win_folder,num)
+            os.chdir(temp)
+            doc = ET.parse('About.xml')
+            root = doc.getroot()
+            name = root.find('name').text
+            template_list.append(name)
+        except:
+            pass
 
 def sort_num_update(template_dic, overlap_list, nlist): #template_dic는 template에 모드이름 : 번호로 추가, overlap_list는 기존의 template 받아오기
     template_list = []

@@ -152,12 +152,14 @@ def sort_num_update(template_dic, overlap_list, nlist): #template_dic는 templat
             if i == 'X' or i == 'x':
                 print('작업이 중단되었습니다.')
                 print('Operation aborted.')
+                print('\n\n')
                 breakloop = True
                 test = True
 
             elif i.lower() == 'p':
                 print(temp, ' 모드는 보류합니다.')
                 print('pass this mod : ', temp)
+                print('\n\n')
                 nlist.append(temp)
                 test = True
                 continue
@@ -166,12 +168,12 @@ def sort_num_update(template_dic, overlap_list, nlist): #template_dic는 templat
                 template_dic[temp] = float(i)
                 if float(i) > 20 or float(i) < 0:
                     raise ValueError
-                print('\n\n')
                 test = True
             
             except:
                 print('올바르지 않는 입력입니다... 1~20에 해당하는 숫자를 입력해주세요. P or p를 입력하면 패스합니다.')
                 print('wrong input... please type 1~20 or X or P')
+                print('\n\n')
         
         if breakloop == True:
             break
@@ -250,6 +252,11 @@ if __name__ == '__main__':
             for x in nlist:
                 f.write(x)
                 f.write('\n')
+
+        print('업데이트된 DB는 바탕화면에 db_template.json 파일로 저장되어있습니다. 개발자에게 전달해주세요')
+        print('스킵한 모드 리스트는 바탕화면에 nlist.json 파일로 저장되어있습니다.')
+        print('\n The updated DB is saved as db_template.json file on the desktop. Please send it to developer.')
+        print('A list of skipped modes can be found in the nlist.json file.(in desktop)')
             
 
         

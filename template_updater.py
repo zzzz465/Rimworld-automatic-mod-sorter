@@ -11,7 +11,37 @@ from tkinter import filedialog
 import logging
 from colorama import init
 from colorama import Fore as Color
+import pickle
 init(autoreset=True)
+
+def add_dic(template_list, template_dic, template_):
+    for temp in template_list: # 모드 리스트를 불러줌
+        print('Mod name : {}'.format(temp))
+
+        test = False
+        while test == False:
+            i = (input('번호는 1~20번입니다. : '))
+            if i == 'X' or i == 'x':
+                print('작업이 중단되었습니다.')
+                breakloop = True
+                test = True
+
+            elif i.lower() == 'p':
+                print(temp, ' 모드는 보류합니다.')
+                continue
+
+            try:
+                template_dic[temp] = float(i)
+                if float(i) > 20 or float(i) < 0:
+                    raise ValueError
+                print('\n\n')
+                test = True
+            
+            except:
+                print('올바르지 않는 입력입니다... 1~20에 해당하는 숫자를 입력해주세요. P or p를 입력하면 패스합니다.')
+        
+        if breakloop == True:
+            break
 
 def Listhandler(template_list): #구독한 모드 리스트 불러오기, template_list에 모드 이름 저장
     root = tk.Tk()
@@ -42,7 +72,7 @@ def Listhandler(template_list): #구독한 모드 리스트 불러오기, templa
         except:
             pass
 
-    for num in localmod_moddir:
+    for num in localmod_moddir: #num은 모드 번호, local 모드
         temp = '{}/Mods/{}/About'.format(rim64win_folder,num)
         os.chdir(temp)
         doc = ET.parse('About.xml')
@@ -50,7 +80,7 @@ def Listhandler(template_list): #구독한 모드 리스트 불러오기, templa
         name = root.find('name').text
         template_list.append(name)
 
-def sort_num_update(template_dic, overlap_list): #template_dic는 template에 모드이름 : 번호로 추가, overlap_list는 기존의 template 받아오기
+def sort_num_update(template_dic, overlap_list, nlist): #template_dic는 template에 모드이름 : 번호로 추가, overlap_list는 기존의 template 받아오기
     template_list = []
     Listhandler(template_list)
     len_list = len(template_list)
@@ -68,6 +98,31 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
             del template_list[indexnum]
         except:
             pass
+
+    a = os.environ['HOMEPATH']
+
+#보류한 모드 리스트 불러오는 중...  
+    os.chdir('C:/')
+    os.chdir(a)
+
+    if os.path.isfile('test.db'):
+        with open('test.db', 'r') as f:
+            overlap_list2 = pickle.load(f)
+        
+
+        
+        for val in overlap_list2:
+                try:
+                    indexnum = template_list.index(val)
+                    del template_list[indexnum]
+                except:
+                    pass
+    
+
+        
+    
+
+
         
     len_list = len(template_list)
     len_list = str(len_list)
@@ -79,6 +134,7 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
     print('모드 배열의 순서는 Dcinside Rimworld 갤러리의 닉네임 개념글에서 닉네임 "forge"를 찾아주세요.')
     sleep(0.2)
     breakloop = False
+    
     for temp in template_list: # 모드 리스트를 불러줌
         print('Mod name : {}'.format(temp))
 
@@ -89,6 +145,13 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
                 print('작업이 중단되었습니다.')
                 breakloop = True
                 test = True
+
+            elif i.lower() == 'p':
+                print(temp, ' 모드는 보류합니다.')
+                nlist.append(temp)
+                test = True
+                continue
+
             try:
                 template_dic[temp] = float(i)
                 if float(i) > 20 or float(i) < 0:
@@ -97,10 +160,11 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
                 test = True
             
             except:
-                print('올바르지 않는 입력입니다... 1~20에 해당하는 숫자를 입력해주세요.')
+                print('올바르지 않는 입력입니다... 1~20에 해당하는 숫자를 입력해주세요. P or p를 입력하면 패스합니다.')
         
         if breakloop == True:
             break
+             
 
     print('다음과 같은 template를 입력하였습니다.\n')
     if len(template_dic) != 0:
@@ -118,14 +182,14 @@ def sort_num_update(template_dic, overlap_list): #template_dic는 template에 �
 #print (os.path.dirname(os.path.realpath(__file__)))
 
 if __name__ == '__main__':
-
+        nlist = list()
         downloaded_list = downloader.update() # 
         template_dic = {}
         temp = False
         while temp == False:
             a = input('Y를 입력하면 모드 번호를 설정하고, N을 입력하면 프로그램을 종료합니다. Y/N : ')
             if a == 'Y' or a == 'y' :   
-                sort_num_update(template_dic, downloaded_list)
+                sort_num_update(template_dic, downloaded_list, nlist)
                 temp = True
 
             elif a == 'N' or a == 'n':
@@ -148,5 +212,11 @@ if __name__ == '__main__':
         with open('db_template.json', 'w') as f:
             f.write(json_val)
             f.close()
+
+        with open('nlist.json', 'w') as f:
+            for x in nlist:
+                f.write(x)
+                f.write('\n')
+            
 
         

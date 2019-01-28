@@ -153,6 +153,15 @@ if len(mod_nlist) != 0:
         sleep(0.05)
         print(x)
 
+os.chdir(os.environ['HOMEPATH'])
+os.chdir('./desktop')
+
+with open('Mod_not_in_the_db.txt', 'w') as f:
+    for x in mod_nlist:
+        f.write(x)
+
+
+
 print('\n')
 print('배열이 끝났습니다.')
 print('sort complete.')

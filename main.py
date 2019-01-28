@@ -96,7 +96,6 @@ for mod in config_num: #mod는 숫자, 영문이름, 또는 __Localcopy
 
 
         elif mod.isdigit() == False: #Local인데 __Localcopy가 아니라면
-            print('test')
             modname = mod_dic[mod]
             mod_list_sorted = mod_list_sorted + [[data[modname], mod, True]]
             print(Color.LIGHTYELLOW_EX + 'local {} 모드를 리스트에 추가'.format(modname))

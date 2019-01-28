@@ -33,7 +33,7 @@ def Parser(mod_dic,mod_dic_num, mod_list_workshop, mod_list_local, data): #mod_d
 
         
 
-        if skipworkshop == False:
+        if skipworkshop != False:
                 os.chdir('./workshop/content/294100')
                 rimmoddir = os.getcwd()
                 moddir = os.listdir('./')  # 모드 번호 (폴더로)  

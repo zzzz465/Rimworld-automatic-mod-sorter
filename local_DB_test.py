@@ -144,7 +144,7 @@ while local_test_breakloop == False:
         for mod in config_num: #mod는 숫자, 영문이름, 또는 __Localcopy
             m = re.match('__LocalCopy', mod)
             if mod == 'Core':
-                continue
+                mod_list_sorted = mod_list_sorted + [[1, 'Core', False]]
 
             try:
                 if m: #만약 config파일에서 불러온 모드의 이름이 __LocalCopy로 시작하면

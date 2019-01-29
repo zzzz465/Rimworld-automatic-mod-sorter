@@ -126,4 +126,9 @@ def find_activate_mod(): #config 파일에서 active된 모드 리스트 가져�
 
 
 if __name__ == '__main__':
-        pass
+        mod_dic, mod_dic_num, mod_list_workshop, mod_list_local = {}, {}, [], []
+        Parser(mod_dic, mod_dic_num, mod_list_workshop, mod_list_local, None)
+        print(mod_dic)
+        print(mod_dic_num)
+        print(mod_list_workshop)
+        print(mod_list_local)

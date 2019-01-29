@@ -84,6 +84,7 @@ mod_list_sorted = list()
 for mod in config_num: #mod는 숫자, 영문이름, 또는 __Localcopy
     m = re.match('__LocalCopy', mod)
     if mod == 'Core':
+        mod_list_sorted = mod_list_sorted + [[1, 'Core', False]]
         continue
 
     try:

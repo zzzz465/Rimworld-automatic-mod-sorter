@@ -112,8 +112,8 @@ let's say A is a hugslib-require mod that doesn't need other mods. B is also a h
 and X is the core mod that B needs it.
 currently X is assigned to '10.0'
 
-first, choosing number for A. ignore other considerations and put it to 7~8. unless it needs to go to specific order.
-second, B is also hugslib so it should go to 7~8. but it needs X and it is on 10.
+first, choosing number for A. ignore other considerations and put it to 8. unless it needs to go to specific order.
+second, B is also hugslib so it should go to 7 or 8. but it needs X and it is on 10.
 so you should assign B to 10.xx or 11~.
 
 after you finished, or saved, you can test your order by using 'mod sorter by local.bat'

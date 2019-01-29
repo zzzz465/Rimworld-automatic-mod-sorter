@@ -228,7 +228,7 @@
 "RuntimeGC" : 4.0,
 "Prison Labor" : 10.0,
 "Centralized Climate Control" : 15.0,
-"time" : "Tue Jan 29 16:10:08 2019",
+"time" : "Tue Jan 29 21:07:54 2019",
 "More Steel" : 14.0,
 "[B19] Farmable Neutroamine" : 14.0,
 "gloomy_hair" : 13.0,
@@ -365,7 +365,7 @@
 "MT - Everyone Hauls" : 17.0,
 "AnimalCollabProj ADS Patch" : 12.0,
 "Tables+" : 15.0,
-"RimJobWorld" : 9.0,
+"RimJobWorld" : 18.0,
 "BetterLoading" : 0.5,
 "Rim of Madness - Bones" : 14.0,
 "[KV] Weapon Storage - 1.0" : 14.0,
@@ -639,5 +639,9 @@
 "Expanded Patchleather v0.14" : 15.0,
 "Soaking Wet is a Good Thing" : 15.0,
 "AdvancedWeapons" : 15.0,
-"[FSF] Efficient Utilities" : 15.0
+"[FSF] Efficient Utilities" : 15.0,
+"[SS]King's slaves" : 13.0,
+"Dragonian" : 11.0,
+"NewRatkinVanillaFace" : 12.0,
+"Dragonian RimjobEdtion" : 18.5
 }

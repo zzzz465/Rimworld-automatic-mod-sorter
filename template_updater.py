@@ -176,7 +176,9 @@ def sort_num_update(template_dic, overlap_list, nlist): #template_dic는 templat
             except:
                 print('올바르지 않는 입력입니다... 1~20에 해당하는 숫자를 입력해주세요. P or p를 입력하면 패스합니다.')
                 print('wrong input... please type 1~20 or X or P')
-                print('\n\n')
+            
+            finally:
+                print('\n')
         
         if breakloop == True:
             break
@@ -247,11 +249,11 @@ if __name__ == '__main__':
         if os.path.isfile('db_template.json'):
             os.remove('db_template.json')
             
-        with open('db_template.json', 'w') as f:
+        with open('db_template.json', 'w', encoding='UTF-8') as f:
             f.write(string)
             f.close()
 
-        with open('nlist.json', 'w') as f:
+        with open('nlist.json', 'w', encoding='UTF-8') as f:
             for x in nlist:
                 f.write(x)
                 f.write('\n')

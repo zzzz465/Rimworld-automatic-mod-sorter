@@ -97,7 +97,6 @@ def setconfig(m_s): # 소팅된 모드를 받아오기, 세팅 xml을 수정
        
         #print(ET.dump(root)) 
         sorted_mod = ET.SubElement(activeMod, 'li')
-        sorted_mod.text = str('Core')
         for value in m_s: #m_s는 소팅된 모드 리스트를 받아옴, [순서(숫자), 모드 번호] 형식이어야함
                 sorted_mod = ET.SubElement(activeMod, 'li')
                 sorted_mod.text = str(value[1])

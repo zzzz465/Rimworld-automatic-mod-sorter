@@ -68,6 +68,7 @@ def Parser(mod_dic,mod_dic_num, mod_list_workshop, mod_list_local, data): #mod_d
                         name = root.find('name').text
                         mod_list_local.append(name)
                         mod_dic[num] = name
+                        mod_dic_num[name] = num #이름 : 번호(config 파일용)
 
                 except Exception as e:
                         print('Error occur! ', e)
@@ -76,7 +77,10 @@ def Parser(mod_dic,mod_dic_num, mod_list_workshop, mod_list_local, data): #mod_d
         
         
         mod_dic['Core'] = 'Core'
+        #raise(ValueError)
         return rim64win_path # 림월드 실행을 위해 파일 경로를 반환
+
+
         
 
 

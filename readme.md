@@ -1,4 +1,5 @@
 HOW-TO-USE
+========
 
 unzip a file. find rimworld mod sorter folder.
 you can see the .bat file named 'Launch mod sorter.bat'
@@ -20,7 +21,7 @@ if you're interested in adding mod to DB. please read below and contact to me!
 
 
 Screenshots
-
+========
 
 ![061](https://user-images.githubusercontent.com/46273764/51812240-099a9100-22f4-11e9-8d42-b66b18232ab3.jpg)
 ![063](https://user-images.githubusercontent.com/46273764/51812242-099a9100-22f4-11e9-84b0-21ea9e863b6b.jpg)
@@ -31,6 +32,7 @@ Screenshots
 
 
 HOW-TO use DB updater
+=============
 
 I included DB updating tool if the user wants to contribute to DB.
 you can found folder named "template updater"
@@ -44,7 +46,9 @@ and remove overlapping mods from list.
 
 then you'll see, you need to input number one of 1~20.
 if you type P, you can pass that mod if you can't sure. press X to stop the program and save.
-======================================================================================
+
+*****
+
 important : this number support Prime number. you can use it!
 
 0~1. Mod manager, MOD-E, BetterLoading and other mods that should be loaded before Core.
@@ -76,7 +80,9 @@ example: haul to stack, while you're up
 17. interface / user convenience
 
 18~ always load last
-=======================================================================================
+
+*****
+
 I'll show you an example.
 
 if you're trying to add mod "Megafuana", what you should do?
@@ -86,9 +92,9 @@ first. always read steam mod dscription page unless you know very well about the
 https://steamcommunity.com/sharedfiles/filedetails/?id=1055485938&searchtext=megafauna
 
 the description says:
-====
-Megafauna will automatically detect and patch both A Dog Said... by SpoonShortage (so you can cure old wounds of your animals and install bionic parts on them) and Giddy-up! by Roolo (which means that you can ride your animals!), so make sure to make it load after those mods.
-====
+
+>Megafauna will automatically detect and patch both A Dog Said... by >SpoonShortage (so you can cure old wounds of your animals and >install bionic parts on them) and Giddy-up! by Roolo (which means >that you can ride your animals!), so make sure to make it load after >those mods.
+
 
 nothing refer to mod conflict, and no hugslib require. and always put mod under 'A dog said...' and 'Giddy up! core'
 'A dog said...' is the Core mod in other mod. so it will be in 3~6.

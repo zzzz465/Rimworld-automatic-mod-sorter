@@ -14,7 +14,7 @@ import Parse
 
 init(autoreset=True) # colroama 초기화
 
-Version = 0.36
+Version = 0.37
 print('현재 버전은 v.' + str(Version) + '입니다.')
 print('current program version is v.' + str(Version))
 print('\n')
@@ -82,6 +82,10 @@ config_num = Parse.find_activate_mod() # config 리스트에 현재 로딩중인
 print('모드 세팅에서 로딩한 모드를 재배열 합니다...')
 print('sorting activated mods....')
 sleep(1)
+try:
+    config_num.pop(config_num.index('None'))
+except:
+    pass
 
 mod_list_sorted = list()
 for mod in config_num: #mod는 숫자, 영문이름, 또는 __Localcopy

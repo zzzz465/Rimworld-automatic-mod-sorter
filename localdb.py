@@ -9,7 +9,7 @@ def return_local_db():
     os.chdir('./desktop')
 
     local_dic = dict()
-    with open('db_template.json', 'r') as f:
+    with open('db_template.json', 'r', encoding='UTF-8') as f:
         temp = json.loads(f.read())
         local_dic.update(temp)
     return local_dic

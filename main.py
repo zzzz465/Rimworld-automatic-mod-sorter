@@ -159,7 +159,7 @@ if len(mod_nlist) != 0:
 os.chdir(os.environ['HOMEPATH'])
 os.chdir('./desktop')
 
-with open('Mod_not_in_the_db.txt', 'w') as f:
+with open('Mod_not_in_the_db.txt', 'w', encoding='UTF-8') as f:
     for x in mod_nlist:
         f.write(x)
         f.write('\n')

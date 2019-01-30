@@ -115,7 +115,7 @@ def sort_num_update(template_dic, overlap_list, nlist): #template_dic는 templat
     os.chdir(a)
 
     if os.path.isfile('test.db'):
-        with open('test.db', 'r') as f:
+        with open('test.db', 'r', encoding='UTF-8') as f:
             overlap_list2 = pickle.load(f)
         
 
@@ -253,7 +253,7 @@ if __name__ == '__main__':
             f.write(string)
             f.close()
 
-        with open('nlist.json', 'w', encoding='UTF-8') as f:
+        with open('nlist.json', 'w',encoding='UTF-8') as f:
             for x in nlist:
                 f.write(x)
                 f.write('\n')

@@ -20,7 +20,7 @@ def update():
 
     os.chdir('./Rimworld-automatic-mod-sorter-master')
 
-    f = open('db_template.json', 'r')
+    f = open('db_template.json', 'r', encoding='UTF-8')
     return_dict = json.loads(f.read())
     f.close()
     

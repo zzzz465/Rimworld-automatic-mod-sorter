@@ -1,7 +1,7 @@
-import os
 import json
-import downloader
+import os
 
+import downloader
 
 
 def return_local_db():
@@ -30,9 +30,3 @@ def return_compare_dic():
 
 if __name__ == '__main__':
     return_compare_dic()
- 
-    
-
-        
-
-

@@ -1,15 +1,18 @@
 import os
-import shutil
-import Parse
-from time import sleep
-import downloader
-import time
-import sys
 import re
-import localdb
-from colorama import init
-from colorama import Fore as Color
+import shutil
+import sys
+import time
 from collections import OrderedDict
+from time import sleep
+
+from colorama import Fore as Color
+from colorama import init
+
+import downloader
+import localdb
+import Parse
+
 init(autoreset=True) # colroama 초기화
 
 Version = 0.35
@@ -248,8 +251,3 @@ while exit == False:
         exit = True
     else:
         pass
-
-
-
-
-

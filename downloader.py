@@ -1,9 +1,11 @@
-from urllib.request import urlopen
-import os
-import zipfile
 import json
+import os
 import shutil
 import tempfile
+import zipfile
+from urllib.request import urlopen
+
+
 def update():
     tempdir = tempfile.mkdtemp()
     os.chdir(tempdir)

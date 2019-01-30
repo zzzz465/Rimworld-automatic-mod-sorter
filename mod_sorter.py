@@ -1,6 +1,8 @@
 import os
 import xml.etree.ElementTree as etree
+
 import Parse
+
 
 def num_grant(mod_list, mod_list_sorted, template, mod_dic):
     mod_list_sorted = [] # 초기화
@@ -16,4 +18,3 @@ def num_grant(mod_list, mod_list_sorted, template, mod_dic):
 
 if __name__ == '__main__':
     pass
-

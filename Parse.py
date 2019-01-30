@@ -1,9 +1,11 @@
-import xml.etree.ElementTree as ET
 import os
-from lxml import etree
-import tkinter as tk
-from tkinter import filedialog
 import re
+import tkinter as tk
+import xml.etree.ElementTree as ET
+from tkinter import filedialog
+
+from lxml import etree
+
 #파이썬에서 환경변수를 지원 안함? 아니다. os.environ 사용
 #mod_dic = {} # 테스트용
 #mod_list = [] # 테스트용

@@ -1,14 +1,17 @@
 
 import os
-import shutil
-import Parse
-from time import sleep
-import downloader
-import time
-import sys
 import re
-from colorama import init
+import shutil
+import sys
+import time
+from time import sleep
+
 from colorama import Fore as Color
+from colorama import init
+
+import downloader
+import Parse
+
 init(autoreset=True) # colroama 초기화
 
 Version = 0.36
@@ -184,8 +187,3 @@ while exit == False:
         exit = True
     else:
         pass
-
-
-
-
-

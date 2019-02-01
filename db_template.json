@@ -227,7 +227,7 @@
 "RuntimeGC" : 4.0,
 "Prison Labor" : 10.0,
 "Centralized Climate Control" : 15.0,
-"time" : "Fri Feb  1 08:46:47 2019",
+"time" : "Sat Feb  2 08:54:45 2019",
 "More Steel" : 14.0,
 "[B19] Farmable Neutroamine" : 14.0,
 "gloomy_hair" : 13.0,
@@ -670,5 +670,10 @@
 "Misc. MapGen FactionBase" : 15.0,
 "Super Soil" : 14.0,
 "Realistic Rooms Lite" : 17.0,
-"SeedsPlease" : 12.0
+"SeedsPlease" : 12.0,
+"Realistic Darkness 1.0" : 15.0,
+"Less Arbitrary Surgery" : 15.0,
+"Expanded Incidents" : 15.0,
+"Misc. Incidents" : 15.0,
+"Miniaturisation" : 19.0
 }

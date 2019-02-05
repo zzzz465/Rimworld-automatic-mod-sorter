@@ -13,7 +13,11 @@ def give_num(ML_active, MD_num_name, MD_name_num, DB): # 배열된 리스트 만
     except:
         pass
 
-    ML_active.append('Core')
+    if 'Core' in ML_active:
+        pass
+    
+    else:
+        ML_active.append('Core')
 
     for x in ML_active:
         try:
@@ -22,14 +26,18 @@ def give_num(ML_active, MD_num_name, MD_name_num, DB): # 배열된 리스트 만
                 ML_sorted.append([[DB[MOD_name], x]])
                 print(Color.LIGHTGREEN_EX + 'Add workshop mod to the list. >> {}'.format(MOD_name))
             
-            else:
+            elif x.isdigit() == False:
                 MOD_name = MD_num_name[x]
                 ML_sorted.append([[DB[MOD_name], x]])
                 print(Color.LIGHTYELLOW_EX + 'Add local mod to the list. >> {}'.format(MOD_name))
 
-        except:
-            print(Color.LIGHTRED_EX + MD_num_name[x] + ' is not supported yet.')
-            ML_error.append(MD_num_name[x])
+            else:
+                print(Color.LIGHTRED_EX + MD_num_name[x] + ' is not supported yet.')
+                ML_error.append(MD_num_name[x])
+
+        except Exception as e:
+            print('error occur! ', e)
+            print('changing config file can raise an error.')
 
         finally:
             print('\n')

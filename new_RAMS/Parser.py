@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 from tkinter import filedialog
 from colorama import Fore as Color
 from colorama import init
+from time import sleep
 
 from lxml import etree
 
@@ -81,6 +82,7 @@ def showlist(ML_sorted, ML_workshop, ML_local, MFDN):
 
         else:
             print(MOD_name)
+        sleep(0.1)
 
 if __name__ == '__main__':
     pass

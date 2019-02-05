@@ -51,8 +51,8 @@ MOD_DB = dict()
 downloader.download_DB(MOD_DB, Version)
 #print(MOD_DB)
 
-print('Number of Mods registered in DB : {}'.format(len(MOD_DB)))
-print('Last DB updated date : {}'.format(MOD_DB['time']))
+print('Number of Mods registered in DB : ' + Color.LIGHTCYAN_EX + '{}'.format(len(MOD_DB)))
+print('Last DB updated date : ' + Color.LIGHTGREEN_EX + '{}'.format(MOD_DB['time']))
 
 sleep(1)
 
@@ -70,9 +70,11 @@ workshop_mod_dir = str()
 
 #0. 림월드 위치 묻기
 rimexedir, local_mod_dir = finder.finder()
+print('\n')
 
 #1. 림월드 로컬 모드 검색
 Parser.mod_loader(ML_local, MD_name_num, MD_num_name, local_mod_dir)
+print('\n')
 
 #2. 림월드 워크샵 모드 탐색
 workshop_skip = False
@@ -108,33 +110,40 @@ if workshop_skip == False:
 else:
     pass
 
+print('\n')
 #3. 컨픽 파일 읽어오기
 Parser.config_loader(cfolder, ML_active)
-
+print('\n')
 #4. 배열하기
 ML_sorted, ML_error = sorter.give_num(ML_active, MD_num_name, MD_name_num, MOD_DB)
-
-#5. 컨픽 파일 수정하기
+print('\n')
+#5. 컨픽 파일 백업 후 수정
+backup.backup()
 Parser.config_updater(cfolder, ML_sorted)
-
+print('\n')
 #6. 리스트 보여주기
 Parser.showlist(ML_sorted, ML_workshop, ML_local, MD_num_name)
-
+print('\n')
 #7.파일 읽고 쓰기
 os.chdir(DESKTOP)
-with open('ML_not_in_the_DB.txt', 'w', encoding='UTF-8') as f:
-    for x in ML_error:
-        f.write(x)
-        f.write('\n')
+
+if ML_error:
+    with open('ML_not_in_the_DB.txt', 'w', encoding='UTF-8') as f:
+        for x in ML_error:
+            print(x)
+            f.write(x)
+            f.write('\n')
+    print('unregistered mod in DB list can be found in desktop folder <ML_not_in_the_db.txt>')
 
 
 #8. 안내
 print('work done!')
+print('\n')
 print('starting Rimworld...')
-
+print('\n')
 os.startfile(rimexedir)
 print('Please check this terminal.')
-
+print('\n\n')
 print('program will be closed in 5 seconds...')
 sleep(5)
 sys.exit(0)

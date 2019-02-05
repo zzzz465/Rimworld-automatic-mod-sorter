@@ -20,7 +20,6 @@ def finder_folder(): # 폴더 디렉토리 반환
     sleep(1.5)
     root = tk.Tk()
     dir = filedialog.askdirectory(initialdir = 'C:/', title = 'select folder')
-    root.destory()
 
     return dir
 

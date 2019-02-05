@@ -17,9 +17,8 @@ def download_DB(DB, Ver): # DB 다운받아서, DB 반환, 버전 체크도 함�
             f.write(res_data)
  
     with open('db_template.json', 'r', encoding='UTF-8') as f:
-        return_dict = json.loads(f.read())
+        DB.update(json.loads(f.read()))
     
-    DB = return_dict
     
     if Ver < DB['Version'] :
         print('New version detected. please download newer version in github!')
@@ -27,6 +26,11 @@ def download_DB(DB, Ver): # DB 다운받아서, DB 반환, 버전 체크도 함�
     else:
         pass
 
+    return DB
+
 
 if __name__ == '__main__':
-    pass
+    DB = dict()
+    Ver = 1.0
+    download_DB(DB,Ver)
+    print(DB) # 테스트

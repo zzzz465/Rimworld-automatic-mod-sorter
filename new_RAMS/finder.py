@@ -15,6 +15,15 @@ def finder(): # exe 파일, 폴더 찾아서 넘김
     
     return rimdir, local_mod_folder
 
+def finder_folder(): # 폴더 디렉토리 반환
+    print('pop up will open in 2 seconds...')
+    sleep(1.5)
+    root = tk.Tk()
+    dir = filedialog.askdirectory(initialdir = 'C:/', title = 'select folder')
+    root.destory()
+
+    return dir
+
 
 if __name__ == '__main__':
     pass

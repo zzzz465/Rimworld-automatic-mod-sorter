@@ -2,12 +2,17 @@ import os
 import tkinter as tkinter
 import xml.etree.ElementTree as ET
 from tkinter import filedialog
+from colorama import Fore as Color
+from colorama import init
 
 from lxml import etree
+
+import finder
 
 HOMEPATH = os.environ['userprofile']
 rimsavedir = r'{}/appdata/locallow/Ludeon Studios/RimWorld by Ludeon Studios/Config'.format(HOMEPATH)
 
+init(autoreset=True)
 
 def mod_loader(mod_list, MFD, MFDN, dir):#모드 리스트, 모드이름(키) : 폴더이름(값), 폴더이름 : 모드이름, 경로 받아옴
     if os.path.isdir(dir):
@@ -34,6 +39,7 @@ def mod_loader(mod_list, MFD, MFDN, dir):#모드 리스트, 모드이름(키) : 
         print("can't find folder.")
 
 
+
 def config_loader(cfdir, active_mod): #컨픽파일 모드 리스트 가져오기
     os.chdir(cfdir)
     doc = ET.parse('ModsConfig.xml')
@@ -44,16 +50,37 @@ def config_loader(cfdir, active_mod): #컨픽파일 모드 리스트 가져오�
         active_mod.append(str(li.text))
 
 
-    
+def config_updater(cfdir, ML_sorted):
+    os.chdir(cfdir)
+    doc = ET.parse('ModsConfig.xml')
+    root = doc.getroot()
+
+    activeMod = root.find('activeMods')
+    print('initializing config file...')
+
+    for li in activeMod.findall('li'):
+        activeMod.remove(li)
+
+    sorted_mod = ET.SubElement(activeMod, 'li')
+    for x in ML_sorted:
+        sorted_mod = ET.SubElement(activeMod, 'li')
+        sorted_mod.text = str(x[0][1])
+
+    doc.write('ModsConfig.xml', encoding='UTF-8', xml_declaration='False')
 
 
+def showlist(ML_sorted, ML_workshop, ML_local, MFDN):
+    for x in ML_sorted:
+        MOD_name = MFDN[x[0][1]]
 
+        if MOD_name in ML_local:
+            print(Color.LIGHTYELLOW_EX + MOD_name)
 
+        elif MOD_name in ML_workshop:
+            print(Color.LIGHTGREEN_EX + MOD_name)
 
-
-
-
-
+        else:
+            print(MOD_name)
 
 if __name__ == '__main__':
     pass

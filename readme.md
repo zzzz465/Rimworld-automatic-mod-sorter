@@ -1,7 +1,9 @@
 HOW-TO-USE
 ========
 
-unzip a file. find rimworld mod sorter folder.
+(No Linux support. yet...)
+
+unzip a file.
 you can see the .bat file named 'Launch mod sorter.bat'
 before opening it, you should run rimworld, and go to the mod tab, and activate mod that you want to use.
 restart rimworld, and close it(this will add the mod list to the rimworld config file)
@@ -15,7 +17,7 @@ if the mod isn't on DB, the terminal will show you a list that which mods are on
 
 GREEN  = workshop mod
 YELLOW = Local mod
-BLUE = local mod saved by mod manager
+~BLUE = local mod saved by mod manager~ deleted feature. it will add if in need.
 
 if you're interested in adding mod to DB. please read below and contact to me!
 

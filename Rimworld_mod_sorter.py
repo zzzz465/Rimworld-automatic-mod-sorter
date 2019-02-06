@@ -19,7 +19,6 @@ Version = 0.41 #unstable hotfix
 init(autoreset=True)
 
 HOMEPATH = os.environ['userprofile']
-DESKTOP = '{}/desktop'.format(HOMEPATH)
 cfolder = r'{}/appdata/locallow/Ludeon Studios/RimWorld by Ludeon Studios/Config'.format(HOMEPATH)
 #디폴트 폴더
 
@@ -125,7 +124,8 @@ print('\n')
 Parser.showlist(ML_sorted, ML_workshop, ML_local, MD_num_name)
 print('\n')
 #7.파일 읽고 쓰기
-os.chdir(DESKTOP)
+os.chdir(HOMEPATH)
+os.chdir('./desktop')
 
 if ML_error:
     with open('ML_not_in_the_DB.txt', 'w', encoding='UTF-8') as f:

@@ -89,11 +89,10 @@ important : this number support Prime number. you can use it!
 mod that need hugslib.
 
 
-[noparse]9~12 Large-scale mod and sub mod of that mod[/noparse]
+9~12 Large-scale mod and sub mod of that mod
 
 example : Rimsennal, EPOE
-
-[noparse]explain : Hospitality is a large-scale mod, but it hugslib-require mod. so it will go to 7~8.[/noparse]
+explain : Hospitality is a large-scale mod, but it hugslib-require mod. so it will go to 7~8.
 
 13. Hair/trait/story teller/faction add
 

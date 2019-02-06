@@ -91,13 +91,16 @@ except:
     breakloop = False
     while breakloop == False:
         x = input('type Y or N : ')
-        if x == 'Y':
-            workshop_dir = finder.finder_folder()
-            breakloop = True
         
-        elif x == 'N':
-            breakloop = True
-            workshop_skip = True
+        if x.isalnum():
+            x = x.lower()
+                if x.lower() == 'y':
+                    workshop_dir = finder.finder_folder()
+                    breakloop = True
+        
+                elif x == 'n':
+                    breakloop = True
+                    workshop_skip = True
 
         else:
             print('wrong input. please type Y or N')

@@ -124,16 +124,17 @@ print('\n')
 Parser.showlist(ML_sorted, ML_workshop, ML_local, MD_num_name)
 print('\n')
 #7.파일 읽고 쓰기
-os.chdir(HOMEPATH)
-os.chdir('./desktop')
 
 if ML_error:
+    print('please select folder to save ML_not_in_the_db.txt')
+    dir = finder.finder_folder()
+    os.chdir(dir)
     with open('ML_not_in_the_DB.txt', 'w', encoding='UTF-8') as f:
         for x in ML_error:
             print(x)
             f.write(x)
             f.write('\n')
-    print('unregistered mod in DB list can be found in desktop folder <ML_not_in_the_db.txt>')
+    print('unregistered mod in DB list can be found in <ML_not_in_the_db.txt>')
 
 
 #8. 안내

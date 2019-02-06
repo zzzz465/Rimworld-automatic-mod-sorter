@@ -78,8 +78,8 @@ print('\n')
 #2. 림월드 워크샵 모드 탐색
 workshop_skip = False
 try:
-    temp = local_mod_dir.split('/')
-    del temp[4:]
+    temp = local_mod_dir.split("/")
+    del temp[len(temp) - 1:]
     temp = "/".join(temp)
     workshop_dir = '{}/workshop/content/294100'.format(temp)
     if os.path.isdir(workshop_dir) == False:
@@ -94,13 +94,14 @@ except:
         
         if x.isalnum():
             x = x.lower()
-                if x.lower() == 'y':
-                    workshop_dir = finder.finder_folder()
-                    breakloop = True
+            if x.lower() == 'y':
+                workshop_dir = finder.finder_folder()
+                workshop_dir = '{}/content/294100'.format(workshop_dir)
+                breakloop = True
         
-                elif x == 'n':
-                    breakloop = True
-                    workshop_skip = True
+            elif x == 'n':
+                breakloop = True
+                workshop_skip = True
 
         else:
             print('wrong input. please type Y or N')
@@ -108,9 +109,6 @@ except:
 
 if workshop_skip == False:
     Parser.mod_loader(ML_workshop, MD_name_num, MD_num_name, workshop_dir)
-
-else:
-    pass
 
 print('\n')
 #3. 컨픽 파일 읽어오기

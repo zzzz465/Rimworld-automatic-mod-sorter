@@ -21,20 +21,24 @@ def mod_loader(mod_list, MFD, MFDN, dir):#모드 리스트, 모드이름(키) : 
         folder_list = os.listdir(dir)
 
         for x in folder_list:
-            os.chdir('{}/{}/About'.format(dir, x))# 각 모드의 About 폴더로 이동
+            try:
+                os.chdir('{}/{}/About'.format(dir, x))# 각 모드의 About 폴더로 이동
 
-            if os.path.isfile('About.xml'): #파일이 정상적인지 확인
-                pass
-            else:
-                continue
+                if os.path.isfile('About.xml'): #파일이 정상적인지 확인
+                    pass
+                else:
+                    continue
 
-            doc = ET.parse('About.xml')
-            root = doc.getroot()
-            name = root.find('name').text # 모드 이름
-            mod_list.append(name)
+                doc = ET.parse('About.xml')
+                root = doc.getroot()
+                name = root.find('name').text # 모드 이름
+                mod_list.append(name)
+                
+                MFD[name] = x 
+                MFDN[x] = name
             
-            MFD[name] = x 
-            MFDN[x] = name
+            except:
+                pass
 
     else:
         print("can't find folder.")

@@ -13,6 +13,11 @@ def finder(): # exe 파일, 폴더 찾아서 넘김
     root.destroy()
 
     local_mod_folder = '{}/Mods'.format(os.path.dirname(rimdir))
+
+    if os.path.isdir(local_mod_folder) == False:
+        print("can't find rimworld mod folder.")
+        print('please select local Mod folder.')
+        local_mod_folder = finder_folder()
     
     return rimdir, local_mod_folder
 

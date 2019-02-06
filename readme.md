@@ -4,20 +4,32 @@ HOW-TO-USE
 (No Linux support. yet...)
 
 unzip a file.
+
 you can see the .bat file named 'Launch mod sorter.bat'
+
 before opening it, you should run rimworld, and go to the mod tab, and activate mod that you want to use.
+
 restart rimworld, and close it(this will add the mod list to the rimworld config file)
+
 and start 'Launch mod sorter.bat'
+
 in the terminal, a window will pop up asking for rimworldwin64.exe
+
 (you can found it in steam/steamapps/common/rimworld folder, or just open game directory in steam)
 
 and that's it!
+
 the mod will be automatically sorted and open rimworld.
+
 if the mod isn't on DB, the terminal will show you a list that which mods are on load list, but not loaded. turn on rimworld and finish your work.
 
+
 GREEN  = workshop mod
+
 YELLOW = Local mod
+
 ~BLUE = local mod saved by mod manager~ deleted feature. it will add if in need.
+
 
 if you're interested in adding mod to DB. please read below and contact to me!
 
@@ -37,22 +49,32 @@ HOW-TO use DB updater
 =============
 
 I included DB updating tool if the user wants to contribute to DB.
+
 you can found folder named "template updater"
+
 run  "Launch template_updater.bat" (don't run tetmplate_updater.exe)
+
 after you run it, terminal will ask you to type Y or N (if screen freezed, press enter few times.)
+
 type Y to start work, type N to exit program.
 
+
 a window will pop up asking you to locate "Rimworld64Win.exe"
+
 find rimworld64win.exe and it will download DB from github, and show your all mods from workshop and local.
+
 and remove overlapping mods from list.
 
+
 then you'll see, you need to input number one of 1~20.
+
 if you type P, you can pass that mod if you can't sure. press X to stop the program and save.
+
 
 *****
 
 important : this number support Prime number. you can use it!
-
+[noparse]
 0~1. Mod manager, MOD-E, BetterLoading and other mods that should be loaded before Core.
 1. Core
 
@@ -82,7 +104,7 @@ example: haul to stack, while you're up
 17. interface / user convenience
 
 18~ always load last
-
+[/noparse]
 *****
 
 I'll show you an example.

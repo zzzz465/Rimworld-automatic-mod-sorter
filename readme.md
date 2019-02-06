@@ -74,7 +74,7 @@ if you type P, you can pass that mod if you can't sure. press X to stop the prog
 *****
 
 important : this number support Prime number. you can use it!
-[noparse]
+
 0~1. Mod manager, MOD-E, BetterLoading and other mods that should be loaded before Core.
 1. Core
 
@@ -89,9 +89,11 @@ important : this number support Prime number. you can use it!
 mod that need hugslib.
 
 
-9~12 Large-scale mod and sub mod of that mod
+[noparse]9~12 Large-scale mod and sub mod of that mod[/noparse]
+
 example : Rimsennal, EPOE
-explain : Hospitality is a large-scale mod, but it hugslib-require mod. so it will go to 7~8.
+
+[noparse]explain : Hospitality is a large-scale mod, but it hugslib-require mod. so it will go to 7~8.[/noparse]
 
 13. Hair/trait/story teller/faction add
 
@@ -104,7 +106,6 @@ example: haul to stack, while you're up
 17. interface / user convenience
 
 18~ always load last
-[/noparse]
 *****
 
 I'll show you an example.

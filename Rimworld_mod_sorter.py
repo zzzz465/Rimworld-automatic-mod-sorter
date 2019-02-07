@@ -79,9 +79,9 @@ print('\n')
 workshop_skip = False
 try:
     temp = local_mod_dir.split("/")
-    del temp[len(temp) - 1:]
-    temp = "/".join(temp)
-    workshop_dir = '{}/workshop/content/294100'.format(temp)
+    del temp[len(temp) - 3:]
+    temp = "\\".join(temp)
+    workshop_dir = '{}\\workshop\\content\\294100'.format(temp)
     if os.path.isdir(workshop_dir) == False:
         raise(ValueError)
 
@@ -94,7 +94,7 @@ except:
         
         if x.isalnum():
             x = x.lower()
-            if x.lower() == 'y':
+            if x == 'y':
                 workshop_dir = finder.finder_folder()
                 workshop_dir = '{}/content/294100'.format(workshop_dir)
                 breakloop = True
@@ -109,8 +109,8 @@ except:
 
 if workshop_skip == False:
     Parser.mod_loader(ML_workshop, MD_name_num, MD_num_name, workshop_dir)
-
 print('\n')
+
 #3. 컨픽 파일 읽어오기
 Parser.config_loader(cfolder, ML_active)
 print('\n')

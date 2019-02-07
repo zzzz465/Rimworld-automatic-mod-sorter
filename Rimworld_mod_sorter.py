@@ -14,7 +14,7 @@ import finder
 import Parser
 import sorter
 
-Version = 0.43 #unstable hotfix
+Version = 0.43 #unstable
 
 init(autoreset=True)
 

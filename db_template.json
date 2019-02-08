@@ -227,7 +227,7 @@
 "RuntimeGC" : 4.0,
 "Prison Labor" : 10.0,
 "Centralized Climate Control" : 15.0,
-"time" : "Thu Feb  7 21:24:49 2019",
+"time" : "Fri Feb  8 21:22:29 2019",
 "More Steel" : 14.0,
 "[B19] Farmable Neutroamine" : 14.0,
 "gloomy_hair" : 13.0,
@@ -689,5 +689,7 @@
 "Plant Growing Wall Light" : 15.0,
 "Embrasures" : 15.0,
 "[sd] chicken nest" : 15.0,
-"AC-Smart Speed" : 18.0
+"AC-Smart Speed" : 18.0,
+"[1.0] ExtendedInspectData" : 17.0,
+"Tiberium Rim Factions" : 10.0
 }

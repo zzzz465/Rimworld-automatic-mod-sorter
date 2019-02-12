@@ -66,7 +66,7 @@ find rimworld64win.exe and it will download DB from github, and show your all mo
 and remove overlapping mods from list.
 
 
-then you'll see, you need to input number one of 1~20.
+then you'll see, you need to input number one of 1 to 20.
 
 if you type P, you can pass that mod if you can't sure. press X to stop the program and save.
 
@@ -75,7 +75,7 @@ if you type P, you can pass that mod if you can't sure. press X to stop the prog
 
 important : this number support Prime number. you can use it!
 
-0~1. Mod manager, MOD-E, BetterLoading and other mods that should be loaded before Core.
+0 to 1. Mod manager, MOD-E, BetterLoading and other mods that should be loaded before Core.
 1. Core
 
 2.Hugslib only
@@ -94,12 +94,14 @@ mod that need hugslib.
 example : Rimsennal, EPOE
 explain : Hospitality is a large-scale mod, but it hugslib-require mod. so it will go to 7~8.
 
+Race add mod : go to 9~12 if it have any dependency relation. go to 13 if it doesn't have any.
+
 13. Hair/trait/story teller/faction add
 
-14~15.. item/terrain/object/simple mod like add animals.
+14~15. item/terrain/object/simple mod like add animals.
 15. simple mod or mods that don't modify mod many.
 
-15.~16. mod that affact AI behavior
+15~16. mod that affact AI behavior
 example: haul to stack, while you're up
 
 17. interface / user convenience
@@ -121,13 +123,13 @@ the description says:
 
 
 nothing refer to mod conflict, and no hugslib require. and always put mod under 'A dog said...' and 'Giddy up! core'
-'A dog said...' is the Core mod in other mod. so it will be in 3~6.
-and also giddy-up! core is the Core mod. so it will be in 3~6.
-so finally, this mod add lots of animals, but it doesn't modify game too much. so 'Megafuana' will get 14~15.
+'A dog said...' is the Core mod in other mod. so it will be in 3 to 6.
+and also giddy-up! core is the Core mod. so it will be in 3 to 6.
+so finally, this mod add lots of animals, but it doesn't modify game too much. so 'Megafuana' will get 14 to 15.
 
 if you have trobule when you add sub mod. you can use PRIME NUMBER to add it.
 example:
-Rimsenal is a huge mod, so it will be in 9~12. (it is core mod so It should be set close to 9.)
+Rimsenal is a huge mod, so it will be in 9 to 12. (it is core mod so It should be set close to 9.)
 "rimsenal : federation", "rimsenal : feral" is a sub-mod of Rimsenal Core.
 so it will go to 9.1, 9.2, 9.xx or 10.(It is actually in 10.)
 
@@ -138,7 +140,7 @@ currently X is assigned to '10.0'
 
 first, choosing number for A. ignore other considerations and put it to 8. unless it needs to go to specific order.
 second, B is also hugslib so it should go to 7 or 8. but it needs X and it is on 10.
-so you should assign B to 10.xx or 11~.
+so you should assign B to 10.xx or 11to.
 
 after you finished, or saved, you can test your order by using 'mod sorter by local.bat'
 

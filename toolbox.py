@@ -14,6 +14,14 @@ def overlap_remover(DB, M_list):
 
     return returnlist
 
+def isfloat(num):
+    try:
+        float(num)
+        return True
+
+    except:
+        return False
+
 def mod_update(MD_list):
     template = dict()
     for x in MD_list:
@@ -22,7 +30,7 @@ def mod_update(MD_list):
         while breakloop:            
             _input = input('input 1 ~ 20 : ')
 
-            if _input.isdigit():                
+            if isfloat(_input):                
                 if float(_input) > 20 or float(_input) < 0:
                     print('wrong input. ')
                 

@@ -52,7 +52,7 @@ def Parser(mod_dic,mod_dic_num, mod_list_workshop, mod_list_local, data): #mod_d
                                 mod_dic[num] = name #번호(config 파일용) : 이름
                                 mod_dic_num[name] = num # 이름 : 번호(config 파일용)
                         except Exception as e:
-                                print('Error appear! ', e)
+                                print("Error ", 'trying to open Mod number : ', num, " but About.Xml is not a vaild file. ", e)
         else:
                 pass
 
@@ -73,7 +73,8 @@ def Parser(mod_dic,mod_dic_num, mod_list_workshop, mod_list_local, data): #mod_d
                         mod_dic_num[name] = num #이름 : 번호(config 파일용)
 
                 except Exception as e:
-                        print('Error occur! ', e)
+                        print('Error trying to open mod number : ', num, ' but About.Xml is not a vaild file.' , e)
+
 
                  
         

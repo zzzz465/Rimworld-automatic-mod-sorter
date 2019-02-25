@@ -36,8 +36,8 @@ def give_num(ML_active, MD_num_name, MD_name_num, DB): # 배열된 리스트 만
                 ML_error.append(MD_num_name[x])
 
         except Exception as e:
-            print('error occur! ', e)
-            print('changing config file can raise an error.')
+            print('ERROR : ', e)
+            print("can't add mod to the list.")
 
         finally:
             print('\n')

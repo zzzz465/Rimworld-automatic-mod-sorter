@@ -227,7 +227,7 @@
 "RuntimeGC" : 4.0,
 "Prison Labor" : 10.0,
 "Centralized Climate Control" : 15.0,
-"time" : "Wed Feb 13 15:07:32 2019",
+"time" : "Tue Feb 26 09:05:30 2019",
 "More Steel" : 14.0,
 "[B19] Farmable Neutroamine" : 14.0,
 "gloomy_hair" : 13.0,
@@ -745,5 +745,18 @@
 "Slither Race" : 13,
 "Survivalist's Additions" : 15,
 "Twi'lek Race" : 13,
-"Leeani Playable Race" : 13
+"Leeani Playable Race" : 13,
+"[RF] Permafrost [1.0]" : 15,
+"Trap Disable[1.0]" : 15,
+"Infinite Turrets" : 18,
+"Lord of the Rims - Facial Stuff Patch" : 13.1,
+"No Friendly Fire" : 15,
+"Brighter Blood" : 19,
+"Effective Lumbering" : 15,
+"Xenohumans - Gen-spliced Xenos on the Rim" : 13,
+"Stockpile Stack Limit" : 18,
+"Play Time Tracker (v1.1.0)" : 15,
+"Real World Religions" : 8.9,
+"Kurin, The Three Tailed Fox" : 13,
+"HelpTab" : 15
 }

@@ -10,6 +10,8 @@ from lxml import etree
 
 import finder
 
+class MOD
+
 HOMEPATH = os.environ['userprofile']
 rimsavedir = r'{}/appdata/locallow/Ludeon Studios/RimWorld by Ludeon Studios/Config'.format(HOMEPATH)
 

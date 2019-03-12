@@ -6,6 +6,7 @@ import zipfile
 import sys
 from time import sleep
 from urllib.request import urlopen
+import logging
 
 DB_url = 'https://raw.githubusercontent.com/zzzz465/Rimworld-automatic-mod-sorter/master/db_template.json'
 
@@ -23,8 +24,8 @@ def download_DB(DB, Ver): # DB 다운받아서, DB 반환, 버전 체크도 함�
     
     
     if Ver < DB['Version'] :
-        print('New version detected. please download newer version in github!')
-        print('\n Program will be closed in 5 seconds...')
+        logging.warning('New version detected. please download newer version in github!')
+        logging.warning('\n Program will be closed in 5 seconds...')
         sleep(3)
         sys.exit(0)
         

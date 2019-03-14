@@ -39,9 +39,9 @@ def askfiledir(titlename, filetype):
 
     return filedir
 
-def askfolderdir(): # 폴더 디렉토리 반환
+def askfolderdir(titlename="select folder."): # 폴더 디렉토리 반환
     root = tk.Tk()
-    dir1 = filedialog.askdirectory(initialdir = 'C:/', title = 'select folder')
+    dir1 = filedialog.askdirectory(initialdir = 'C:/', title = titlename)
     root.destroy()
 
     return dir1

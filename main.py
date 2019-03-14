@@ -3,6 +3,7 @@ import logging
 import time
 import Modmanager
 import RWmanager
+from time import sleep
 
 Version = 0.5
 
@@ -20,7 +21,6 @@ log.addHandler(file_handler)
 log.propagate = 0
 
 
-
 if __name__ == '__main__':
     log.info('Initializing program...')
 
@@ -30,6 +30,9 @@ if __name__ == '__main__':
 
     log.info('DB MOD COUNT : {}'.format(len(DB)))
     log.info('Latest DB updated date : {}'.format(DB['time']))
+
+    log.info('select your ModsConfig.xml file')
+    Modmanager.ModBase.ConfigXmldir = RWmanager.askfiledir('select ModsConfig.xml', [('ModsConfig.xml', '*.*')])
 
     log.info('select your Local mod folder.')
     localdir = RWmanager.askfolderdir()
@@ -50,10 +53,12 @@ if __name__ == '__main__':
         if mod.MODkey in Modmanager.ModBase.ActiveModlist:
             mods.append(mod)
 
+    log.info('sorting...')
     mods.sort(key=Modmanager.Mod.getOrderNum)
+    log.info('sort complete.')
 
     log.debug(Modmanager.ModBase.ConfigXmldir)
-    #RWmanager.backup(Modmanager.ModBase.ConfigXmldir, 'ModsConfig.xml')
+    RWmanager.backup(Modmanager.ModBase.ConfigXmlfolderdir, 'ModsConfig.xml') # 백업 고치기
     #모드 배열을 XML에 올리는 것 추가하기
     #githubgist와 연동하기
 

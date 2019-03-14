@@ -10,36 +10,37 @@ from lxml import etree
 import RWmanager
 import downloader
 
-
+log = logging.getLogger('RAMS.ModManager')
 
 class ModBase:
     DB = dict()#DB저장
     ActiveModlist = list()#modkey 저장(활성화)
     ConfigXmldir = str() #컨픽파일 경로 저장
+    ConfigXmlfolderdir = str()
 
     @classmethod
     def setDB(cls, DB):
         cls.DB = DB 
+
+    @classmethod
+    def setXmldir(cls, dir1):
+        cls.ConfigXmldir = dir1
+        cls.ConfigXmlfolderdir = dir1[:len(cls.ConfigXmldir) - 15]
     
     def __init__(self):
         if ModBase.DB == {}:
             ModBase.setDB(ModBase.DB)
 
-        if ModBase.ConfigXmldir == '':
-            ModBase.ConfigXmldir = RWmanager.askfiledir('select Rimworld config file.', [('ModsConfig.xml', '*.*')])
-
-        
-        else:
-            pass
+        #if ModBase.ConfigXmldir == str():
+        #    ModBase.ConfigXmldir = RWmanager.askfiledir('select Rimworld config file.', [('ModsConfig.xml', '*.*')])
+    
+        #if ModBase.ConfigXmldir
 
         if ModBase.ActiveModlist == []:
-            logging.info('select your ModsConfig.xml')
-            configdir = RWmanager.askfiledir('Select your Rimworld config.xml file.', [('ModsConfig.xml', '*.*')])
-            ModBase.ConfigXmldir = configdir
-            root = RWmanager.LoadXML(configdir)
+            root = RWmanager.LoadXML(ModBase.ConfigXmldir)
             ModBase.ActiveModlist = RWmanager.LoadActMod(root)
-            logging.info('Active mod list loaded.')
-            logging.info('current active mod number : {}'.format(len(ModBase.ActiveModlist)))
+            log.info('Active mod list loaded.')
+            log.info('current active mod number : {}'.format(len(ModBase.ActiveModlist)))
 
 
 class Mod(ModBase):
@@ -47,6 +48,7 @@ class Mod(ModBase):
     MODs = list()
 
     def __init__(self, moddir, modkey):    
+        super().__init__()
         self.MODkey = str(modkey)
         self.MODdir = str(moddir) # 폴더위치
         self.dir_Aboutxml = '{}/About/About.xml'.format(self.MODdir)
@@ -69,11 +71,11 @@ class Mod(ModBase):
     def SetOrderNum(self):
         if self.MODname in Mod.DB:
             num = Mod.DB[self.MODname]
-            logging.info("grant mod number {} to mod name : {}".format(num, self.MODname))
+            log.info("grant mod number {} to mod name : {}".format(num, self.MODname))
             return float(num)
 
         else:
-            logging.error('error while giving order number to mod : {}'.format(self.MODname))
+            log.error('error while giving order number to mod : {}'.format(self.MODname))
             return None
 
 class ModWorkshop(Mod):
@@ -86,61 +88,61 @@ class ModLocal(Mod):
 
 def parseXML(dir_XML, attribute):
     if type(dir_XML) != type(str()):
-        logging.error('cannot read XML file directory. ')
-        logging.debug(str(dir_XML), ' - dir_XML 내용')
+        log.error('cannot read XML file directory. ')
+        log.debug(str(dir_XML), ' - dir_XML 내용')
         return None
     
     if type(attribute) != type(str()):
-        logging.error('wrong attribute data type.')
-        logging.debug(str(attribute))
+        log.error('wrong attribute data type.')
+        log.debug(str(attribute))
         return None
 
     try:
         doc = ET.parse(dir_XML)
         root = doc.getroot()
         name = root.find(attribute).text
-        logging.debug('{}에서 {}를 찾았습니다.'.format(dir_XML, attribute))
+        log.debug('{}에서 {}를 찾았습니다.'.format(dir_XML, attribute))
         return name
 
     except Exception as e:
-        logging.debug('parseXML에서 에러 발생')
-        logging.debug(e)
+        log.debug('parseXML에서 에러 발생')
+        log.debug(e)
     
 def LoadMod(dir1, type1='Local'):
     '''
         dir = 모드 폴더 경로\n
         type = 'Local' 또는 'Workshop'
     '''
-    logging.debug('LoadMod 호출')
+    log.debug('LoadMod 호출')
     folderlist = os.listdir(dir1)
-    logging.debug('dir1 폴더에서 폴더 {} 개를 찾았습니다.'.format(len(folderlist)))
-    logging.debug(dir1)
+    log.debug('dir1 폴더에서 폴더 {} 개를 찾았습니다.'.format(len(folderlist)))
+    log.debug(dir1)
     if type1 == 'Local':
         list1 = list()
         for folder in folderlist:
             try:
-                logging.debug('폴더 {}'.format(folder))
+                log.debug('폴더 {}'.format(folder))
                 dir2 = dir1 + '/{}'.format(folder)
                 list1.append(ModLocal(dir2, folder))
-                logging.debug(folder, ' ', dir2)
+                log.debug(folder + ' ' + dir2)
 
             except Exception as e:
-                logging.debug('LoadMod local 돌던 중 에러 발생')
-                logging.debug('에러 코드 : {}'.format(e))
+                log.debug('LoadMod local 돌던 중 에러 발생')
+                log.debug('에러 코드 : {}'.format(e))
         Mod.MODs = Mod.MODs + list1
 
     else:
         list1 = list()
         for folder in folderlist:
             try:
-                logging.debug('폴더 {}'.format(folder))
+                log.debug('폴더 {}'.format(folder))
                 dir2 = dir1 + '/{}'.format(folder)
                 list1.append(ModWorkshop(dir2, folder))
-                logging.debug('{} {}'.format(dir2, folder))
+                log.debug('{} {}'.format(dir2, folder))
 
             except Exception as e:
-                logging.debug('LoadMod workshop 돌던 중 에러 발생')
-                logging.debug('에러 코드 : {}'.format(e))
+                log.debug('LoadMod workshop 돌던 중 에러 발생')
+                log.debug('에러 코드 : {}'.format(e))
         Mod.MODs = Mod.MODs + list1
 
 
@@ -175,7 +177,7 @@ def config_updater(cfdir, ML_sorted):
 
 if __name__ == '__main__':
 
-    '''
+    
     log = logging.getLogger()
     log.setLevel(logging.DEBUG)
     x = RWmanager.askfolderdir()
@@ -183,4 +185,4 @@ if __name__ == '__main__':
     ModBase.setDB(DB)
     LoadMod(x, 'Workshop')
     print(len(Mod.MODs))
-    '''
+    

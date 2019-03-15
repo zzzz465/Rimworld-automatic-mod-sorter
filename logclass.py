@@ -1,7 +1,8 @@
 import logging
 import time
+import logging
 
-class Logger:
+class Log(logging.Logger):
     def __init__(self):
         self.format1 = str(time.strftime('%j - %H:%M:%S'))
         self.formatter = logging.Formatter(self.format1, ' [%(levelname)s] : %(message)s')

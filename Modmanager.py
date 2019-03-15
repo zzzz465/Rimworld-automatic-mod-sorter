@@ -39,8 +39,11 @@ class ModBase:
         if ModBase.ActiveModlist == []:
             root = RWmanager.LoadXML(ModBase.ConfigXmldir)
             ModBase.ActiveModlist = RWmanager.LoadActMod(root)
+            sleep(2)
             log.info('Active mod list loaded.')
+            sleep(1)
             log.info('current active mod number : {}'.format(len(ModBase.ActiveModlist)))
+            
 
 
 class Mod(ModBase):
@@ -71,6 +74,7 @@ class Mod(ModBase):
     def SetOrderNum(self):
         if self.MODname in Mod.DB:
             num = Mod.DB[self.MODname]
+            sleep(0.3)
             log.info("grant mod number {} to mod name : {}".format(num, self.MODname))
             return float(num)
 
@@ -127,7 +131,7 @@ def LoadMod(dir1, type1='Local'):
                 log.debug(folder + ' ' + dir2)
 
             except Exception as e:
-                log.debug('LoadMod local 돌던 중 에러 발생')
+                log.warning('cannot read About.xml in mod number : {}'.format(folder))
                 log.debug('에러 코드 : {}'.format(e))
         Mod.MODs = Mod.MODs + list1
 
@@ -145,6 +149,26 @@ def LoadMod(dir1, type1='Local'):
                 log.debug('에러 코드 : {}'.format(e))
         Mod.MODs = Mod.MODs + list1
 
+def update_config(dir1, mod):
+    currentdir = os.getcwd()
+    os.chdir(dir1)
+
+    
+    list1 = list()
+    for x in mod:
+        try:
+            list1.append(str(x.MODkey))
+            log.info('Sorting Mod : {}'.format(str(x.MODname)))
+            sleep(0.3)
+
+        except Exception as e:
+            log.warning('Error while loading Mod {} to order list.'.format(x.MODname))
+            log.debug('에러 코드 : {}'.format(e))
+
+    config_updater(dir1, list1)
+
+    os.chdir(currentdir)
+
 
 def config_loader(cfdir, active_mod): #컨픽파일 모드 리스트 가져오기
     os.chdir(cfdir)
@@ -156,23 +180,24 @@ def config_loader(cfdir, active_mod): #컨픽파일 모드 리스트 가져오�
         active_mod.append(str(li.text))
 
 
-def config_updater(cfdir, ML_sorted):
+def config_updater(cfdir, Mods):
     os.chdir(cfdir)
     doc = ET.parse('ModsConfig.xml')
     root = doc.getroot()
 
-    activeMod = root.find('activeMods')
-    print('initializing config file...')
+    log.info('initializing config file...')
+    sleep(2)
+    root.remove(root.find('activeMods')) # activeMods 와 이하 모두 삭제
+    ActiveMods = ET.SubElement(root, 'activeMods') # 태그 생성
+    
+    log.info('overriding mod lists...')
+    for x in Mods:
+        mod = ET.SubElement(ActiveMods, 'li')
+        mod.text = str(x)
 
-    for li in activeMod.findall('li'):
-        activeMod.remove(li)
-
-    sorted_mod = ET.SubElement(activeMod, 'li')
-    for x in ML_sorted:
-        sorted_mod = ET.SubElement(activeMod, 'li')
-        sorted_mod.text = str(x[0][1])
-
+    sleep(3)    
     doc.write('ModsConfig.xml', encoding='UTF-8', xml_declaration='False')
+    log.info('ModsConfig.xml saved...')
 
 
 if __name__ == '__main__':

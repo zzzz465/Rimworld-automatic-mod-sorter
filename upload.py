@@ -1,16 +1,33 @@
-#!/usr/bin/python
-import os, requests, sys, json, time
+import urllib.request
+import json
+import datetime
+import time
 
-def gitupload():
-    time.sleep(5)
-    print('please wait...')
-    username='RAMSlog'
-    password='githubgistRAMSlog'
-    filename = 'RAMS_Log.txt'
+def gitupload(str1):
+    token = "7d89a919a84024682af376874e0535444d72ea8d"
+    access_url = "https://api.github.com/gists"
 
-    content=open(filename, 'r').read()
-    r = requests.post('https://api.github.com/gists',json.dumps({'files':{filename:{"content":content}}}),auth=requests.auth.HTTPBasicAuth(username, password)) 
-    print(r.json()['html_url'])
+    filename = "RAMS_nMODlist.txt"
+    description = "description"
+    public = "true"
 
-if __name__ == '__main__':
-    gitupload()
+    information = "information"
+    date = datetime.date.today()
+    current_time = time.strftime("%H:%M:%S")
+
+    data = """{
+    "description": "%s",
+    "public": %s,
+    "files": {
+        "%s": {
+        "content": "{}"
+            }w
+        }
+    }""".format(str1)
+
+    json_data = data % (description, public, filename, information, date, current_time)
+
+    req = urllib.request.Request(access_url)
+    req.add_header("Authorization", "token {}".format(token))
+    req.add_header("Content-Type", "application/json")
+    urllib.request.urlopen(req, data=json_data)

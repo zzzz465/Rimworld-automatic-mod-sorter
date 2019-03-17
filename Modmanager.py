@@ -89,14 +89,14 @@ class Mod(ModBase):
 
     
     def SetOrderNum(self):
+        sleep(0.08)
         if self.MODname in Mod.DB:
             num = Mod.DB[self.MODname]
-            sleep(0.1)
             log.info("grant mod number {} to mod name > {}".format(num, self.MODname))
             return float(num)
 
         else:
-            log.error('error while giving order number to mod > {}'.format(self.MODname))
+            log.warning('ERROR while giving order number to mod > {}'.format(self.MODname))
             return None
 
 class ModWorkshop(Mod):
@@ -175,7 +175,7 @@ def update_config(dir1, mod):
     for x in mod:
         try:
             list1.append(str(x.MODkey))
-            log.info('Sorting Mod > {}'.format(str(x.MODname)))
+            log.info('Record Mod > {}'.format(str(x.MODname)))
             sleep(0.1)
 
         except Exception as e:

@@ -42,13 +42,16 @@ class ModBase:
             sleep(2)
             log.info('Active mod list loaded.')
             sleep(1)
-            log.info('current active mod number : {}'.format(len(ModBase.ActiveModlist)))
+            log.info('current active mod number > {}'.format(len(ModBase.ActiveModlist)))
             
 
 
 class Mod(ModBase):
     Modcount = 0
-    MODs = list()
+    MODs = list() # 모드 모음
+    list1 = list() # 활성화 안된 것들
+    list2 = list() # 활성화됐지만 리스트에서 빠진 것들
+    list3 = list() # 넣을것들
 
     def __init__(self, moddir, modkey):    
         super().__init__()
@@ -57,11 +60,6 @@ class Mod(ModBase):
         self.dir_Aboutxml = '{}/About/About.xml'.format(self.MODdir)
         self.MODname = parseXML(self.dir_Aboutxml, 'name')
         self.OrderNum = self.SetOrderNum()
-        if self.OrderNum != None:
-            Mod.Modcountplus()
-
-        else:
-            self.OrderNum = 30.0 # 고장난 모드 예약번호
 
     @classmethod
     def Modcountplus(cls):
@@ -70,16 +68,35 @@ class Mod(ModBase):
     @staticmethod
     def getOrderNum(self):
         return self.OrderNum
+
+    @classmethod
+    def Sort(cls): # 항상 마지막에 호출
+        for x in cls.MODs:
+            if x.MODkey in cls.ActiveModlist: # 모드가 리스트위에 있을 때
+                
+                if x.OrderNum != None: # DB안에 있을 때
+                    cls.list3.append(x)
+
+                else:
+                    cls.list2.append(x)
+            
+            else:
+                cls.list1.append(x)
+
+        cls.list3.sort(key=Mod.getOrderNum)
+
+                    
+
     
     def SetOrderNum(self):
         if self.MODname in Mod.DB:
             num = Mod.DB[self.MODname]
-            sleep(0.3)
-            log.info("grant mod number {} to mod name : {}".format(num, self.MODname))
+            sleep(0.1)
+            log.info("grant mod number {} to mod name > {}".format(num, self.MODname))
             return float(num)
 
         else:
-            log.error('error while giving order number to mod : {}'.format(self.MODname))
+            log.error('error while giving order number to mod > {}'.format(self.MODname))
             return None
 
 class ModWorkshop(Mod):
@@ -131,7 +148,7 @@ def LoadMod(dir1, type1='Local'):
                 log.debug(folder + ' ' + dir2)
 
             except Exception as e:
-                log.warning('cannot read About.xml in mod number : {}'.format(folder))
+                log.warning('cannot read About.xml in mod number > {}'.format(folder))
                 log.debug('에러 코드 : {}'.format(e))
         Mod.MODs = Mod.MODs + list1
 
@@ -158,12 +175,12 @@ def update_config(dir1, mod):
     for x in mod:
         try:
             list1.append(str(x.MODkey))
-            log.info('Sorting Mod : {}'.format(str(x.MODname)))
-            sleep(0.3)
+            log.info('Sorting Mod > {}'.format(str(x.MODname)))
+            sleep(0.1)
 
         except Exception as e:
             log.warning('Error while loading Mod {} to order list.'.format(x.MODname))
-            log.debug('에러 코드 : {}'.format(e))
+            log.debug('에러 코드 > {}'.format(e))
 
     config_updater(dir1, list1)
 

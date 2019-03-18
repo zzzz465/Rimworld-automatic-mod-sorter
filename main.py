@@ -33,7 +33,7 @@ if __name__ == '__main__':
     Modmanager.ModBase.setDB(DB) #DB 파일 설정
     logging.info('download complete!')
 
-    log.info('current version > {}'.format(Version))
+    log.info('current version = {}'.format(Version))
 
     #버전체크
     if Version < DB['Version']:

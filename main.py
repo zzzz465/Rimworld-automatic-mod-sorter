@@ -103,9 +103,6 @@ if __name__ == '__main__':
             log_upload = log_upload + '\n{}'.format(x.MODname)
             sleep(0.08)
 
-    with open('RAMS_nMODlist.txt', mode='w', encoding='UTF-8') as f:
-        f.write(log_upload)
-
     log.info('Help the developer improve the program by uploading a DB')
     while True:
         a = input('upload it? Y/N > ')

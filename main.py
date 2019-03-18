@@ -32,6 +32,16 @@ if __name__ == '__main__':
     log.info('downloading DB file...')
     Modmanager.ModBase.setDB(DB) #DB 파일 설정
     logging.info('download complete!')
+
+    log.info('current version > {}'.format(Version))
+
+    #버전체크
+    if Version < DB:
+        log.info('latest version > {}'.format(DB['version']))
+        log.info('please update to latest version.')
+        log.info('program will be closed in 5 seconds...')
+        sleep(5)
+        sys.exit(0)
     sleep(1)# this is my stupid decision.
 
     log.info('DB MOD COUNT : {}'.format(len(DB)))

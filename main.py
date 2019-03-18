@@ -9,10 +9,7 @@ import upload
 import os
 
 currentdir = os.getcwd()
-
-
 Version = 0.5
-
 DB = downloader.download_DB(Version)
 
 formatter = logging.Formatter('%(asctime)s - [%(levelname)s] : %(message)s')

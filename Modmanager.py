@@ -48,15 +48,15 @@ class ModBase:
 
 class Mod(ModBase):
     Modcount = 0
-    MODs = list() # 모드 모음
-    list1 = list() # 활성화 안된 것들
-    list2 = list() # 활성화됐지만 리스트에서 빠진 것들
-    list3 = list() # 넣을것들
+    MODs = list() # every mod data will saved in this list
+    list1 = list() # deactivated
+    list2 = list() # activated but removed cuz not on the activelist
+    list3 = list() # activated and will load on activelist
 
     def __init__(self, moddir, modkey):    
         super().__init__()
         self.MODkey = str(modkey)
-        self.MODdir = str(moddir) # 폴더위치
+        self.MODdir = str(moddir) # folder location
         self.dir_Aboutxml = '{}/About/About.xml'.format(self.MODdir)
         self.MODname = parseXML(self.dir_Aboutxml, 'name')
         self.OrderNum = self.SetOrderNum()
@@ -72,9 +72,9 @@ class Mod(ModBase):
     @classmethod
     def Sort(cls): # 항상 마지막에 호출
         for x in cls.MODs:
-            if x.MODkey in cls.ActiveModlist: # 모드가 리스트위에 있을 때
+            if x.MODkey in cls.ActiveModlist: # if the mod is on the list
                 
-                if x.OrderNum != None: # DB안에 있을 때
+                if x.OrderNum != None: # and if the mod is in the DB
                     cls.list3.append(x)
 
                 else:
@@ -187,7 +187,7 @@ def update_config(dir1, mod):
     os.chdir(currentdir)
 
 
-def config_loader(cfdir, active_mod): #컨픽파일 모드 리스트 가져오기
+def config_loader(cfdir, active_mod): #get a mod list from config file
     os.chdir(cfdir)
     doc = ET.parse('ModsConfig.xml')
     root = doc.getroot()
@@ -204,8 +204,8 @@ def config_updater(cfdir, Mods):
 
     log.info('initializing config file...')
     sleep(2)
-    root.remove(root.find('activeMods')) # activeMods 와 이하 모두 삭제
-    ActiveMods = ET.SubElement(root, 'activeMods') # 태그 생성
+    root.remove(root.find('activeMods')) # remove activemods tag and below
+    ActiveMods = ET.SubElement(root, 'activeMods') # make a tag
     
     log.info('overriding mod lists...')
     for x in Mods:
@@ -217,7 +217,7 @@ def config_updater(cfdir, Mods):
     log.info('ModsConfig.xml saved...')
 
 
-if __name__ == '__main__':
+if __name__ == '__main__': # for testing
 
     
     log = logging.getLogger()

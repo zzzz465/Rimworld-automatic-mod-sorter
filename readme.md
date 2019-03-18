@@ -1,37 +1,21 @@
 HOW-TO-USE
 ========
+always use latest version!
 
-(No Linux support. yet...)
+0) read terminal log
 
-unzip a file.
+1) pop-up will ask you to select ModConfig.xml file.
+you can find it in "your USERNAME\AppData\LocalLow\Ludeon Studios\RimWorld by Ludeon Studios\Config" (default path)
 
-you can see the .bat file named 'Launch mod sorter.bat'
+2) another pop-up will ask you to select Rimworld Local mod folder.
+select 'Mods' folder located in your Rimworld folder
 
-before opening it, you should run rimworld, and go to the mod tab, and activate mod that you want to use.
+3) type Y or N to load workshop mod, or not(for DRM-free version)
 
-restart rimworld, and close it(this will add the mod list to the rimworld config file)
+3-1)if you press Y, and another pop-up will show, and ask you to select rimworld Workshop mod folder
+you should select folder named '294100' in your steam/steamapps/workshop/content
 
-and start 'Launch mod sorter.bat'
-
-in the terminal, a window will pop up asking for rimworldwin64.exe
-
-(you can found it in steam/steamapps/common/rimworld folder, or just open game directory in steam)
-
-and that's it!
-
-the mod will be automatically sorted and open rimworld.
-
-if the mod isn't on DB, the terminal will show you a list that which mods are on load list, but not loaded. turn on rimworld and finish your work.
-
-
-GREEN  = workshop mod
-
-YELLOW = Local mod
-
-~BLUE = local mod saved by mod manager~ deleted feature. it will add if in need.
-
-
-if you're interested in adding mod to DB. please read below and contact to me!
+4)follow terminal
 
 
 Screenshots

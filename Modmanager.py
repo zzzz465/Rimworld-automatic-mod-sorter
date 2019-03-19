@@ -50,8 +50,9 @@ class Mod(ModBase):
     Modcount = 0
     MODs = list() # every mod data will saved in this list
     list1 = list() # deactivated
-    list2 = list() # activated but removed cuz not on the activelist
+    list2 = list() # activated but removed cuz not on the DB
     list3 = list() # activated and will load on activelist
+    list4 = list() # deactivated and not on the DB
 
     def __init__(self, moddir, modkey):    
         super().__init__()
@@ -72,16 +73,19 @@ class Mod(ModBase):
     @classmethod
     def Sort(cls): # 항상 마지막에 호출
         for x in cls.MODs:
-            if x.MODkey in cls.ActiveModlist: # if the mod is on the list
+            if x.OrderNum != None: #if it have order number
+                if x.MODkey in cls.ActiveModlist:#check to load or not
+                    cls.list3.append(x) #load it
                 
-                if x.OrderNum != None: # and if the mod is in the DB
-                    cls.list3.append(x)
-
                 else:
+                    cls.list1.append(x) #don't load
+
+            else:#if it doesn't have order number
+                if x.MODkey in cls.ActiveModlist:#if it activated
                     cls.list2.append(x)
-            
-            else:
-                cls.list1.append(x)
+
+                else:#if it deactivated
+                    cls.list4.append(x)
 
         cls.list3.sort(key=Mod.getOrderNum)
 

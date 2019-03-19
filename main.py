@@ -30,11 +30,17 @@ weblogurl = 'https://gist.github.com/RAMSlog'
 
 if __name__ == '__main__':
     log.info('Initializing program...')
-    sleep(1) # I'm trying to add sleep function between every log message with decorator, closure or something else.
+    sleep(0.5) # I'm trying to add sleep function between every log message with decorator, closure or something else.
 
     log.info('downloading DB file...')
     Modmanager.ModBase.setDB(DB) #DB 파일 설정
     logging.info('download complete!')
+
+    try: #to give any important messages.
+        log.info(DB['message'])
+        sleep(3)
+    except:
+        pass
 
     log.info('current version = {}'.format(Version))
 
@@ -45,11 +51,11 @@ if __name__ == '__main__':
         log.info('program will be closed in 5 seconds...')
         sleep(5)
         sys.exit(0)
-    sleep(1)# this is my stupid decision.
+    sleep(0.5)# this is my stupid decision.
 
     log.info('DB MOD COUNT : {}'.format(len(DB)))
     log.info('Latest DB updated date : {}'.format(DB['time']))
-    sleep(1)
+    sleep(2)
 
     log.info('select your ModsConfig.xml file')
     Modmanager.ModBase.ConfigXmldir = RWmanager.askfiledir('select ModsConfig.xml', [('ModsConfig.xml', '*.*')])
@@ -106,18 +112,21 @@ if __name__ == '__main__':
     log.info('Your activated mod list\n----------')
     for x in mods:
         log2.info(x.MODname)
-        sleep(0.08)
+        sleep(0.05)
 
-    if Modmanager.Mod.list2 != []:
+    nMods = Modmanager.Mod.list2 + Modmanager.Mod.list4
+    if nMods != []:
         log_upload = 'missing mod in DB'
-        log2.info('Missing mode in DB (need manual activation)\n------------')
-        for x in Modmanager.Mod.list2:
+        log2.info('Missing mode in DB (need manual activation)\n')
+        log2.info('---LOG START---')
+        for x in nMods:
             log2.info(x.MODname)
             log_upload = log_upload + '\n{}'.format(x.MODname)
-            sleep(0.08)
-
+            sleep(0.05)
+        log2.info('---LOG END---\n')
+    sleep(1)
+    log.info('The above log will be sent to the server if you want.')
     log.info('Help the developer improve the program by uploading a DB')
-    log.info('your log will show after uploading.')
     log.info('log will collect :\n {}'.format(logcollect)) #let users know what data will be upload to github gist.
 
     while True:
@@ -125,7 +134,8 @@ if __name__ == '__main__':
         if a.isalpha():
             if a.lower() == 'y':
                 from upload import gitupload
-                gitupload(log_upload)
+                gitupload(log_upload, DB['token'])
+                sleep(5) # wait for gist update
                 webbrowser.open(weblogurl) # show log file.
                 log.info('exit in 5 seconds...')
                 sys.exit(0)

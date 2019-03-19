@@ -111,8 +111,8 @@ if __name__ == '__main__':
         log2.info(x.MODname)
         sleep(0.05)
 
-    nMods = Modmanager.Mod.list2 + Modmanager.Mod.list4
-    if nMods != []:
+    nMods = Modmanager.Mod.list2 + Modmanager.Mod.list4 #should move to ModManager class method
+    if nMods != []:#should
         log_upload = 'missing mod in DB'
         log2.info('Missing mode in DB (need manual activation)\n')
         log2.info('---LOG START---')
@@ -124,7 +124,7 @@ if __name__ == '__main__':
     sleep(1)
     log.info('The above log will be sent to the server if you want.')
     log.info('Help the developer improve the program by uploading a DB')
-    log.info('log will collect :\n {}'.format(logcollect)) #let users know what data will be upload to github gist.
+    print('log will collect :\n {}'.format(logcollect)) #let users know what data will be upload to github gist.
 
     while True:
         a = input('upload it? Y/N > ')

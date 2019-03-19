@@ -1,35 +1,32 @@
+Before use
+=======
+1 - this program doesn't have any signiture, so If the antivirus program blocks the program, please allow it.
+2 - this program will require internet connection.(DB download and Log upload)
+3 - you can upload log to internet. This method is similar to hugslib.
+you can see log at https://gist.github.com/RAMSlog
+log will collect:
+- compare your local/workshop mod with DB, and record which is not on the DB.
+=====
 HOW-TO-USE
 ========
 always use latest version!
-
-0) read terminal log
-
+0) Always read terminal log
 1) pop-up will ask you to select ModConfig.xml file.
 you can find it in "your USERNAME\AppData\LocalLow\Ludeon Studios\RimWorld by Ludeon Studios\Config" (default path)
-
 2) another pop-up will ask you to select Rimworld Local mod folder.
 select 'Mods' folder located in your Rimworld folder
-
 3) type Y or N to load workshop mod, or not(for DRM-free version)
-
-3-1)if you press Y, and another pop-up will show, and ask you to select rimworld Workshop mod folder
+if you press Y, and another pop-up will show, and ask you to select rimworld Workshop mod folder
 you should select folder named '294100' in your steam/steamapps/workshop/content
-
 4)follow terminal
 
 
 Screenshots
 ========
 
-![061](https://user-images.githubusercontent.com/46273764/51812240-099a9100-22f4-11e9-8d42-b66b18232ab3.jpg)
-![063](https://user-images.githubusercontent.com/46273764/51812242-099a9100-22f4-11e9-84b0-21ea9e863b6b.jpg)
-![064](https://user-images.githubusercontent.com/46273764/51812244-099a9100-22f4-11e9-8fae-d96c50badf1d.jpg)
-![065](https://user-images.githubusercontent.com/46273764/51812245-099a9100-22f4-11e9-84fe-1c0bf5eea391.jpg)
-![066](https://user-images.githubusercontent.com/46273764/51812247-0a332780-22f4-11e9-9b70-11f7569b3abb.jpg)
-![062](https://user-images.githubusercontent.com/46273764/51812251-0c958180-22f4-11e9-9f80-e896e3de62d0.jpg)
+temporary removed
 
-
-HOW-TO use DB updater
+HOW-TO use DB updater(temporary removed)
 =============
 
 I included DB updating tool if the user wants to contribute to DB.

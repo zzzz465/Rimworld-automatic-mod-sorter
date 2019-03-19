@@ -7,6 +7,9 @@ from tkinter import filedialog
 import time
 from lxml import etree
 import shutil
+import time
+
+log = logging.getLogger('RAMS.RWManager')
 
 def LoadXML(dir_XMLfile): #  Root를 넘겨줌
     doc = ET.parse(dir_XMLfile)
@@ -59,6 +62,29 @@ def backup(dir1, file1):
 
     logging.info('backup config file created. [{}.backup.{}]'.format(file1,now_time))
     os.chdir(currentpath)
+
+def SaveLOG(_str, _dir, name='RAMSLOG.txt', _mode='a'):
+    '''save _str to .txt file, in _dir (_dir should be a folder, not file)\n
+name should include file's name and filename extension.\nexample : name=RAMSLOG.txt (default)\n
+default mode = 'a'
+    '''
+    currnetdir = os.getcwd()
+    try:
+        os.chdir(_dir)
+        if type(_str) != type(str()): #if str1 argument isn't a string type.
+            return None 
+
+        with open('{}'.format(name), mode=_mode) as f:
+            f.write('LOG RECORD TIME : {}'.format(time.strftime("%d %H %M")))
+            f.write('---------------')
+            f.write(_str)
+
+    except Exception as e:
+        log.warning('error while saving LOG to {}, {}'.format(_dir, e))
+
+    os.chdir(currnetdir) # returning to current working tree.
+            
+
 
 
 

@@ -22,7 +22,7 @@ select 'Mods' folder located in your Rimworld folder
 3. type Y or N to load workshop mod, or not(for DRM-free version)
 if you press Y, and another pop-up will show, and ask you to select rimworld Workshop mod folder
 you should select folder named '294100' in your steam/steamapps/workshop/content
-4.follow terminal
+4. follow terminal
 *********
 Screenshots
 ========

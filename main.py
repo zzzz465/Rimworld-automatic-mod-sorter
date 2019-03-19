@@ -7,6 +7,7 @@ from time import sleep
 import sys
 import upload
 import os
+import webbrowser
 
 currentdir = os.getcwd()
 Version = 0.5
@@ -21,6 +22,11 @@ log.addHandler(stream_handler)
 log.propagate = 0
 logfile_handler = logging.FileHandler('program.log')
 log.addHandler(logfile_handler)
+
+logcollect = '''compare your mods with online DB, and get mods which are not on the DB
+'''
+
+weblogurl = 'https://gist.github.com/RAMSlog'
 
 if __name__ == '__main__':
     log.info('Initializing program...')
@@ -111,12 +117,16 @@ if __name__ == '__main__':
             sleep(0.08)
 
     log.info('Help the developer improve the program by uploading a DB')
+    log.info('your log will show after uploading.')
+    log.info('log will collect :\n {}'.format(logcollect)) #let users know what data will be upload to github gist.
+
     while True:
         a = input('upload it? Y/N > ')
         if a.isalpha():
             if a.lower() == 'y':
                 from upload import gitupload
                 gitupload(log_upload)
+                webbrowser.open(weblogurl) # show log file.
                 log.info('exit in 5 seconds...')
                 sys.exit(0)
             

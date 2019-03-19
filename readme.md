@@ -10,21 +10,20 @@ you can see log at https://gist.github.com/RAMSlog
 
 log will collect:
 - compare your local/workshop mod with DB, and record which is not on the DB.
-
+*******
 HOW-TO-USE
-
+=======
 always use latest version!
-0) Always read terminal log
-1) pop-up will ask you to select ModConfig.xml file.
+0. Always read terminal log
+1. pop-up will ask you to select ModConfig.xml file
 you can find it in "your USERNAME\AppData\LocalLow\Ludeon Studios\RimWorld by Ludeon Studios\Config" (default path)
-2) another pop-up will ask you to select Rimworld Local mod folder.
+2. another pop-up will ask you to select Rimworld Local mod folder
 select 'Mods' folder located in your Rimworld folder
-3) type Y or N to load workshop mod, or not(for DRM-free version)
+3. type Y or N to load workshop mod, or not(for DRM-free version)
 if you press Y, and another pop-up will show, and ask you to select rimworld Workshop mod folder
 you should select folder named '294100' in your steam/steamapps/workshop/content
-4)follow terminal
-
-
+4.follow terminal
+*********
 Screenshots
 ========
 

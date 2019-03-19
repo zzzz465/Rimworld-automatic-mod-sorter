@@ -10,9 +10,9 @@ you can see log at https://gist.github.com/RAMSlog
 
 log will collect:
 - compare your local/workshop mod with DB, and record which is not on the DB.
-=====
+
 HOW-TO-USE
-========
+
 always use latest version!
 0) Always read terminal log
 1) pop-up will ask you to select ModConfig.xml file.

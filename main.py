@@ -10,8 +10,7 @@ import os
 import webbrowser
 
 currentdir = os.getcwd()
-Version = 0.5
-DB = downloader.download_DB(Version)
+Version = 0.51
 
 formatter = logging.Formatter('%(asctime)s - [%(levelname)s] : %(message)s')
 log = logging.getLogger("RAMS")
@@ -31,10 +30,8 @@ weblogurl = 'https://gist.github.com/RAMSlog'
 if __name__ == '__main__':
     log.info('Initializing program...')
     sleep(0.5) # I'm trying to add sleep function between every log message with decorator, closure or something else.
-
-    log.info('downloading DB file...')
-    Modmanager.ModBase.setDB(DB) #DB 파일 설정
-    logging.info('download complete!')
+    DB = downloader.download_DB() # GET DB from server
+    Modmanager.ModBase.setDB(DB) # DB 파일 설정
 
     try: #to give any important messages.
         log.info(DB['message'])

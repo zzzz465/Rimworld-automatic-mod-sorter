@@ -20,6 +20,9 @@ def download_DB(): #shakeyourbunny's code. thank you!
     sleep(1)
     with urlopen(DB_url) as jsonurl:
         dbrawdata = jsonurl.read()
+    
+    log.info('DB download complete!')
+    
     return json.loads(dbrawdata)
 
     #with open('db_template.json', 'wb') as dbfile:

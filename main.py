@@ -10,7 +10,7 @@ import os
 import webbrowser
 
 currentdir = os.getcwd()
-Version = 0.51
+Version = 0.51 #dev
 
 formatter = logging.Formatter('%(asctime)s - [%(levelname)s] : %(message)s')
 log = logging.getLogger("RAMS")

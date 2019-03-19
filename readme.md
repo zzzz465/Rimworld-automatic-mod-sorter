@@ -61,7 +61,7 @@ if you type P, you can pass that mod if you can't sure. press X to stop the prog
 important : this number support Prime number. you can use it!
 
 0 to 1. Mod manager, MOD-E, BetterLoading and other mods that should be loaded before Core.
-1. Core
+1.Core
 
 2.Hugslib only
 
@@ -81,15 +81,15 @@ explain : Hospitality is a large-scale mod, but it hugslib-require mod. so it wi
 
 Race add mod : go to 9~12 if it have any dependency relation. go to 13 if it doesn't have any.
 
-13. Hair/trait/story teller/faction add
+13.Hair/trait/story teller/faction add
 
-14~15. item/terrain/object/simple mod like add animals.
-15. simple mod or mods that don't modify mod many.
+14~14.9. item/terrain/object/simple mod like add animals.
+15.simple mod or mods that don't modify mod many.
 
 15~16. mod that affact AI behavior
 example: haul to stack, while you're up
 
-17. interface / user convenience
+17.interface / user convenience
 
 18~ always load last
 *****

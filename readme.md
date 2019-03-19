@@ -13,7 +13,7 @@ log will collect:
 *******
 HOW-TO-USE
 =======
-always use latest version!
+always use latest version!\n
 0. Always read terminal log
 1. pop-up will ask you to select ModConfig.xml file
 you can find it in "your USERNAME\AppData\LocalLow\Ludeon Studios\RimWorld by Ludeon Studios\Config" (default path)

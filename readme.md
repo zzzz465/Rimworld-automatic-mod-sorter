@@ -1,9 +1,13 @@
 Before use
 =======
 1 - this program doesn't have any signiture, so If the antivirus program blocks the program, please allow it.
+
 2 - this program will require internet connection.(DB download and Log upload)
+
 3 - you can upload log to internet. This method is similar to hugslib.
+
 you can see log at https://gist.github.com/RAMSlog
+
 log will collect:
 - compare your local/workshop mod with DB, and record which is not on the DB.
 =====

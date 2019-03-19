@@ -227,7 +227,7 @@ if __name__ == '__main__': # for testing
     log = logging.getLogger()
     log.setLevel(logging.DEBUG)
     x = RWmanager.askfolderdir()
-    DB = downloader.download_DB(0.5)
+    DB = downloader.download_DB()
     ModBase.setDB(DB)
     LoadMod(x, 'Workshop')
     print(len(Mod.MODs))

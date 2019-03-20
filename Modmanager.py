@@ -16,7 +16,8 @@ class ModBase:
     ActiveModlist = list()#modkey 저장(활성화)
     ConfigXmlpath = str() #컨픽파일 경로 저장
     Configxmlfolderpath = str()
-    LocalModpath = getSteamdir()
+    Steampath = getSteampath()
+    LocalModpath = Steampath + '/steamapps/common/RimWorld/Mods'
 
     @classmethod
     def setDB(cls, DB):
@@ -131,7 +132,6 @@ def LoadMod(dir1, type1=1):
         2 = Workshop
         
     '''
-
     folderlist = os.listdir(dir1)
     log.debug('dir1 폴더에서 폴더 {} 개를 찾았습니다.'.format(len(folderlist)))
 
@@ -203,7 +203,7 @@ def config_updater(cfdir, Mods):
     doc.write('ModsConfig.xml', encoding='UTF-8', xml_declaration='False')
     log.info('ModsConfig.xml saved...')
 
-def getSteamdir():
+def getSteampath():
     '''
     return steam folder dir as string type via registery data
     return None if can't find right value.

@@ -116,16 +116,21 @@ def getSteampath():
     return steam folder dir as string type via registery data
     return None if can't find right value.
     '''
+    log.debug('call getSteampath')
     try:
         steamreg = OpenKey(HKEY_CURRENT_USER, c_steamregpath)
+        log.debug('steamreg = ' + steamreg)
         try:
             value = QueryValueEx(steamreg, "SteamPath")
+            log.debug('value : ' + value)
             return value[0]
         
         except:
+            log.debug('return None')
             return None
     
     except:
+        log.debug('return None')
         return None
 
 class ModBase:
@@ -170,6 +175,7 @@ class ModBase:
         '''
         Always run first before sorting.
         '''
+        log.debug('start MODbase __init__')
         root = RWmanager.LoadXML(ModBase.ConfigXmlpath)
         ModBase.ActiveModlist = RWmanager.LoadActMod(root)
         sleep(2)
@@ -177,7 +183,9 @@ class ModBase:
         sleep(1)
         log.info('current active mod number = {}'.format(len(ModBase.ActiveModlist)))
 
+        log.debug('start MODbase __init__ setlocalpath')
         ModBase.setLocalPath()
+        log.debug('start modbase init setworkshoppath')
         ModBase.setWorkshopPath()
 
   

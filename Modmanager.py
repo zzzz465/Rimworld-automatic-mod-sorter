@@ -1,7 +1,7 @@
 import logging
 import os
 import tkinter as tkinter
-from winreg import *  # for steam folder location.
+from winreg import OpenKey, QueryValueEx  # for steam folder location.
 import xml.etree.ElementTree as ET
 from time import sleep
 from lxml import etree
@@ -16,7 +16,7 @@ class ModBase:
     ActiveModlist = list()#modkey 저장(활성화)
     ConfigXmlpath = str() #컨픽파일 경로 저장
     Configxmlfolderpath = str()
-    LocalModpath
+    LocalModpath = getSteamdir()
 
     @classmethod
     def setDB(cls, DB):
@@ -28,9 +28,6 @@ class ModBase:
         cls.Configxmlfolderpath = dir1[:len(cls.ConfigXmlpath) - 15]
     
     def __init__(self):
-        if ModBase.DB == {}:
-            ModBase.setDB(ModBase.DB)
-
         if ModBase.ActiveModlist == []:
             root = RWmanager.LoadXML(ModBase.ConfigXmlpath)
             ModBase.ActiveModlist = RWmanager.LoadActMod(root)
@@ -131,8 +128,7 @@ def LoadMod(dir1, type1='Local'):
         dir = 모드 폴더 경로\n
         type = 'Local' 또는 'Workshop'
     '''
-
-    log.debug('LoadMod 호출')
+    
     folderlist = os.listdir(dir1)
     log.debug('dir1 폴더에서 폴더 {} 개를 찾았습니다.'.format(len(folderlist)))
     log.debug(dir1)
@@ -222,7 +218,8 @@ def getSteamdir():
     try:
         steamreg = OpenKey(HKEY_CURRENT_USER, c_steamregpath)
         try:
-            return QueryValueEx(steamreg, "SteamPath")
+            value = QueryValueEx(steamreg, "SteamPath")
+            return value[0]
         
         except:
             return None

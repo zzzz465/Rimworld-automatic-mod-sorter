@@ -56,13 +56,7 @@ if __name__ == '__main__':
     log.info('Latest DB updated date : {}'.format(DB['time']))
     sleep(2)
 
-    log.info('select your ModsConfig.xml file')
-    Modmanager.ModBase.ConfigXmldir = RWmanager.askfiledir('select ModsConfig.xml', [('ModsConfig.xml', '*.*')], default_cfiledir)
-    sleep(1)
-
-    log.info('select your Local mod folder.')
-    localdir = RWmanager.askfolderdir()
-    Modmanager.LoadMod(localdir)
+    Modmanager.ModBase()
 
     sleep(1)
     log.info('Load Workshop Mod? Y/N > ')
@@ -99,7 +93,7 @@ if __name__ == '__main__':
     mods = Modmanager.Mod.list3
     log.info('sort complete.')
 
-    dir1 = Modmanager.ModBase.ConfigXmldir[:len(Modmanager.ModBase.ConfigXmldir)-15]
+    dir1 = Modmanager.ModBase.ConfigXmlpath[:len(Modmanager.ModBase.ConfigXmldir)-15]
     RWmanager.backup(dir1, 'ModsConfig.xml') 
 
     Modmanager.update_config(dir1, mods)

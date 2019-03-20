@@ -14,7 +14,7 @@ Version = 0.51 #dev
 HOMEPATH = os.environ['HOMEPATH']
 default_cfiledir = HOMEPATH + '\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by Ludeon Studios\\Config\\ModsConfig.xml'
 
-formatter = logging.Formatter('%(asctime)s - [%(levelname)s] : %(message)s')
+formatter = logging.Formatter('%(asctime)s - [%(levelname)s] : %(message)s') #TODO change tomore readable format.
 log = logging.getLogger("RAMS")
 log.setLevel(logging.INFO)
 stream_handler = logging.StreamHandler()
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     log.info('Latest DB updated date : {}'.format(DB['time']))
     sleep(2)
 
-    Modmanager.ModBase()
+    Modmanager.ModBase() #run __init__
 
     sleep(1)
     log.info('Load Workshop Mod? Y/N > ')
@@ -93,17 +93,16 @@ if __name__ == '__main__':
     mods = Modmanager.Mod.list3
     log.info('sort complete.')
 
-    dir1 = Modmanager.ModBase.ConfigXmlpath[:len(Modmanager.ModBase.ConfigXmldir)-15]
-    RWmanager.backup(dir1, 'ModsConfig.xml') 
-
-    Modmanager.update_config(dir1, mods)
+    RWmanager.backup(Modmanager.ModBase.Configxmlfolderpath, 'ModsConfig.xml') #backup file
+    Modmanager.update_config(Modmanager.ModBase.Configxmlfolderpath, mods) #write ModsConfig.xml and save.
 
     log2 = logging.getLogger('RAMS.UploadLog')
     file_handler = logging.FileHandler('RAMS.log', encoding='UTF-8', mode='w')
-    log2.addHandler(file_handler)
+    log2.addHandler(file_handler) #base
 
+    #TODO add color distinction and more readable format.
     log.info('Your activated mod list\n----------')
-    for x in mods:
+    for x in mods: 
         log2.info(x.MODname)
         sleep(0.05)
 

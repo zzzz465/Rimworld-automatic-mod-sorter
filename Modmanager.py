@@ -11,6 +11,123 @@ import RWmanager
 log = logging.getLogger('RAMS.ModManager')
 c_steamregpath = "Software\\Valve\\Steam"
 
+def parseXML(dir_XML, attribute):
+    if type(dir_XML) != type(str()):
+        log.error('cannot read XML file directory. ')
+        log.debug(str(dir_XML), ' - dir_XML 내용')
+        return None
+    
+    if type(attribute) != type(str()):
+        log.error('wrong attribute data type.')
+        log.debug(str(attribute))
+        return None
+
+    try:
+        doc = ET.parse(dir_XML)
+        root = doc.getroot()
+        name = root.find(attribute).text
+        log.debug('{}에서 {}를 찾았습니다.'.format(dir_XML, attribute))
+        return name
+
+    except Exception as e:
+        log.debug('parseXML에서 에러 발생')
+        log.debug(e)
+    
+def LoadMod(dir1, type1=1):
+    '''
+        dir = 모드 폴더 경로\n
+        type
+        1 = Local
+        2 = Workshop
+        
+    '''
+    folderlist = os.listdir(dir1)
+    log.debug('dir1 폴더에서 폴더 {} 개를 찾았습니다.'.format(len(folderlist)))
+
+    list1 = list()
+    for folder in folderlist:
+        try:
+            log.debug('폴더 {}'.format(folder))
+            dir2 = dir1 + '/{}'.format(folder) # Mods folder path
+            
+            if type1 == 1:
+                list1.append(ModLocal(dir2, folder))
+
+            elif type1 == 2:
+                list1.append(ModWorkshop(dir2, folder))
+
+        except Exception as e:
+            log.warning('cannot read About.xml in mod number > {}'.format(folder))
+            log.debug('에러 코드 : {}'.format(e))
+
+    Mod.MODs = Mod.MODs + list1
+
+def update_config(dir1, mod):
+    currentdir = os.getcwd()
+    os.chdir(dir1)
+
+    
+    list1 = list()
+    for x in mod:
+        try:
+            list1.append(str(x.MODkey))
+            log.info('Record Mod > {}'.format(str(x.MODname)))
+            sleep(0.1)
+
+        except Exception as e:
+            log.warning('Error while loading Mod {} to order list.'.format(x.MODname))
+            log.debug('에러 코드 > {}'.format(e))
+
+    config_updater(dir1, list1)
+
+    os.chdir(currentdir)
+
+def config_loader(cfdir, active_mod): #get a mod list from config file
+    os.chdir(cfdir)
+    doc = ET.parse('ModsConfig.xml')
+    root = doc.getroot()
+    ActiveMod = root.find('activeMods')
+
+    for li in ActiveMod.findall('li'):
+        active_mod.append(str(li.text))
+
+
+def config_updater(cfdir, Mods):
+    os.chdir(cfdir)
+    doc = ET.parse('ModsConfig.xml')
+    root = doc.getroot()
+
+    log.info('initializing config file...')
+    sleep(2)
+    root.remove(root.find('activeMods')) # remove activemods tag and below
+    ActiveMods = ET.SubElement(root, 'activeMods') # make a tag
+    
+    log.info('overriding mod lists...')
+    for x in Mods:
+        mod = ET.SubElement(ActiveMods, 'li')
+        mod.text = str(x)
+
+    sleep(3)    
+    doc.write('ModsConfig.xml', encoding='UTF-8', xml_declaration='False')
+    log.info('ModsConfig.xml saved...')
+
+def getSteampath():
+    '''
+    return steam folder dir as string type via registery data
+    return None if can't find right value.
+    '''
+    try:
+        steamreg = OpenKey(HKEY_CURRENT_USER, c_steamregpath)
+        try:
+            value = QueryValueEx(steamreg, "SteamPath")
+            return value[0]
+        
+        except:
+            return None
+    
+    except:
+        return None
+
 class ModBase:
     DB = dict()#DB저장
     ActiveModlist = list() # modkey 저장(활성화)
@@ -127,128 +244,9 @@ class ModWorkshop(Mod):
 class ModLocal(Mod):
     def __init__(self, modkey, moddir):
         super().__init__(modkey, moddir)
-
-def parseXML(dir_XML, attribute):
-    if type(dir_XML) != type(str()):
-        log.error('cannot read XML file directory. ')
-        log.debug(str(dir_XML), ' - dir_XML 내용')
-        return None
-    
-    if type(attribute) != type(str()):
-        log.error('wrong attribute data type.')
-        log.debug(str(attribute))
-        return None
-
-    try:
-        doc = ET.parse(dir_XML)
-        root = doc.getroot()
-        name = root.find(attribute).text
-        log.debug('{}에서 {}를 찾았습니다.'.format(dir_XML, attribute))
-        return name
-
-    except Exception as e:
-        log.debug('parseXML에서 에러 발생')
-        log.debug(e)
-    
-def LoadMod(dir1, type1=1):
-    '''
-        dir = 모드 폴더 경로\n
-        type
-        1 = Local
-        2 = Workshop
         
-    '''
-    folderlist = os.listdir(dir1)
-    log.debug('dir1 폴더에서 폴더 {} 개를 찾았습니다.'.format(len(folderlist)))
-
-    list1 = list()
-    for folder in folderlist:
-        try:
-            log.debug('폴더 {}'.format(folder))
-            dir2 = dir1 + '/{}'.format(folder) # Mods folder path
-            
-            if type1 == 1:
-                list1.append(ModLocal(dir2, folder))
-
-            elif type1 == 2:
-                list1.append(ModWorkshop(dir2, folder))
-
-        except Exception as e:
-            log.warning('cannot read About.xml in mod number > {}'.format(folder))
-            log.debug('에러 코드 : {}'.format(e))
-
-    Mod.MODs = Mod.MODs + list1
-
-def update_config(dir1, mod):
-    currentdir = os.getcwd()
-    os.chdir(dir1)
-
-    
-    list1 = list()
-    for x in mod:
-        try:
-            list1.append(str(x.MODkey))
-            log.info('Record Mod > {}'.format(str(x.MODname)))
-            sleep(0.1)
-
-        except Exception as e:
-            log.warning('Error while loading Mod {} to order list.'.format(x.MODname))
-            log.debug('에러 코드 > {}'.format(e))
-
-    config_updater(dir1, list1)
-
-    os.chdir(currentdir)
-
-
-def config_loader(cfdir, active_mod): #get a mod list from config file
-    os.chdir(cfdir)
-    doc = ET.parse('ModsConfig.xml')
-    root = doc.getroot()
-    ActiveMod = root.find('activeMods')
-
-    for li in ActiveMod.findall('li'):
-        active_mod.append(str(li.text))
-
-
-def config_updater(cfdir, Mods):
-    os.chdir(cfdir)
-    doc = ET.parse('ModsConfig.xml')
-    root = doc.getroot()
-
-    log.info('initializing config file...')
-    sleep(2)
-    root.remove(root.find('activeMods')) # remove activemods tag and below
-    ActiveMods = ET.SubElement(root, 'activeMods') # make a tag
-    
-    log.info('overriding mod lists...')
-    for x in Mods:
-        mod = ET.SubElement(ActiveMods, 'li')
-        mod.text = str(x)
-
-    sleep(3)    
-    doc.write('ModsConfig.xml', encoding='UTF-8', xml_declaration='False')
-    log.info('ModsConfig.xml saved...')
-
-def getSteampath():
-    '''
-    return steam folder dir as string type via registery data
-    return None if can't find right value.
-    '''
-    try:
-        steamreg = OpenKey(HKEY_CURRENT_USER, c_steamregpath)
-        try:
-            value = QueryValueEx(steamreg, "SteamPath")
-            return value[0]
-        
-        except:
-            return None
-    
-    except:
-        return None
-
-
 if __name__ == '__main__': # for testing
-
+    
     
     log = logging.getLogger()
     log.setLevel(logging.DEBUG)

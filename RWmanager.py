@@ -9,8 +9,10 @@ from lxml import etree
 import shutil
 import time
 import os
+from winreg import *
 
 log = logging.getLogger('RAMS.RWManager')
+steamregkey = "Software\\Valve\\Steam"
 
 def LoadXML(dir_XMLfile): #  Root를 넘겨줌
     doc = ET.parse(dir_XMLfile)
@@ -31,7 +33,7 @@ def LoadActMod(root):
 
     return active_mod #Modkey를 반환
 
-def askfiledir(titlename, filetype, defaultpath=''):
+def askfiledir(titlename, filetype, defaultpath=' '):
     ''' finder(titlename, filetype)\n
     titlename : popup title\n
     filetype : input file type, example -> [('name.extension', '*.extension')]\n
@@ -93,10 +95,23 @@ default mode = 'a'
         log.warning('error while saving LOG to {}, {}'.format(_dir, e))
 
     os.chdir(currnetdir) # returning to current working tree.
-            
 
+def FindSteamDir():
+    '''
+    find steam directory via Registery data.\n
+        this will
+        return directory (success)
+        return None (fail)
+    '''
+    try:
+        steamreg = ConnectRegistry(HKEY_CURRENT_USER, steamregkey)
 
+        try:
+            a,b,c = EnumValue()
 
+    except:
+        return None
+   
 
 if __name__ == '__main__':
     backup('C:\\Users\\stopc\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by Ludeon Studios\\Config', 'ModsConfig.xml')

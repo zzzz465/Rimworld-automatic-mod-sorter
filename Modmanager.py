@@ -33,9 +33,11 @@ class ModBase:
     def setLocalPath(cls):
         if cls.Steampath != None:
             cls.LocalModpath = cls.Steampath + '/steamapps/common/RimWorld/Mods'
-        
+
         else:
             cls.LocalModpath = RWmanager.askfolderdir(titlename="select Local Mods folder.")
+        
+        log.info('Local mod path "{}"'.format(cls.LocalModpath))
 
     @classmethod
     def setWorkshopPath(cls):
@@ -45,15 +47,23 @@ class ModBase:
         else:
             cls.WorkshopModpath = RWmanager.askfolderdir(titlename='Select Workshop 294100 folder')
 
+        log.info('Workshop mod path "{}"'.format(cls.WorkshopModpath))
+
     def __init__(self):
-        if ModBase.ActiveModlist == []:
-            root = RWmanager.LoadXML(ModBase.ConfigXmlpath)
-            ModBase.ActiveModlist = RWmanager.LoadActMod(root)
-            sleep(2)
-            log.info('Active mod list loaded.')
-            sleep(1)
-            log.info('current active mod number = {}'.format(len(ModBase.ActiveModlist)))
-            
+        '''
+        Always run first before sorting.
+        '''
+        root = RWmanager.LoadXML(ModBase.ConfigXmlpath)
+        ModBase.ActiveModlist = RWmanager.LoadActMod(root)
+        sleep(2)
+        log.info('Active mod list loaded.')
+        sleep(1)
+        log.info('current active mod number = {}'.format(len(ModBase.ActiveModlist)))
+
+        ModBase.setLocalPath()
+        ModBase.setWorkshopPath()
+
+  
 class Mod(ModBase):
     Modcount = 0
     MODs = list() # every mod data will saved in this list
@@ -62,8 +72,7 @@ class Mod(ModBase):
     list3 = list() # activated and will load on activelist
     list4 = list() # deactivated and not on the DB
 
-    def __init__(self, moddir, modkey):    
-        super().__init__()
+    def __init__(self, moddir, modkey):
         self.MODkey = str(modkey)
         self.MODdir = str(moddir) # folder location
         self.dir_Aboutxml = '{}/About/About.xml'.format(self.MODdir)

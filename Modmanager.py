@@ -1,24 +1,22 @@
 import logging
 import os
 import tkinter as tkinter
+from winreg import *  # for steam folder location.
 import xml.etree.ElementTree as ET
-import logging
 from time import sleep
-
 from lxml import etree
-
-import winreg # for steam folder location.
-
-import RWmanager
 import downloader
+import RWmanager
 
 log = logging.getLogger('RAMS.ModManager')
+c_steamregpath = "Software\\Valve\\Steam"
 
 class ModBase:
     DB = dict()#DB저장
     ActiveModlist = list()#modkey 저장(활성화)
-    ConfigXmldir = str() #컨픽파일 경로 저장
-    ConfigXmlfolderdir = str()
+    ConfigXmlpath = str() #컨픽파일 경로 저장
+    Configxmlfolderpath = str()
+    LocalModpath
 
     @classmethod
     def setDB(cls, DB):
@@ -26,15 +24,15 @@ class ModBase:
 
     @classmethod
     def setXmldir(cls, dir1):
-        cls.ConfigXmldir = dir1
-        cls.ConfigXmlfolderdir = dir1[:len(cls.ConfigXmldir) - 15]
+        cls.ConfigXmlpath = dir1
+        cls.Configxmlfolderpath = dir1[:len(cls.ConfigXmlpath) - 15]
     
     def __init__(self):
         if ModBase.DB == {}:
             ModBase.setDB(ModBase.DB)
 
         if ModBase.ActiveModlist == []:
-            root = RWmanager.LoadXML(ModBase.ConfigXmldir)
+            root = RWmanager.LoadXML(ModBase.ConfigXmlpath)
             ModBase.ActiveModlist = RWmanager.LoadActMod(root)
             sleep(2)
             log.info('Active mod list loaded.')
@@ -216,6 +214,22 @@ def config_updater(cfdir, Mods):
     doc.write('ModsConfig.xml', encoding='UTF-8', xml_declaration='False')
     log.info('ModsConfig.xml saved...')
 
+def getSteamdir():
+    '''
+    return steam folder dir as string type via registery data
+    return None if can't find right value.
+    '''
+    try:
+        steamreg = OpenKey(HKEY_CURRENT_USER, c_steamregpath)
+        try:
+            return QueryValueEx(steamreg, "SteamPath")
+        
+        except:
+            return None
+    
+    except:
+        return None
+
 
 if __name__ == '__main__': # for testing
 
@@ -227,4 +241,3 @@ if __name__ == '__main__': # for testing
     #ModBase.setDB(DB)
     LoadMod(x, 'Workshop')
     print(len(Mod.MODs))
-    

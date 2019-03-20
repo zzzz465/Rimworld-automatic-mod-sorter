@@ -123,42 +123,35 @@ def parseXML(dir_XML, attribute):
         log.debug('parseXML에서 에러 발생')
         log.debug(e)
     
-def LoadMod(dir1, type1='Local'):
+def LoadMod(dir1, type1=1):
     '''
         dir = 모드 폴더 경로\n
-        type = 'Local' 또는 'Workshop'
+        type
+        1 = Local
+        2 = Workshop
+        
     '''
-    
+
     folderlist = os.listdir(dir1)
     log.debug('dir1 폴더에서 폴더 {} 개를 찾았습니다.'.format(len(folderlist)))
-    log.debug(dir1)
-    if type1 == 'Local':
-        list1 = list()
-        for folder in folderlist:
-            try:
-                log.debug('폴더 {}'.format(folder))
-                dir2 = dir1 + '/{}'.format(folder)
+
+    list1 = list()
+    for folder in folderlist:
+        try:
+            log.debug('폴더 {}'.format(folder))
+            dir2 = dir1 + '/{}'.format(folder) # Mods folder path
+            
+            if type1 == 1:
                 list1.append(ModLocal(dir2, folder))
-                log.debug(folder + ' ' + dir2)
 
-            except Exception as e:
-                log.warning('cannot read About.xml in mod number > {}'.format(folder))
-                log.debug('에러 코드 : {}'.format(e))
-        Mod.MODs = Mod.MODs + list1
-
-    else:
-        list1 = list()
-        for folder in folderlist:
-            try:
-                log.debug('폴더 {}'.format(folder))
-                dir2 = dir1 + '/{}'.format(folder)
+            elif type1 == 2:
                 list1.append(ModWorkshop(dir2, folder))
-                log.debug('{} {}'.format(dir2, folder))
 
-            except Exception as e:
-                log.debug('LoadMod workshop 돌던 중 에러 발생')
-                log.debug('에러 코드 : {}'.format(e))
-        Mod.MODs = Mod.MODs + list1 #need clean up
+        except Exception as e:
+            log.warning('cannot read About.xml in mod number > {}'.format(folder))
+            log.debug('에러 코드 : {}'.format(e))
+
+    Mod.MODs = Mod.MODs + list1
 
 def update_config(dir1, mod):
     currentdir = os.getcwd()

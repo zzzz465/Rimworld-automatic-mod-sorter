@@ -8,6 +8,7 @@ import time
 from lxml import etree
 import shutil
 import time
+import os
 
 log = logging.getLogger('RAMS.RWManager')
 
@@ -30,15 +31,24 @@ def LoadActMod(root):
 
     return active_mod #Modkey를 반환
 
-def askfiledir(titlename, filetype):
+def askfiledir(titlename, filetype, defaultpath):
     ''' finder(titlename, filetype)\n
-         titlename : 제목 설정\n
-         filetype : 리스트 형식을 입력 예시 = [('이름.확장자', '*.확장자')]
+    titlename : popup title\n
+    filetype : input file type, example -> [('name.extension', '*.extension')]\n
+    defaultpath : find this file first. if exist, select that. if not, make pop-up window
     '''
-    cdir = os.path.dirname(os.path.realpath(__file__))
-    root = tk.Tk()
-    filedir = filedialog.askopenfilename(initialdir = cdir, title = titlename, filetype = filetype)
-    root.destroy()
+    try:
+        if os.path.exists(defaultpath): #if the file exists.
+            return filedir
+        
+        else:
+            raise ValueError
+    
+    except:
+        cdir = os.path.dirname(os.path.realpath(__file__))
+        root = tk.Tk()
+        filedir = filedialog.askopenfilename(initialdir = cdir, title = titlename, filetype = filetype)
+        root.destroy()
 
     return filedir
 

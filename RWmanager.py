@@ -31,7 +31,7 @@ def LoadActMod(root):
 
     return active_mod #Modkey를 반환
 
-def askfiledir(titlename, filetype, defaultpath):
+def askfiledir(titlename, filetype, defaultpath=''):
     ''' finder(titlename, filetype)\n
     titlename : popup title\n
     filetype : input file type, example -> [('name.extension', '*.extension')]\n

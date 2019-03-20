@@ -11,6 +11,8 @@ import webbrowser
 
 currentdir = os.getcwd()
 Version = 0.51 #dev
+HOMEPATH = os.environ['HOMEPATH']
+default_cfiledir = HOMEPATH + '\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by Ludeon Studios\\Config\\ModsConfig.xml'
 
 formatter = logging.Formatter('%(asctime)s - [%(levelname)s] : %(message)s')
 log = logging.getLogger("RAMS")
@@ -19,7 +21,7 @@ stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
 log.addHandler(stream_handler)
 log.propagate = 0
-logfile_handler = logging.FileHandler('program.log')
+logfile_handler = logging.FileHandler('RAMS.log')
 log.addHandler(logfile_handler)
 
 logcollect = '''compare your mods with online DB, and get mods which are not on the DB
@@ -55,7 +57,7 @@ if __name__ == '__main__':
     sleep(2)
 
     log.info('select your ModsConfig.xml file')
-    Modmanager.ModBase.ConfigXmldir = RWmanager.askfiledir('select ModsConfig.xml', [('ModsConfig.xml', '*.*')])
+    Modmanager.ModBase.ConfigXmldir = RWmanager.askfiledir('select ModsConfig.xml', [('ModsConfig.xml', '*.*')], default_cfiledir)
     sleep(1)
 
     log.info('select your Local mod folder.')

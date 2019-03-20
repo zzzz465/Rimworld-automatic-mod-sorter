@@ -13,11 +13,12 @@ c_steamregpath = "Software\\Valve\\Steam"
 
 class ModBase:
     DB = dict()#DB저장
-    ActiveModlist = list()#modkey 저장(활성화)
+    ActiveModlist = list() # modkey 저장(활성화)
     ConfigXmlpath = str() #컨픽파일 경로 저장
     Configxmlfolderpath = str()
-    Steampath = getSteampath()
-    LocalModpath = Steampath + '/steamapps/common/RimWorld/Mods'
+    Steampath = getSteampath() # steam path or None
+    LocalModpath = str()
+    WorkshopModpath = str()
 
     @classmethod
     def setDB(cls, DB):
@@ -27,7 +28,23 @@ class ModBase:
     def setXmldir(cls, dir1):
         cls.ConfigXmlpath = dir1
         cls.Configxmlfolderpath = dir1[:len(cls.ConfigXmlpath) - 15]
-    
+
+    @classmethod
+    def setLocalPath(cls):
+        if cls.Steampath != None:
+            cls.LocalModpath = cls.Steampath + '/steamapps/common/RimWorld/Mods'
+        
+        else:
+            cls.LocalModpath = RWmanager.askfolderdir(titlename="select Local Mods folder.")
+
+    @classmethod
+    def setWorkshopPath(cls):
+        if cls.Steampath != None:
+            cls.WorkshopModpath = cls.Steampath + '/steamapps/workshop/content/294100'
+        
+        else:
+            cls.WorkshopModpath = RWmanager.askfolderdir(titlename='Select Workshop 294100 folder')
+
     def __init__(self):
         if ModBase.ActiveModlist == []:
             root = RWmanager.LoadXML(ModBase.ConfigXmlpath)

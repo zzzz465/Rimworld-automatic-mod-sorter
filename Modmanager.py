@@ -7,6 +7,8 @@ from time import sleep
 
 from lxml import etree
 
+import winreg # for steam folder location.
+
 import RWmanager
 import downloader
 
@@ -31,21 +33,14 @@ class ModBase:
         if ModBase.DB == {}:
             ModBase.setDB(ModBase.DB)
 
-        #if ModBase.ConfigXmldir == str():
-        #    ModBase.ConfigXmldir = RWmanager.askfiledir('select Rimworld config file.', [('ModsConfig.xml', '*.*')])
-    
-        #if ModBase.ConfigXmldir
-
         if ModBase.ActiveModlist == []:
             root = RWmanager.LoadXML(ModBase.ConfigXmldir)
             ModBase.ActiveModlist = RWmanager.LoadActMod(root)
             sleep(2)
             log.info('Active mod list loaded.')
             sleep(1)
-            log.info('current active mod number > {}'.format(len(ModBase.ActiveModlist)))
+            log.info('current active mod number = {}'.format(len(ModBase.ActiveModlist)))
             
-
-
 class Mod(ModBase):
     Modcount = 0
     MODs = list() # every mod data will saved in this list
@@ -96,11 +91,11 @@ class Mod(ModBase):
         sleep(0.08)
         if self.MODname in Mod.DB:
             num = Mod.DB[self.MODname]
-            log.info("grant mod number {} to mod name > {}".format(num, self.MODname))
+            log.debug("grant mod number {} to mod name > {}".format(num, self.MODname))
             return float(num)
 
         else:
-            log.warning('ERROR while giving order number to mod > {}'.format(self.MODname))
+            log.debug('ERROR while giving order number to mod > {}'.format(self.MODname))
             return None
 
 class ModWorkshop(Mod):
@@ -138,6 +133,7 @@ def LoadMod(dir1, type1='Local'):
         dir = 모드 폴더 경로\n
         type = 'Local' 또는 'Workshop'
     '''
+
     log.debug('LoadMod 호출')
     folderlist = os.listdir(dir1)
     log.debug('dir1 폴더에서 폴더 {} 개를 찾았습니다.'.format(len(folderlist)))
@@ -168,7 +164,7 @@ def LoadMod(dir1, type1='Local'):
             except Exception as e:
                 log.debug('LoadMod workshop 돌던 중 에러 발생')
                 log.debug('에러 코드 : {}'.format(e))
-        Mod.MODs = Mod.MODs + list1
+        Mod.MODs = Mod.MODs + list1 #need clean up
 
 def update_config(dir1, mod):
     currentdir = os.getcwd()
@@ -228,7 +224,7 @@ if __name__ == '__main__': # for testing
     log.setLevel(logging.DEBUG)
     x = RWmanager.askfolderdir()
     DB = downloader.download_DB()
-    ModBase.setDB(DB)
+    #ModBase.setDB(DB)
     LoadMod(x, 'Workshop')
     print(len(Mod.MODs))
     

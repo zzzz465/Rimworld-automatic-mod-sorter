@@ -16,7 +16,7 @@ default_cfiledir = HOMEPATH + '\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by 
 
 formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s',"%H:%M:%S") #TODO change tomore readable format.
 log = logging.getLogger("RAMS")
-log.setLevel(logging.INFO)
+log.setLevel(logging.DEBUG)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
 log.addHandler(stream_handler)
@@ -31,7 +31,7 @@ weblogurl = 'https://gist.github.com/RAMSlog'
 
 if __name__ == '__main__':
     log.info('Initializing program...')
-    sleep(0.5) # I'm trying to add sleep function between every log message with decorator, closure or something else.
+    sleep(0.5) #TODO I'm trying to add sleep function between every log message with decorator, closure or something else.
     DB = downloader.download_DB() # GET DB from server
     Modmanager.ModBase.setDB(DB) # DB 파일 설정
 
@@ -59,8 +59,7 @@ if __name__ == '__main__':
     Modmanager.ModBase() #run __init__
 
     sleep(1)
-    log.info('Load Workshop Mod? Y/N > ')
-    if str(input(' : ')).lower() == 'y':
+    if str(input('Load Workshop Mod? Y/N > ')).lower() == 'y':
         logging.info('select your workshop mod folder. folder number is 294100')
         workshopdir = RWmanager.askfolderdir()
         Modmanager.LoadMod(workshopdir, "Workshop")

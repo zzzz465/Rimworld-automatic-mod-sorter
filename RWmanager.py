@@ -96,5 +96,3 @@ default mode = 'a'
 
 if __name__ == '__main__':
     backup('C:\\Users\\stopc\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by Ludeon Studios\\Config', 'ModsConfig.xml')
-
-

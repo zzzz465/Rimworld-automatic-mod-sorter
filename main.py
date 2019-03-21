@@ -1,13 +1,11 @@
-import downloader
 import logging
 import time
-import Modmanager
-import RWmanager
 from time import sleep
 import sys
-import upload
 import os
 import webbrowser
+
+from core import *
 
 currentdir = os.getcwd()
 Version = 0.51 #dev

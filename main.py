@@ -11,8 +11,6 @@ import webbrowser
 
 currentdir = os.getcwd()
 Version = 0.51 #dev
-HOMEPATH = os.environ['HOMEPATH']
-default_cfiledir = HOMEPATH + '\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by Ludeon Studios\\Config\\ModsConfig.xml'
 
 formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s',"%H:%M:%S") #TODO change tomore readable format.
 log = logging.getLogger("RAMS")

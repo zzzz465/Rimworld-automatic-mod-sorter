@@ -11,6 +11,9 @@ import RWmanager
 log = logging.getLogger('RAMS.ModManager')
 c_steamregpath = "Software\\Valve\\Steam"
 
+HOMEPATH = os.environ['HOMEPATH']
+default_cfilepath = HOMEPATH + '\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by Ludeon Studios\\Config\\ModsConfig.xml'
+
 def parseXML(dir_XML, attribute):
     if type(dir_XML) != type(str()):
         log.error('cannot read XML file directory. ')
@@ -147,9 +150,20 @@ class ModBase:
         cls.DB = DB 
 
     @classmethod
-    def setXmldir(cls, dir1):
-        cls.ConfigXmlpath = dir1
-        cls.Configxmlfolderpath = dir1[:len(cls.ConfigXmlpath) - 15]
+    def setXmlpath(cls):#call in Modbase.__init__()
+        if os.path.exists(default_cfilepath):
+            
+            if os.path.isfile(cls.ConfigXmlpath):
+                cls.ConfigXmlpath = default_cfilepath
+                cls.Configxmlfolderpath = default_cfilepath[:len(cls.ConfigXmlpath) - 15]
+            
+            else:
+                cls.Configxmlfolderpath = RWmanager.askfiledir("select ModsConfig.xml", [('ModsConfig.Xml', '*.*')])
+                cls.Configxmlfolderpath = default_cfilepath[:len(cls.ConfigXmlpath) - 15]
+        
+        else:
+            cls.Configxmlfolderpath = RWmanager.askfiledir("select ModsConfig.xml", [('ModsConfig.Xml', '*.*')])
+            cls.Configxmlfolderpath = default_cfilepath[:len(cls.ConfigXmlpath) - 15] #TODO need clean up
 
     @classmethod
     def setLocalPath(cls):
@@ -176,6 +190,7 @@ class ModBase:
         Always run first before sorting.
         '''
         log.debug('start MODbase __init__')
+        ModBase.setXmlpath()
         root = RWmanager.LoadXML(ModBase.ConfigXmlpath)
         ModBase.ActiveModlist = RWmanager.LoadActMod(root)
         sleep(2)

@@ -5,7 +5,7 @@ import sys
 import os
 import webbrowser
 
-from core import *
+from core import downloader, Modmanager, RWmanager
 
 currentdir = os.getcwd()
 Version = 0.51 #dev
@@ -120,7 +120,7 @@ if __name__ == '__main__':
         a = input('upload it? Y/N > ')
         if a.isalpha():
             if a.lower() == 'y':
-                from upload import gitupload
+                from core.upload import gitupload
                 gitupload(log_upload, DB['token'])
                 sleep(5) # wait for gist update
                 webbrowser.open(weblogurl) # show log file.

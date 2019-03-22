@@ -191,7 +191,8 @@ class ModBase:
                 
         log.info('Workshop mod path "{}"'.format(cls.WorkshopModpath))
 
-    def __init__(self):
+    @classmethod
+    def setinit(cls):
         '''
         Always run first before sorting.
         '''
@@ -209,7 +210,9 @@ class ModBase:
         log.debug('start modbase init setworkshoppath')
         ModBase.setWorkshopPath()
 
-  
+    def __init__(self):
+        pass
+
 class Mod(ModBase):
     Modcount = 0
     MODs = list() # every mod data will saved in this list

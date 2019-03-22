@@ -39,8 +39,7 @@ if __name__ == '__main__':
 
     log.info('current version = {}'.format(Version))
 
-    #버전체크
-    if Version < DB['Version']:
+    if Version < DB['Version']:#version check
         log.info('latest version > {}'.format(DB['Version']))
         log.info('please update to latest version.')
         log.info('program will be closed in 5 seconds...')
@@ -52,7 +51,7 @@ if __name__ == '__main__':
     log.info('Latest DB updated date : {}'.format(DB['time']))
     sleep(2)
 
-    Modmanager.ModBase() #run __init__
+    Modmanager.ModBase.setinit() # do initial setting.
     
     log.info('current loaded mod number : {}'.format(len(Modmanager.Mod.MODs)))
     while True:

@@ -13,20 +13,25 @@ DB_url = 'https://raw.githubusercontent.com/zzzz465/Rimworld-automatic-mod-sorte
 log = logging.getLogger('RAMS.downloader')
 
 def download_DB(): #shakeyourbunny's code. thank you!
-    '''Return latest DB file type <dict>
-    '''
-    log.info('fetching latest DB file from server...')
-    log.info('please allow firewall internet connection.')
-    sleep(1)
-    with urlopen(DB_url) as jsonurl:
-        dbrawdata = jsonurl.read()
-    
-    log.info('DB download complete!')
-    
-    return json.loads(dbrawdata)
+    try:
+        '''Return latest DB file type <dict>
+        '''
+        log.info('fetching latest DB file from server...')
+        log.info('please allow firewall internet connection.')
+        sleep(1)
+        with urlopen(DB_url) as jsonurl:
+            dbrawdata = jsonurl.read()
+        
+        log.info('DB download complete!')
+        
+        return json.loads(dbrawdata)
 
-    #with open('db_template.json', 'wb') as dbfile:
-    #    dbfile.write(dbrawdata)
+    except:
+        log.warning('cannot download DB from server. loading local DB files...')
+        with open('DB_template.json', mode='w') as jsonlocal:
+            dbrawdata = jsonlocal.read()
+        
+        return json.loads(dbrawdata)
 
 if __name__ == '__main__':
     DBtest = download_DB()

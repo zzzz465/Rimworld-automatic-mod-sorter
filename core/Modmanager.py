@@ -44,6 +44,9 @@ def LoadMod(dir1, type1=1):
         2 = Workshop
         
     '''
+    if dir1 == None:
+        return None
+        
     folderlist = os.listdir(dir1)
     log.debug('dir1 폴더에서 폴더 {} 개를 찾았습니다.'.format(len(folderlist)))
 
@@ -184,7 +187,6 @@ class ModBase:
             if str(input('Load Workshop Mod? Y/N > ')).lower() == 'y':
                 logging.info('select your workshop mod folder. folder number is 294100')
                 cls.WorkshopModpath = RWmanager.askfolderdir(titlename='Select Workshop 294100 folder')
-                LoadMod(ModBase.WorkshopModpath, "Workshop")
             
             else:
                 return None
@@ -192,9 +194,10 @@ class ModBase:
         log.info('Workshop mod path "{}"'.format(cls.WorkshopModpath))
 
     @classmethod
-    def setinit(cls):
+    def setinit(cls): #TODO merge DB setting and this
         '''
-        Always run first before sorting.
+        Always run first before sorting.\n
+        find activate mod list, set local/workshop path.
         '''
         log.debug('start MODbase __init__')
         ModBase.setXmlpath()
@@ -205,10 +208,11 @@ class ModBase:
         sleep(1)
         log.info('current active mod number = {}'.format(len(ModBase.ActiveModlist)))
 
-        log.debug('start MODbase __init__ setlocalpath')
         ModBase.setLocalPath()
-        log.debug('start modbase init setworkshoppath')
         ModBase.setWorkshopPath()
+
+        LoadMod(ModBase.LocalModpath, 1)
+        LoadMod(ModBase.WorkshopModpath, 2)
 
     def __init__(self):
         pass

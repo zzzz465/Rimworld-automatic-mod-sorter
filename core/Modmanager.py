@@ -181,8 +181,14 @@ class ModBase:
             cls.WorkshopModpath = cls.Steampath + '/steamapps/workshop/content/294100'
         
         else:
-            cls.WorkshopModpath = RWmanager.askfolderdir(titlename='Select Workshop 294100 folder')
-
+            if str(input('Load Workshop Mod? Y/N > ')).lower() == 'y':
+                logging.info('select your workshop mod folder. folder number is 294100')
+                cls.WorkshopModpath = RWmanager.askfolderdir(titlename='Select Workshop 294100 folder')
+                LoadMod(ModBase.WorkshopModpath, "Workshop")
+            
+            else:
+                return None
+                
         log.info('Workshop mod path "{}"'.format(cls.WorkshopModpath))
 
     def __init__(self):

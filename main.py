@@ -29,7 +29,7 @@ if __name__ == '__main__':
     log.info('Initializing program...')
     sleep(0.5) #TODO I'm trying to add sleep function between every log message with decorator, closure or something else.
     DB = downloader.download_DB() # GET DB from server
-    Modmanager.ModBase.setDB(DB) # DB 파일 설정
+    Modmanager.ModBase.setDB(DB) # DB 파일 설정 TODO move this to setinit()
 
     try: #to give any important messages.
         log.info(DB['message'])
@@ -125,13 +125,3 @@ if __name__ == '__main__':
         else:
             log.info('input Y/N, not {}'.format(a))
     #githubgist와 연동하기
-    
-
-
-
-    
-
-    
-
-
-    

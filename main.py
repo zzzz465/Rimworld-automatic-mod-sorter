@@ -10,7 +10,7 @@ from core import downloader, Modmanager, RWmanager
 currentdir = os.getcwd()
 Version = 0.51 #dev
 
-formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s',"%H:%M:%S") #TODO change tomore readable format.
+formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s',"%H:%M:%S") #TODO change to more readable format.
 log = logging.getLogger("RAMS")
 log.setLevel(logging.DEBUG)
 stream_handler = logging.StreamHandler()
@@ -53,15 +53,6 @@ if __name__ == '__main__':
     sleep(2)
 
     Modmanager.ModBase() #run __init__
-
-    sleep(1)
-    if str(input('Load Workshop Mod? Y/N > ')).lower() == 'y':
-        logging.info('select your workshop mod folder. folder number is 294100')
-        workshopdir = RWmanager.askfolderdir()
-        Modmanager.LoadMod(workshopdir, "Workshop")
-    
-    else:
-        pass
     
     log.info('current loaded mod number : {}'.format(len(Modmanager.Mod.MODs)))
     while True:

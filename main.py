@@ -12,7 +12,7 @@ Version = 0.51 #dev
 
 formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s',"%H:%M:%S") #TODO change to more readable format.
 log = logging.getLogger("RAMS")
-log.setLevel(logging.DEBUG)
+log.setLevel(logging.INFO)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
 log.addHandler(stream_handler)

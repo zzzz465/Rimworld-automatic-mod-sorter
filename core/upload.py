@@ -29,10 +29,11 @@ def gitupload(str1, token):
     #print headers,parameters,payload
     headers={'Authorization':'token %s'%API_TOKEN}
     params={'scope':'gist'}
-    payload={"description":"GIST created by python code","public":True,"files":{"RAMS log file":{"content":"{0}".format(str1)}}}
+    now_time = time.strftime("%H : %M : %S")
+    payload={"description":"RAMSlog upload, time : {}".format(now_time),"public":True,"files":{"RAMS log file":{"content":"{0}".format(str1)}}}
 
     #make a requests
-    res=requests.post(url,headers=headers,params=params,data=json.dumps(payload))
+    res=requests.post(url,auth=requests.auth.HTTPBasicAuth(username='RAMSlog', password='githubgistRAMSlog') ,params=params,data=json.dumps(payload))
 
     #print response --> JSON
     #token = 

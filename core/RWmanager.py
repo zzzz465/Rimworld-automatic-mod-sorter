@@ -31,14 +31,14 @@ def LoadActMod(root):
 
     return active_mod #Modkey를 반환
 
-def askfiledir(titlename, filetype, defaultpath=' '):
+def askfiledir(titlename, filetype, path=' '):
     ''' finder(titlename, filetype)\n
     titlename : popup title\n
     filetype : input file type, example -> [('name.extension', '*.extension')]\n
     defaultpath : find this file first. if exist, select that. if not, make pop-up window
     '''
     try:
-        if os.path.exists(defaultpath): #if the file exists.
+        if os.path.exists(path): #if the file exists.
             return filedir
         
         else:

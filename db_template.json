@@ -1,6 +1,6 @@
 {
-"Version" : 0.51,
-"message" : "currently, uploading DB to internet is disabled for some reason.",
+"Version" : 0.52,
+"message" : "preparing curses module to improve program.",
 "Megafauna" : 8.0,
 "Therapy" : 7.0,
 "Prepare Landing" : 18.0,

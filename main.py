@@ -8,7 +8,7 @@ import webbrowser
 from core import downloader, Modmanager, RWmanager
 
 currentdir = os.getcwd()
-Version = 0.51 #dev
+Version = 0.52 #dev
 
 formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s',"%H:%M:%S") #TODO change to more readable format.
 log = logging.getLogger("RAMS")

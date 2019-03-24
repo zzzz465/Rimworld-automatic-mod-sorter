@@ -27,11 +27,16 @@ def download_DB(): #shakeyourbunny's code. thank you!
         return json.loads(dbrawdata)
 
     except:
-        log.warning('cannot download DB from server. loading local DB files...')
-        with open('DB_template.json', mode='w') as jsonlocal:
-            dbrawdata = jsonlocal.read()
+        try:
+            log.warning('cannot download DB from server. loading local DB files...')
+            with open('DB_template.json', mode='w') as jsonlocal:
+                dbrawdata = jsonlocal.read()
+            
+            return json.loads(dbrawdata)
         
-        return json.loads(dbrawdata)
+        except:
+            log.error('cannot found DB file from local. exit program...')
+            sys.exit(0)
 
 if __name__ == '__main__':
     DBtest = download_DB()

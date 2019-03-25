@@ -29,9 +29,16 @@ def download_DB(): #shakeyourbunny's code. thank you!
     except:
         try:
             log.warning('cannot download DB from server. loading local DB files...')
-            with open('DB_template.json', mode='w') as jsonlocal:
+            currentpath = os.getcwd() # 설마..
+
+            from core import RWmanager
+            xmlpath = RWmanager.askfiledir(titlename="select DB_template.json", filetype=[('*.*', '*.*')])
+            os.chdir(os.path.dirname(xmlpath))
+            with open('DB_template.json', mode='r') as jsonlocal:
                 dbrawdata = jsonlocal.read()
-            
+
+            os.chdir(currentpath) #FIXME change to more better code.
+
             return json.loads(dbrawdata)
         
         except:

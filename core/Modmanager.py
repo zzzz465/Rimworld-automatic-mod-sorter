@@ -1,12 +1,15 @@
 import logging
 import os
 import tkinter as tkinter
-from winreg import OpenKey, QueryValueEx  # for steam folder location.
+from winreg import OpenKey, QueryValueEx, HKEY_CURRENT_USER  # for steam folder location.
 import xml.etree.ElementTree as ET
 from time import sleep
 from lxml import etree
-import downloader
-import RWmanager
+try: #FIXME for testing. should be removed.
+    from core import downloader, RWmanager, Loghandler
+
+except:
+    import downloader, RWmanager, Loghandler
 
 log = logging.getLogger('RAMS.ModManager')
 c_steamregpath = "Software\\Valve\\Steam"
@@ -77,8 +80,6 @@ def update_config(dir1, mod):
     for x in mod:
         try:
             list1.append(str(x.MODkey))
-            log.info('Record Mod > {}'.format(str(x.MODname)))
-            sleep(0.1)
 
         except Exception as e:
             log.warning('Error while loading Mod {} to order list.'.format(x.MODname))
@@ -104,7 +105,6 @@ def config_updater(cfdir, Mods):
     root = doc.getroot()
 
     log.info('initializing config file...')
-    sleep(2)
     root.remove(root.find('activeMods')) # remove activemods tag and below
     ActiveMods = ET.SubElement(root, 'activeMods') # make a tag
     
@@ -112,8 +112,7 @@ def config_updater(cfdir, Mods):
     for x in Mods:
         mod = ET.SubElement(ActiveMods, 'li')
         mod.text = str(x)
-
-    sleep(3)    
+ 
     doc.write('ModsConfig.xml', encoding='UTF-8', xml_declaration='False')
     log.info('ModsConfig.xml saved...')
 
@@ -125,10 +124,10 @@ def getSteampath():
     log.debug('call getSteampath')
     try:
         steamreg = OpenKey(HKEY_CURRENT_USER, c_steamregpath)
-        log.debug('steamreg = ' + steamreg)
+        log.debug('steamreg = ' + str(steamreg))
         try:
             value = QueryValueEx(steamreg, "SteamPath")
-            log.debug('value : ' + value)
+            log.debug('value : ' + str(value))
             return value[0]
         
         except:
@@ -142,7 +141,7 @@ def getSteampath():
 class ModBase:
     DB = dict()#DB저장
     ActiveModlist = list() # modkey 저장(활성화)
-    ConfigXmlpath = str() #컨픽파일 경로 저장
+    ConfigXmlpath = default_cfilepath #컨픽파일 경로 저장
     Configxmlfolderpath = str()
     Steampath = getSteampath() # steam path or None
     LocalModpath = str()
@@ -154,19 +153,17 @@ class ModBase:
 
     @classmethod
     def setXmlpath(cls):#call in Modbase.__init__()
-        if os.path.exists(default_cfilepath):
-            
-            if os.path.isfile(cls.ConfigXmlpath):
-                cls.ConfigXmlpath = default_cfilepath
-                cls.Configxmlfolderpath = default_cfilepath[:len(cls.ConfigXmlpath) - 15]
-            
-            else:
-                cls.Configxmlfolderpath = RWmanager.askfiledir("select ModsConfig.xml", [('ModsConfig.Xml', '*.*')])
-                cls.Configxmlfolderpath = default_cfilepath[:len(cls.ConfigXmlpath) - 15]
+        if os.path.isfile(cls.ConfigXmlpath):
+            cls.ConfigXmlpath = default_cfilepath
+            cls.Configxmlfolderpath = os.path.dirname(default_cfilepath)
         
         else:
-            cls.Configxmlfolderpath = RWmanager.askfiledir("select ModsConfig.xml", [('ModsConfig.Xml', '*.*')])
-            cls.Configxmlfolderpath = default_cfilepath[:len(cls.ConfigXmlpath) - 15] #TODO need clean up
+            path = RWmanager.askfiledir("select ModsConfig.xml", [('ModsConfig.Xml', '*.*')])
+            cls.Configxmlfolderpath = path
+            cls.Configxmlfolderpath = os.path.dirname(path)
+
+        log.debug('XML path : {} | XML folder path : {}'.format(cls.ConfigXmlpath, cls.Configxmlfolderpath))
+
 
     @classmethod
     def setLocalPath(cls):
@@ -199,13 +196,10 @@ class ModBase:
         Always run first before sorting.\n
         find activate mod list, set local/workshop path.
         '''
-        log.debug('start MODbase __init__')
         ModBase.setXmlpath()
         root = RWmanager.LoadXML(ModBase.ConfigXmlpath)
         ModBase.ActiveModlist = RWmanager.LoadActMod(root)
-        sleep(2)
         log.info('Active mod list loaded.')
-        sleep(1)
         log.info('current active mod number = {}'.format(len(ModBase.ActiveModlist)))
 
         ModBase.setLocalPath()
@@ -263,7 +257,6 @@ class Mod(ModBase):
 
     
     def SetOrderNum(self):
-        sleep(0.08)
         if self.MODname in Mod.DB:
             num = Mod.DB[self.MODname]
             log.debug("grant mod number {} to mod name > {}".format(num, self.MODname))
@@ -282,10 +275,11 @@ class ModLocal(Mod):
         super().__init__(modkey, moddir)
         
 if __name__ == '__main__': # for testing
-    
-    
-    log = logging.getLogger()
+
     log.setLevel(logging.DEBUG)
+    
+    ModBase.setinit()
+
     x = RWmanager.askfolderdir()
     DB = downloader.download_DB()
     #ModBase.setDB(DB)

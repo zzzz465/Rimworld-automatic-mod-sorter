@@ -10,7 +10,8 @@ import sys
 sys.path.insert(0, '{}\\core'.format(os.getcwd()))
 #print(sys.path)
 
-import downloader, Modmanager, RWmanager
+from core import downloader, RWmanager, upload
+from core.Modmanager import Modmanager
 
 currentdir = os.getcwd()
 Version = 0.54 #dev

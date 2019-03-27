@@ -7,12 +7,7 @@ import xml.etree.ElementTree as ET
 from time import sleep
 from lxml import etree
 
-import sys
-sys.path.insert(0, '{}\\core'.format(os.getcwd()))
-#print(sys.path) #FIXME should change folder structure
-
-import downloader, RWmanager
-
+from .. import RWmanager, downloader
 
 log = logging.getLogger('RAMS.ModManager')
 c_steamregpath = "Software\\Valve\\Steam"

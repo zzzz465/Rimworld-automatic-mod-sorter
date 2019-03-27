@@ -13,7 +13,7 @@ sys.path.insert(0, '{}\\core'.format(os.getcwd()))
 import downloader, Modmanager, RWmanager
 
 currentdir = os.getcwd()
-Version = 0.53 #dev
+Version = 0.54 #dev
 
 formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s',"%H:%M:%S") #TODO change to more readable format.
 log = logging.getLogger("RAMS")

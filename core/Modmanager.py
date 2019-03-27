@@ -5,11 +5,13 @@ from winreg import OpenKey, QueryValueEx, HKEY_CURRENT_USER  # for steam folder 
 import xml.etree.ElementTree as ET
 from time import sleep
 from lxml import etree
-try: #FIXME for testing. should be removed.
-    from core import downloader, RWmanager, Loghandler
 
-except:
-    import downloader, RWmanager, Loghandler
+import sys
+sys.path.insert(0, '{}\\core'.format(os.getcwd()))
+#print(sys.path) #FIXME should change folder structure
+
+import downloader, RWmanager
+
 
 log = logging.getLogger('RAMS.ModManager')
 c_steamregpath = "Software\\Valve\\Steam"

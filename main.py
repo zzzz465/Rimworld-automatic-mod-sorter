@@ -5,7 +5,11 @@ import sys
 import os
 import webbrowser
 
-from core import downloader, Modmanager, RWmanager
+import sys
+sys.path.insert(0, '{}\\core'.format(os.getcwd()))
+#print(sys.path)
+
+import downloader, Modmanager, RWmanager
 
 currentdir = os.getcwd()
 Version = 0.53 #dev

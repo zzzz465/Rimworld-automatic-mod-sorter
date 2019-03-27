@@ -21,5 +21,4 @@ if __name__ == '__main__':
 
     Modmanager.ModBase.setinit()
 
-    Modmanager.ModBase.
-    
+    #Modmanager.ModBase.\    

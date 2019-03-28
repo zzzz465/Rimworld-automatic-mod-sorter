@@ -1,1 +1,1 @@
-__all__ = ['downloader', 'Modmanager', 'RWmanager', 'upload']
+__all__ = ['downloader', 'Modmanager', 'RWmanager', 'upload', 'Loghandler']

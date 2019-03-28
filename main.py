@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 import logging
 import time
 from time import sleep
@@ -5,10 +6,15 @@ import sys
 import os
 import webbrowser
 
-from core import downloader, Modmanager, RWmanager
+import sys
+sys.path.insert(0, '{}\\core'.format(os.getcwd()))
+#print(sys.path)
+
+from core import downloader, RWmanager, upload
+from core.Modmanager import Modmanager
 
 currentdir = os.getcwd()
-Version = 0.53 #dev
+Version = 0.54 #dev
 
 formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s',"%H:%M:%S") #TODO change to more readable format.
 log = logging.getLogger("RAMS")

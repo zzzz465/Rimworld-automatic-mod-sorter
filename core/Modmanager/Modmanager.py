@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 import logging
 import os
 import tkinter as tkinter
@@ -5,11 +6,12 @@ from winreg import OpenKey, QueryValueEx, HKEY_CURRENT_USER  # for steam folder 
 import xml.etree.ElementTree as ET
 from time import sleep
 from lxml import etree
-try: #FIXME for testing. should be removed.
-    from core import downloader, RWmanager, Loghandler
+
+try:
+    from .. import RWmanager, downloader
 
 except:
-    import downloader, RWmanager, Loghandler
+    pass
 
 log = logging.getLogger('RAMS.ModManager')
 c_steamregpath = "Software\\Valve\\Steam"
@@ -141,9 +143,9 @@ def getSteampath():
 class ModBase:
     DB = dict()#DB저장
     ActiveModlist = list() # modkey 저장(활성화)
-    ConfigXmlpath = default_cfilepath #컨픽파일 경로 저장
+    ConfigXmlpath = str() #컨픽파일 경로 저장
     Configxmlfolderpath = str()
-    Steampath = getSteampath() # steam path or None
+    Steampath = str() # steam path or None
     LocalModpath = str()
     WorkshopModpath = str()
 
@@ -151,19 +153,18 @@ class ModBase:
     def setDB(cls, DB):
         cls.DB = DB 
 
-    @classmethod
-    def setXmlpath(cls):#call in Modbase.__init__()
-        if os.path.isfile(cls.ConfigXmlpath):
-            cls.ConfigXmlpath = default_cfilepath
-            cls.Configxmlfolderpath = os.path.dirname(default_cfilepath)
+    @staticmethod
+    def setXmlpath():#call in Modbase.__init__()
+        if os.path.isfile(default_cfilepath):
+            path = default_cfilepath
         
         else:
             path = RWmanager.askfiledir("select ModsConfig.xml", [('ModsConfig.Xml', '*.*')])
-            cls.Configxmlfolderpath = path
-            cls.Configxmlfolderpath = os.path.dirname(path)
 
-        log.debug('XML path : {} | XML folder path : {}'.format(cls.ConfigXmlpath, cls.Configxmlfolderpath))
+        ModBase.ConfigXmlpath = path
+        ModBase.Configxmlfolderpath = os.path.dirname(path)
 
+        log.debug('XML path : {} | XML folder path : {}'.format(path, os.path.dirname(path)))
 
     @classmethod
     def setLocalPath(cls):
@@ -178,8 +179,10 @@ class ModBase:
     @classmethod
     def setWorkshopPath(cls):
         if cls.Steampath != None:
-            cls.WorkshopModpath = cls.Steampath + '/steamapps/workshop/content/294100'
-        
+            value1 = cls.Steampath + '/steamapps/workshop/content/294100'
+            if os.path.isdir(value1):
+                cls.WorkshopModpath = value1
+
         else:
             if str(input('Load Workshop Mod? Y/N > ')).lower() == 'y':
                 logging.info('select your workshop mod folder. folder number is 294100')
@@ -190,8 +193,8 @@ class ModBase:
                 
         log.info('Workshop mod path "{}"'.format(cls.WorkshopModpath))
 
-    @classmethod
-    def setinit(cls): #TODO merge DB setting and this
+    @staticmethod
+    def setinit(): #TODO merge DB setting and this
         '''
         Always run first before sorting.\n
         find activate mod list, set local/workshop path.
@@ -202,6 +205,7 @@ class ModBase:
         log.info('Active mod list loaded.')
         log.info('current active mod number = {}'.format(len(ModBase.ActiveModlist)))
 
+        ModBase.Steampath = getSteampath()
         ModBase.setLocalPath()
         ModBase.setWorkshopPath()
 
@@ -226,10 +230,6 @@ class Mod(ModBase):
         self.MODname = parseXML(self.dir_Aboutxml, 'name')
         self.OrderNum = self.SetOrderNum()
 
-    @classmethod
-    def Modcountplus(cls):
-        cls.Modcount += 1
-
     @staticmethod
     def getOrderNum(self):
         return self.OrderNum
@@ -253,9 +253,6 @@ class Mod(ModBase):
 
         cls.list3.sort(key=Mod.getOrderNum)
 
-                    
-
-    
     def SetOrderNum(self):
         if self.MODname in Mod.DB:
             num = Mod.DB[self.MODname]
@@ -275,10 +272,20 @@ class ModLocal(Mod):
         super().__init__(modkey, moddir)
         
 if __name__ == '__main__': # for testing
-
+    import sys
+    sys.path.insert(0, "C:\\Users\\stopc\\Documents\\Git\\Python\\RAMS\\core")
+    import RWmanager, RWmanager
+   
+    log = logging.getLogger("RAMS")
     log.setLevel(logging.DEBUG)
+    stream_handler = logging.StreamHandler()
+    formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s',"%H:%M:%S") #TODO change to more readable format.
+    stream_handler.setFormatter(formatter)
+    log.addHandler(stream_handler)
+    log.propagate = 0
     
-    ModBase.setinit()
+    Root = ModBase()
+    Root.setinit()
 
     x = RWmanager.askfolderdir()
     DB = downloader.download_DB()

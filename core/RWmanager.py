@@ -110,10 +110,3 @@ def write_data(path, key, value):
     
     with open(path, mode='w') as f:
         f.write(json.dumps(data, indent=4))
-
-def test():
-    #from API.Auth.GitAuth import data_path
-    #write_data(data_path, 'test', 'value')
-
-if __name__ == '__main__':
-    test()

@@ -1,52 +1,3 @@
-import WebLogin
-import json
-import os
-
-data_path = os.path.dirname(__file__) + '\\data.json'
-
-def read_token():
-    '''
-    read token in data.json file
-    return token if available.
-    raise ValueError if the value is blank.
-    '''
-    with open(data_path, mode='r') as f:
-        raw = f.read()
-        data_dict = json.loads(raw)
-        
-        if data_dict['token']:
-            return data_dict['token']
-
-        else:
-            raise ValueError
-
-def write_token(token):
-    '''
-    write token to data.json file.
-    "token" : " ~~token~~ "
-    '''
-    with open(data_path, mode='r') as f:
-        data_dict = json.loads(f.read())
-        data_dict['token'] = token
-        
-    with open(data_path, mode='w') as f:
-        f.write(json.dumps(data_dict, indent=4))
-
-def test():
-    #with open(data_path, mode='r') as f:
-    #    print(f.read())
-    #    print(type(f.read()))
-
-    #print(data_path)
-
-    param = "test token"
-    write_token(param)
-
-
-if __name__ == '__main__':
-    test()
-from . import WebLogin
-from ... import RWmanager
 import json
 from time import sleep
 import logging
@@ -54,9 +5,25 @@ import os
 
 client_id = '663a6cf8eeff353b0625'
 gitAuthurl = 'https://github.com/login/oauth/authorize?client_id=663a6cf8eeff353b0625'
-data_path = os.path.dirname(os.path.abspath(__file__)) + '\\data.json'
+appdata = os.environ['appdata']
+data_path = appdata + '\\RAMS\\Auth' + '\\data.json'
 
 log = logging.getLogger('RAMS.core.API.Auth.GitAuth')
+
+def write_data(key, value):
+    '''
+    write key, value to data.json file in Auth
+    '''
+
+    if os.path.isdir(os.path.dirname(data_path)) != True:
+        os.mkdir(os.path.dirname(data_path))
+
+    with open(data_path, mode='r') as f:
+        data = json.loads(f.read())
+
+    with open(data_path, mode='w') as f:
+        data[key] = value
+        f.write(json.dumps(data))
 
 def issue_token():
     '''
@@ -72,7 +39,7 @@ def issue_token():
     code = get_code(driver)
     log.debug('code : {}'.format(code))
 
-    RWmanager.write_data(data_path, 'token', code)
+    write_data(data_path, 'token', code)
 
 def get_code(driver):
     '''
@@ -105,13 +72,31 @@ def get_code(driver):
             raise TimeoutError
             break
 
-def get_token():
+def load_token():
     """
     return token in data.
     raise Error if can't load token
     """
     log.debug('load token...')
-    with open(data_path, mode='r') as f:
-        token = json.loads(f.read())['token'] 
+    try:
+        with open(data_path, mode='r') as f:
+            token = json.loads(f.read())['token'] 
+            return token
+
+    except Exception as e:
+        log.error('Exception : {}'.format(e))
+        raise e
+
+def get_code():
+    '''
+    return token
+    '''
+
+    try: #try to load code from data.json file
+        token = load_token()
         return token
 
+    except:
+        token = issue_token()
+    
+    return token

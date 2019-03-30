@@ -168,8 +168,9 @@ class ModBase:
 
     @classmethod
     def setLocalPath(cls):
-        if cls.Steampath != None:
-            cls.LocalModpath = cls.Steampath + '/steamapps/common/RimWorld/Mods'
+        defaultpath = cls.Steampath + '\\steamapps\\common\\RimWorld\\Mods'
+        if os.path.isdir(defaultpath):
+            cls.LocalModpath = defaultpath
 
         else:
             cls.LocalModpath = RWmanager.askfolderdir(titlename="select Local Mods folder.")
@@ -178,10 +179,9 @@ class ModBase:
 
     @classmethod
     def setWorkshopPath(cls):
-        if cls.Steampath != None:
-            value1 = cls.Steampath + '/steamapps/workshop/content/294100'
-            if os.path.isdir(value1):
-                cls.WorkshopModpath = value1
+        defaultpath = Steampath + '\\steamapps\\workshop\\content\\294100'
+        if os.path.isdir(defaultpath):
+            cls.WorkshopModpath = defaultpath
 
         else:
             if str(input('Load Workshop Mod? Y/N > ')).lower() == 'y':
@@ -263,7 +263,7 @@ class Mod(ModBase):
             log.debug('ERROR while giving order number to mod > {}'.format(self.MODname))
             return None
 
-class ModWorkshop(Mod):
+class ModWorkshop(Mod): #placeholder
     def __init__(self, modkey, moddir):
         super().__init__(modkey, moddir)
 
@@ -272,23 +272,4 @@ class ModLocal(Mod):
         super().__init__(modkey, moddir)
         
 if __name__ == '__main__': # for testing
-    import sys
-    sys.path.insert(0, "C:\\Users\\stopc\\Documents\\Git\\Python\\RAMS\\core")
-    import RWmanager, RWmanager
-   
-    log = logging.getLogger("RAMS")
-    log.setLevel(logging.DEBUG)
-    stream_handler = logging.StreamHandler()
-    formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s',"%H:%M:%S") #TODO change to more readable format.
-    stream_handler.setFormatter(formatter)
-    log.addHandler(stream_handler)
-    log.propagate = 0
-    
-    Root = ModBase()
-    Root.setinit()
-
-    x = RWmanager.askfolderdir()
-    DB = downloader.download_DB()
-    #ModBase.setDB(DB)
-    LoadMod(x, 'Workshop')
-    print(len(Mod.MODs))
+    pass

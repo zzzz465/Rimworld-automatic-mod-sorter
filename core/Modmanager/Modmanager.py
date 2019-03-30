@@ -168,7 +168,7 @@ class ModBase:
 
     @classmethod
     def setLocalPath(cls):
-        if cls.Steampath != None:
+        if cls.Steampath != None: #FIXME 로컬모드 있는지 isdir 사용gi
             cls.LocalModpath = cls.Steampath + '/steamapps/common/RimWorld/Mods'
 
         else:

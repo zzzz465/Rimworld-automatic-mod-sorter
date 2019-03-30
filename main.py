@@ -46,11 +46,14 @@ if __name__ == '__main__':
     log.info('current version = {}'.format(Version))
 
     if Version < DB['Version']:#version check
-        log.info('latest version > {}'.format(DB['Version']))
+        log.info('latest version = {}'.format(DB['Version']))
         log.info('please update to latest version.')
-        log.info('program will be closed in 5 seconds...')
-        sleep(5)
-        sys.exit(0)
+        
+        if DB['ForceUpdate'] == 'True':
+            log.info('program will be closed in 5 seconds...')
+            sleep(5)
+            sys.exit(0)
+
     sleep(0.5)# this is my stupid decision.
 
     log.info('DB MOD COUNT : {}'.format(len(DB)))

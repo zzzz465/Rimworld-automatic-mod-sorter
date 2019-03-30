@@ -48,7 +48,7 @@ if __name__ == '__main__':
     if Version < DB['Version']:#version check
         log.info('latest version = {}'.format(DB['Version']))
         log.info('please update to latest version.')
-        
+
         if DB['ForceUpdate'] == 'True':
             log.info('program will be closed in 5 seconds...')
             sleep(5)
@@ -120,7 +120,7 @@ if __name__ == '__main__':
         if a.isalpha():
             if a.lower() == 'y':
                 from core.upload import gitupload
-                gitupload(log_upload, DB['token'])
+                gitupload(log_upload)
                 sleep(5) # wait for gist update
                 webbrowser.open(weblogurl) # show log file.
                 log.info('exit in 5 seconds...')

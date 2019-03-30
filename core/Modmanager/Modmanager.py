@@ -179,7 +179,7 @@ class ModBase:
 
     @classmethod
     def setWorkshopPath(cls):
-        defaultpath = Steampath + '\\steamapps\\workshop\\content\\294100'
+        defaultpath = cls.Steampath + '\\steamapps\\workshop\\content\\294100'
         if os.path.isdir(defaultpath):
             cls.WorkshopModpath = defaultpath
 

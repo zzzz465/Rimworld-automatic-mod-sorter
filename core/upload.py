@@ -6,7 +6,7 @@ import time
 import logging
 
 
-def gitupload(str1, token):
+def gitupload(str1):
     '''
     HTTP Reuests has following parameters: 
     1)Request URL 
@@ -21,14 +21,12 @@ def gitupload(str1, token):
     import json
 
     GITHUB_API="https://api.github.com"
-    API_TOKEN=str(token)
 
     #form a request URL
     url=GITHUB_API+"/gists"
     print("Request URL: %s"%url)
 
     #print headers,parameters,payload
-    headers={'Authorization':'token %s'%API_TOKEN}
     params={'scope':'gist'}
     now_time = time.strftime("%H : %M : %S")
     payload={"description":"RAMSlog upload, time : {}".format(now_time),"public":True,"files":{"RAMS log file":{"content":"{0}".format(str1)}}}
@@ -37,7 +35,6 @@ def gitupload(str1, token):
     res=requests.post(url,auth=requests.auth.HTTPBasicAuth(username='RAMSlog', password='githubgistRAMSlog') ,params=params,data=json.dumps(payload))
 
     #print response --> JSON
-    #token = 
     print('status code : {}'.format(res.status_code))
     j=json.loads(res.text)
 

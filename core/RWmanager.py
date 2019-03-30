@@ -10,6 +10,7 @@ from lxml import etree
 import shutil
 import time
 import os
+import json
 
 log = logging.getLogger('RAMS.RWManager')
 
@@ -95,5 +96,24 @@ default mode = 'a'
 
     os.chdir(currnetdir) # returning to current working tree.
 
+def write_data(path, key, value):
+    """add key and value to path file. \n
+    path should be a file path. not directory
+    """
+    if type(path) or type(key) or type(value) != type(str()):
+        raise ValueError
+        return None
+        
+    with open(path, mode='r') as f:
+        data = json.loads(f.read())
+        data[key] = value
+    
+    with open(path, mode='w') as f:
+        f.write(json.dumps(data, indent=4))
+
+def test():
+    #from API.Auth.GitAuth import data_path
+    #write_data(data_path, 'test', 'value')
+
 if __name__ == '__main__':
-    backup('C:\\Users\\stopc\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by Ludeon Studios\\Config', 'ModsConfig.xml')
+    test()

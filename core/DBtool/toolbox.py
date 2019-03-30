@@ -1,10 +1,7 @@
 import logging
 import curses
 from time import sleep
-try:
-    from core import Modmanager, downloader, RWmanager, Loghandler
-except:
-    import Modmanager, downloader, RWmanager, Loghandler
+
 screen = curses.initscr()
 
 def rootscr(screen):

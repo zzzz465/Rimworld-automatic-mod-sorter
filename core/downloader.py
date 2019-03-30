@@ -12,8 +12,10 @@ import logging
 DB_url = 'https://raw.githubusercontent.com/zzzz465/Rimworld-automatic-mod-sorter/master/db_template.json'
 
 log = logging.getLogger('RAMS.downloader')
+def download_DB():
+    return get_DB()
 
-def download_DB(): #shakeyourbunny's code. thank you!
+def get_DB(): #shakeyourbunny's code. thank you!
     try:
         '''Return latest DB file type <dict>
         '''
@@ -45,6 +47,20 @@ def download_DB(): #shakeyourbunny's code. thank you!
         except:
             log.error('cannot found DB file from local. exit program...')
             sys.exit(0)
+
+def get_public_DB():
+    '''
+    download DB from RAMSlog\n
+    return dict DB file.
+    '''
+
+    public_DB_url = 'https://raw.githubusercontent.com/RAMSlog/RAMS_DB/master/DB.json'
+    log.info('fetching DB data from github...')
+    with urlopen(public_DB_url) as raw:
+        public_DB = json.loads(raw.read())
+
+    log.info('returning public_DB')
+    return public_DB
 
 if __name__ == '__main__':
     DBtest = download_DB()

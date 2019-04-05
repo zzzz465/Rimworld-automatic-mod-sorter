@@ -14,7 +14,7 @@ from core import downloader, RWmanager, upload
 from core.Modmanager import Modmanager
 
 currentdir = os.getcwd()
-Version = 0.54 #dev
+Version = 0.56 #dev
 
 formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s',"%H:%M:%S") #TODO change to more readable format.
 log = logging.getLogger("RAMS")
@@ -46,11 +46,14 @@ if __name__ == '__main__':
     log.info('current version = {}'.format(Version))
 
     if Version < DB['Version']:#version check
-        log.info('latest version > {}'.format(DB['Version']))
+        log.info('latest version = {}'.format(DB['Version']))
         log.info('please update to latest version.')
-        log.info('program will be closed in 5 seconds...')
-        sleep(5)
-        sys.exit(0)
+
+        if DB['ForceUpdate'] == 'True':
+            log.info('program will be closed in 5 seconds...')
+            sleep(5)
+            sys.exit(0)
+
     sleep(0.5)# this is my stupid decision.
 
     log.info('DB MOD COUNT : {}'.format(len(DB)))
@@ -117,7 +120,7 @@ if __name__ == '__main__':
         if a.isalpha():
             if a.lower() == 'y':
                 from core.upload import gitupload
-                gitupload(log_upload, DB['token'])
+                gitupload(log_upload)
                 sleep(5) # wait for gist update
                 webbrowser.open(weblogurl) # show log file.
                 log.info('exit in 5 seconds...')

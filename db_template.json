@@ -1,6 +1,7 @@
 {
-"Version" : 0.55,
-"message" : "hotfix version.",
+"Version" : 0.56,
+"ForceUpdate" : "False",
+"message" : "fixed multi drive support",
 "Megafauna" : 8.0,
 "Therapy" : 7.0,
 "Prepare Landing" : 18.0,

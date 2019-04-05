@@ -169,10 +169,8 @@ class ModBase:
     @classmethod
     def setLocalPath(cls):
         LocalModpath = cls.Steampath + '/steamapps/common/RimWorld/Mods'
-        if os.path.isdir(cls.Steampath):
-
-            if os.path.isdir(LocalModpath):
-                cls.LocalModpath = LocalModpath
+        if os.path.isdir(LocalModpath):
+            cls.LocalModpath = LocalModpath
 
         else:
             cls.LocalModpath = RWmanager.askfolderdir(titlename="select Local Mods folder.")
@@ -181,7 +179,7 @@ class ModBase:
 
     @classmethod
     def setWorkshopPath(cls):
-        defaultpath = cls.Steampath + '\\steamapps\\workshop\\content\\294100'
+        defaultpath = cls.Steampath + r'/steamapps/workshop/content/294100'
         if os.path.isdir(defaultpath):
             cls.WorkshopModpath = defaultpath
 

@@ -31,7 +31,7 @@ logcollect = '''compare your mods with online DB, and get mods which are not on 
 
 weblogurl = 'https://gist.github.com/RAMSlog'
 
-if __name__ == '__main__':
+def main():
     log.info('Initializing program...')
     sleep(0.5) #TODO I'm trying to add sleep function between every log message with decorator, closure or something else.
     DB = downloader.download_DB() # GET DB from server
@@ -134,3 +134,13 @@ if __name__ == '__main__':
         else:
             log.info('input Y/N, not {}'.format(a))
     #githubgist와 연동하기
+
+if __name__ == '__main__':
+    try:
+        main()
+    
+    except Exception as e:
+        log.error('Critical Error occured while running...')
+        log.error(e)
+        log.error('please report this to issue in github')
+        

@@ -6,13 +6,26 @@ class ModList(QtGui.QWidget): #리스트 프레임을 만든다. 상단에는 �
 
         self.RootLayout = QtGui.QVBoxLayout()
         
-        self.searchbox = QtGui.QTextEdit()
+        self.searchbox = QtGui.QLineEdit()
         self.ListWidget = QtGui.QListWidget()
+        self.searchbox.setFixedHeight(40)
 
         self.RootLayout.addWidget(self.searchbox)
         self.RootLayout.addWidget(self.ListWidget)
 
         self.setLayout(self.RootLayout)
+    
+    def connect_Info(self, Description, Preview):
+        self.ListWidget.itemClicked.connect(self.changeInfo)
+        self.Description = Description
+        self.Preview = Preview
+
+    def changeInfo(self):
+        print("changeInfo called")
+        currentItem = self.ListWidget.currentItem()
+        PreviewPath = currentItem.data(20)
+        self.Preview.setPixmap(QtGui.QPixmap(PreviewPath))
+        
 
 def main():
     modlist = ModList()

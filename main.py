@@ -14,7 +14,7 @@ from core import downloader, RWmanager, upload
 from core.Modmanager import Modmanager
 
 currentdir = os.getcwd()
-Version = 0.57 #dev
+Version = 0.571 #dev
 
 formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s',"%H:%M:%S") #TODO change to more readable format.
 log = logging.getLogger("RAMS")

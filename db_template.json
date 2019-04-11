@@ -1,6 +1,6 @@
 {
-"Version" : 0.57,
-"ForceUpdate" : "False",
+"Version" : 0.571,
+"ForceUpdate" : "True",
 "message" : "support for DRM-free version.",
 "Megafauna" : 8.0,
 "Therapy" : 7.0,

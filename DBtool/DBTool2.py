@@ -3,6 +3,7 @@ from PyQt4 import QtCore, QtGui, uic
 from PyQt4 import QtGui
 from Core import mainTool as MT
 from Core import downloader
+from core
 import logging
 
 log = logging.getLogger('RAMS')

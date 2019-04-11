@@ -49,29 +49,32 @@ def LoadMod(dir1, type1=1):
         2 = Workshop
         
     '''
-    if dir1 == None:
+    if dir1 == '' or dir1 == None:
         return None
-        
-    folderlist = os.listdir(dir1)
-    log.debug('dir1 폴더에서 폴더 {} 개를 찾았습니다.'.format(len(folderlist)))
+    try:    
+        folderlist = os.listdir(dir1)
+        log.debug('dir1 폴더에서 폴더 {} 개를 찾았습니다.'.format(len(folderlist)))
 
-    list1 = list()
-    for folder in folderlist:
-        try:
-            log.debug('폴더 {}'.format(folder))
-            dir2 = dir1 + '/{}'.format(folder) # Mods folder path
-            
-            if type1 == 1:
-                list1.append(ModLocal(dir2, folder))
+        list1 = list()
+        for folder in folderlist:
+            try:
+                log.debug('폴더 {}'.format(folder))
+                dir2 = dir1 + '/{}'.format(folder) # Mods folder path
+                
+                if type1 == 1:
+                    list1.append(ModLocal(dir2, folder))
 
-            elif type1 == 2:
-                list1.append(ModWorkshop(dir2, folder))
+                elif type1 == 2:
+                    list1.append(ModWorkshop(dir2, folder))
 
-        except Exception as e:
-            log.warning('cannot read About.xml in mod number > {}'.format(folder))
-            log.debug('에러 코드 : {}'.format(e))
+            except Exception as e:
+                log.warning('cannot read About.xml in mod number > {}'.format(folder))
+                log.debug('에러 코드 : {}'.format(e))
 
-    Mod.MODs = Mod.MODs + list1
+        Mod.MODs = Mod.MODs + list1
+
+    except Exception as e:
+        log.error(e)
 
 def update_config(dir1, mod):
     currentdir = os.getcwd()

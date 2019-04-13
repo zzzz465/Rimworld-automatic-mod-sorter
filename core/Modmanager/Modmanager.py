@@ -1,10 +1,12 @@
 import logging
 import os
-from winreg import (
-    OpenKey,
-    QueryValueEx,
-    HKEY_CURRENT_USER,
-)  # for steam folder location.
+import platform
+if platform.system() == "Windows":
+    from winreg import (
+        OpenKey,
+        QueryValueEx,
+        HKEY_CURRENT_USER,
+    )  # for steam folder location.
 import xml.etree.ElementTree as ET
 
 from .. import RWmanager
@@ -12,12 +14,23 @@ from .. import RWmanager
 log = logging.getLogger("RAMS.ModManager")
 c_steamregpath = "Software\\Valve\\Steam"
 
-HOMEPATH = os.environ["HOMEPATH"]
-default_cfilepath = (
-    HOMEPATH
-    + "\\AppData\\LocalLow\\Ludeon Studios\\"
-    + "RimWorld by Ludeon Studios\\Config\\ModsConfig.xml"
-)
+if platform.system() == "Windows":
+    HOMEPATH = os.environ["HOMEPATH"]
+    default_cfilepath = (
+        HOMEPATH
+        + "\\AppData\\LocalLow\\Ludeon Studios\\"
+        + "RimWorld by Ludeon Studios\\Config\\ModsConfig.xml"
+    )
+else:
+    default_cfilepath = os.path.join(
+        os.environ["HOME"],
+        ".config",
+        "unity3d",
+        "Ludeon Studios",
+        "RimWorld by Ludeon Studios",
+        "Config",
+        "ModsConfig.xml",
+    )
 
 
 def parseXML(dir_XML, attribute):

@@ -104,16 +104,16 @@ def main():
     if nMods != []:#should
         log_upload = 'missing mod in DB'
         log2.info('Missing mode in DB (need manual activation)\n')
-        log2.info('---LOG START---')
+        print('\n---LOG START---')
         for x in nMods:
             try:
-                log2.info(x.MODname)
+                print(x.MODname)
                 log_upload = log_upload + '\n{}'.format(x.MODname)
                 sleep(0.05)
 
             except:
-                log.error('MOD name error(name include illegal character)')
-        log2.info('---LOG END---\n')
+                print('MOD name error(name include illegal character)')
+        print('---LOG END---\n')
     sleep(1)
     log.info('The above log will be sent to the server if you want.')
     log.info('Help the developer improve the program by uploading a DB')

@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 from core import downloader, RWmanager, upload
 from core.Modmanager import Modmanager
 
-Version = 0.571  # dev
+Version = 0.572  # dev
 
 formatter = logging.Formatter(
     "%(asctime)s [%(levelname)s] : %(message)s", "%H:%M:%S"

@@ -2,7 +2,7 @@ import sys
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtGui import QFileDialog, QApplication
 
-import ModManager, CustomItem
+import ModManager, CustomItem, CustomItemList
 WorkshopPath = str()
 LocalPath = str()
 ConfigPath = str()
@@ -54,6 +54,8 @@ class MainWindow(QtGui.QWidget):
         CustomItem.LoadItemToList(self.ModList, self.AvailableList, self.A, self.ActiveKeyList) #왜 ActiveList가 작동 안하지?
 
         self.AvailableList.setAcceptDrops(True)
+        CustomItemList.setListWidget(self.AvailableList)
+        CustomItemList.setListWidget(self.A)
 
     def setConnection(self):
         self.OrderSaveBtn.clicked.connect(self.UpdateConfig)

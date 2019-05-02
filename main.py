@@ -2,6 +2,8 @@ import sys
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtGui import QFileDialog, QApplication
 
+import ModManager
+
 LocalPath = str()
 WorkshopPath = str()
 ConfigPath = str()
@@ -42,15 +44,18 @@ class AskWindow(QtGui.QWidget):
         self.Main.show()
     
 class MainWindow(QtGui.QWidget):
+    ModList = list()
+
     def __init__(self):
         super().__init__()
         uic.loadUi('RAMS.ui', self)
+        
+        ModList.
 
-        #self.setinit()
+    #def setinit(self):
 
-    def setinit(self):
-
-    def setConnection(self):
+    #def setConnection(self):
+    #    self.
 
 
 

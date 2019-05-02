@@ -12,5 +12,4 @@ def setListWidget(widget : QtGui.QListWidget):
 
             if item != None and widget.itemWidget(i) == None:
                 index, name, icon = item.data(QtCore.Qt.UserRole)
-
-                
+    

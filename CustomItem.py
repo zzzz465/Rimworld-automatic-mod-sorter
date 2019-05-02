@@ -1,17 +1,20 @@
 from PyQt4 import QtGui
+from PyQt4 import QtCore
 
 class CustomWidget(QtGui.QWidget):
     def __init__(self):
         super().__init__()
 
-        self.QGridLayout = QtGui.QGridLayout()
+        self.GridLayout = QtGui.QGridLayout()
         self.ModName = QtGui.QLabel()
         self.ModAuthor = QtGui.QLabel()
         self.Icon = QtGui.QLabel()
 
-        self.QGridLayout.addWidget(ModName, 0, 0)
-        self.QGridLayout.addWidget(ModAuthor, 0, 1)
-        self.QGridLayout.addwidget(Icon, 1, 0)
+        self.GridLayout.addWidget(ModName, 0, 0)
+        self.GridLayout.addWidget(ModAuthor, 0, 1)
+        self.GridLayout.addwidget(Icon, 1, 0)
+
+        self.setLayout(self.GridLayout)
 
     def setModName(self, text):
         self.ModName.setText(text)
@@ -25,3 +28,16 @@ class CustomWidget(QtGui.QWidget):
         
         else:
             pass
+
+def setCustomWidgetItem(QWidget : QtGui.QWidget, QListWidget : QtGui.QListWidget, Mod):
+    '''
+    Qwidget -> CustomWidget, QListWidget -> CustomListWidget
+    '''
+    data = (Mod.name, Mod.author, Mod.currentVer, Mod.description)
+    CustomItem = QtGui.QListWidgetItem(QListWidget)
+    CustomItem.setSizeHint(QWidget.sizeHint())
+    
+    QListWidget.addItem(CustomItem)
+    CustomItem.setData(QtCore.Qt.UserRole, data)
+
+    QListWidget.setItemWidget(CustomItem, QWidget)

@@ -2,22 +2,17 @@ import sys
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtGui import QFileDialog, QApplication
 
-import ModManager
-
-LocalPath = str()
+import ModManager, CustomItem
 WorkshopPath = str()
+LocalPath = str()
 ConfigPath = str()
 
 class AskWindow(QtGui.QWidget):
-    global LocalPath
-    global WorkshopPath
-    global ConfigPath
+    global WorkshopPath, LocalPath, ConfigPath
 
-    def __init__(self, Main):
+    def __init__(self):
         super().__init__()
         uic.loadUi("askDialog.ui", self)
-
-        self.Main = Main
 
         self.setConnection()
 
@@ -36,34 +31,55 @@ class AskWindow(QtGui.QWidget):
         sys.exit(0)
 
     def okfunc(self):
+        global LocalPath, WorkshopPath, ConfigPath
+
         LocalPath = self.LocalLine.text()
-        WorkshopLine = self.WorkshopLine.text()
+        WorkshopPath = self.WorkshopLine.text()
         ConfigPath = self.CfgLine.text()
         self.close()
 
-        self.Main.show()
-    
 class MainWindow(QtGui.QWidget):
-    ModList = list()
 
-    def __init__(self):
+    def __init__(self, local, workshop, config):
         super().__init__()
         uic.loadUi('RAMS.ui', self)
+        self.localPath = local
+        self.workshopPath = workshop
+        self.configPath = config
+        self.ModList = ModManager.LoadMod(self.localPath) + ModManager.LoadMod(self.workshopPath) #get mod list
+        self.setinit()
+
+    def setinit(self):
+        self.ActiveKeyList = ModManager.LoadActMod("\\".join([self.configPath, 'Config', 'ModsConfig.xml']))
+        CustomItem.LoadItemToList(self.ModList, self.AvailableList, self.A, self.ActiveKeyList) #왜 ActiveList가 작동 안하지?
+
+        self.AvailableList.setAcceptDrops(True)
+
+    def setConnection(self):
+        self.OrderSaveBtn.clicked.connect(self.UpdateConfig)
+
+    def UpdateConfig(self):
+        length = self.A.count()
+        keyList = list()
+        for count in range(0, length):
+            item = self.A.item(count)
+            key = item.data(QtCore.Qt.UserRole)[1] # this have mod key
+            keyList.append(key)
         
-        ModList.
+        ModManager.SaveXML(keyList, self.configPath)
 
-    #def setinit(self):
 
-    #def setConnection(self):
-    #    self.
 
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    mainscreen = MainWindow()
-
-    askscreen = AskWindow(mainscreen)
+    askscreen = AskWindow()
     askscreen.show()
+    app.exec_()
 
-    exit(app.exec_())
+    MainApp = QApplication(sys.argv)
+    mainscreen = MainWindow(LocalPath, WorkshopPath, ConfigPath)
+    mainscreen.show()
+
+    exit(MainApp.exec_())

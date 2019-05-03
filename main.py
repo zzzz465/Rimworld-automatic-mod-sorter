@@ -7,6 +7,11 @@ WorkshopPath = str()
 LocalPath = str()
 ConfigPath = str()
 
+Style = '''
+    QWidget {
+        
+    }'''
+
 class AskWindow(QtGui.QWidget):
     global WorkshopPath, LocalPath, ConfigPath
 
@@ -59,6 +64,8 @@ class MainWindow(QtGui.QWidget):
         self.ModList = ModManager.LoadMod(self.localPath) + ModManager.LoadMod(self.workshopPath) #get mod list
         self.setinit()
 
+        self.setStyleSheet(Style)
+
     def setinit(self):
         self.AvailableList = CustomItemList.ModListWidget()
         self.AvailableListLayout.addWidget(self.AvailableList, 1)
@@ -81,11 +88,7 @@ class MainWindow(QtGui.QWidget):
         
         ModManager.SaveXML(keyList, self.configPath)
 
-
-
-
-
-if __name__ == '__main__':
+def main():
     app = QApplication(sys.argv)
     askscreen = AskWindow()
     askscreen.show()
@@ -96,3 +99,17 @@ if __name__ == '__main__':
     mainscreen.show()
 
     exit(MainApp.exec_())
+
+def test():
+    LocalPath = 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods'
+    WorkshopPath = 'C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\294100'
+    ConfigPath = 'C:\\Users\\stopc\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by Ludeon Studios'
+    MainApp = QApplication(sys.argv)
+    mainscreen = MainWindow(LocalPath, WorkshopPath, ConfigPath)
+    mainscreen.show()
+
+    exit(MainApp.exec_())
+
+
+if __name__ == '__main__':
+    test()

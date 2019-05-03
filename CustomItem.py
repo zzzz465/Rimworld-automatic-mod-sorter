@@ -1,20 +1,34 @@
 from PyQt4 import QtGui
 from PyQt4 import QtCore
 
+StyleAuthor = '''
+QLabel {
+    font-size : 20px;
+    color : gray;
+}'''
+
+StyleName = '''
+QLabel {
+    font-size : 30px;
+}'''
+
 class CustomWidget(QtGui.QWidget):
     def __init__(self):
         super().__init__()
 
-        self.GridLayout = QtGui.QGridLayout()
+        self.VBoxLayout = QtGui.QVBoxLayout()
         self.ModName = QtGui.QLabel()
         self.ModAuthor = QtGui.QLabel()
-        self.Icon = QtGui.QLabel('IconPH')
 
-        self.GridLayout.addWidget(self.ModName, 0, 0)
-        self.GridLayout.addWidget(self.ModAuthor, 1, 0)
-        self.GridLayout.addWidget(self.Icon, 0, 1)
+        self.VBoxLayout.addWidget(self.ModName, 0)
+        self.VBoxLayout.addWidget(self.ModAuthor, 1)
+        self.VBoxLayout.setSpacing(4)
 
-        self.setLayout(self.GridLayout)
+
+        self.ModAuthor.setStyleSheet(StyleAuthor)
+        self.ModName.setStyleSheet(StyleName)
+
+        self.setLayout(self.VBoxLayout)
 
     def setModName(self, text):
         self.ModName.setText(text)
@@ -34,9 +48,9 @@ def setCustomWidgetItem(QWidget : QtGui.QWidget, QListWidget : QtGui.QListWidget
     Qwidget -> CustomWidget, QListWidget -> CustomListWidget
     '''
     try:
-        data = (Mod.name, Mod.key, Mod.author, Mod.currentVer, Mod.description)
+        data = (Mod.name, Mod.key, Mod.author, Mod.currentVer, Mod.description, QtCore.QSize(20, 85))
         CustomItem = QtGui.QListWidgetItem(QListWidget)
-        CustomItem.setSizeHint(QWidget.sizeHint())
+        CustomItem.setSizeHint(data[len(data) - 1])
 
         QListWidget.addItem(CustomItem)
         CustomItem.setData(QtCore.Qt.UserRole, data)

@@ -5,6 +5,11 @@ import sys, types, CustomItem, inspect
 
 #https://stackoverflow.com/questions/972/adding-a-method-to-an-existing-object-instance
 
+StyleList = '''
+    QListWidget {
+        
+    }'''
+
 class ModListWidget(QtGui.QListWidget):
     def __init__(self):
         super().__init__()
@@ -17,16 +22,19 @@ class ModListWidget(QtGui.QListWidget):
         self.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
         self.model().rowsInserted.connect(self.HandleRowInserted, QtCore.Qt.QueuedConnection)
 
+        self.setStyleSheet(StyleList)
+        self.setSpacing(2)
+
     def HandleRowInserted(self, parent, first, last):
         for index in range(first, last + 1):
             item = self.item(index)
             if item != None and self.itemWidget(item) == None:
-                name, key, author, currentVer, description = item.data(QtCore.Qt.UserRole)
+                name, key, author, currentVer, description, Qsize = item.data(QtCore.Qt.UserRole)
                 ThisWidget = CustomItem.CustomWidget()
                 ThisWidget.setModName(name)
                 ThisWidget.setModAuthor(author)
                 #ThisWidget.setIcon()
-                item.setSizeHint(ThisWidget.sizeHint())
+                item.setSizeHint(Qsize)
                 self.setItemWidget(item, ThisWidget)
 
 

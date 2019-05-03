@@ -2,7 +2,7 @@ import sys
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtGui import QFileDialog, QApplication
 
-import ModManager, CustomItem, CustomItemList
+import ModManager, RWManager, CustomItem, CustomItemList
 WorkshopPath = str()
 LocalPath = str()
 ConfigPath = str()
@@ -13,8 +13,15 @@ class AskWindow(QtGui.QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi("askDialog.ui", self)
-
+        
+        self.setInit()
         self.setConnection()
+
+    def setInit(self):
+        Local, Workshop, Config = RWManager.ReadConfig('LocalPath', 'WorkshopPath', 'ConfigPath')
+        self.LocalLine.setText(Local)
+        self.WorkshopLine.setText(Workshop)
+        self.CfgLine.setText(Config)
 
     def setConnection(self):
         self.LocalBtn.clicked.connect(lambda x : self.askfolderpath(self.LocalLine))
@@ -36,6 +43,9 @@ class AskWindow(QtGui.QWidget):
         LocalPath = self.LocalLine.text()
         WorkshopPath = self.WorkshopLine.text()
         ConfigPath = self.CfgLine.text()
+        RWManager.WriteConfig('LocalPath', LocalPath)
+        RWManager.WriteConfig('WorkshopPath', WorkshopPath)
+        RWManager.WriteConfig('ConfigPath', ConfigPath)
         self.close()
 
 class MainWindow(QtGui.QWidget):
@@ -50,12 +60,13 @@ class MainWindow(QtGui.QWidget):
         self.setinit()
 
     def setinit(self):
-        self.ActiveKeyList = ModManager.LoadActMod("\\".join([self.configPath, 'Config', 'ModsConfig.xml']))
-        CustomItem.LoadItemToList(self.ModList, self.AvailableList, self.A, self.ActiveKeyList) #왜 ActiveList가 작동 안하지?
+        self.AvailableList = CustomItemList.ModListWidget()
+        self.AvailableListLayout.addWidget(self.AvailableList, 1)
+        self.ActiveList = CustomItemList.ModListWidget()
+        self.ActiveListLayout.addWidget(self.ActiveList, 1)
 
-        self.AvailableList.setAcceptDrops(True)
-        CustomItemList.setListWidget(self.AvailableList)
-        CustomItemList.setListWidget(self.A)
+        self.ActiveKeyList = ModManager.LoadActMod("\\".join([self.configPath, 'Config', 'ModsConfig.xml']))
+        CustomItem.LoadItemToList(self.ModList, self.AvailableList, self.ActiveList, self.ActiveKeyList) #왜 ActiveList가 작동 안하지?
 
     def setConnection(self):
         self.OrderSaveBtn.clicked.connect(self.UpdateConfig)

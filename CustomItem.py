@@ -3,13 +3,13 @@ from PyQt4 import QtCore
 
 StyleAuthor = '''
 QLabel {
-    font-size : 20px;
+    font-size : 12px;
     color : gray;
 }'''
 
 StyleName = '''
 QLabel {
-    font-size : 30px;
+    font-size : 16px;
 }'''
 
 class CustomWidget(QtGui.QWidget):
@@ -18,13 +18,14 @@ class CustomWidget(QtGui.QWidget):
 
         self.VBoxLayout = QtGui.QVBoxLayout()
         self.ModName = QtGui.QLabel()
+        self.ModName.setFixedWidth(300)
         self.ModAuthor = QtGui.QLabel()
 
         self.VBoxLayout.addWidget(self.ModName, 0)
         self.VBoxLayout.addWidget(self.ModAuthor, 1)
         self.VBoxLayout.setSpacing(4)
-
-
+        self.VBoxLayout.setContentsMargins(0, 0, 0, 0)
+        self.VBoxLayout.setSpacing(0)
         self.ModAuthor.setStyleSheet(StyleAuthor)
         self.ModName.setStyleSheet(StyleName)
 
@@ -47,13 +48,30 @@ def setCustomWidgetItem(QWidget : QtGui.QWidget, QListWidget : QtGui.QListWidget
     '''
     Qwidget -> CustomWidget, QListWidget -> CustomListWidget
     '''
+    def GetDBValue(DB, name):
+        try:
+            num = DB[name]
+            return num
+        
+        except:
+            return None
+
     try:
-        data = (Mod.name, Mod.key, Mod.author, Mod.currentVer, Mod.description, QtCore.QSize(20, 85))
+        data = {
+            'name' : Mod.name,
+            'key' : Mod.key,
+            'author' : Mod.author,
+            'cver' : Mod.currentVer,
+            'description' : Mod.description,
+            'Qsize' : QtCore.QSize(20,50),
+            'path' : Mod.path
+        }
         CustomItem = QtGui.QListWidgetItem(QListWidget)
-        CustomItem.setSizeHint(data[len(data) - 1])
+        CustomItem.setSizeHint(data['Qsize'])
 
         QListWidget.addItem(CustomItem)
         CustomItem.setData(QtCore.Qt.UserRole, data)
+        CustomItem.setData(QtCore.Qt.DisplayRole, GetDBValue(QListWidget.DB, data['name']))
 
         QListWidget.setItemWidget(CustomItem, QWidget)
 

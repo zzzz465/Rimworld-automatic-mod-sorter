@@ -1,11 +1,14 @@
-import sys
+import sys, os
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtGui import QFileDialog, QApplication
 
-import ModManager, RWManager, CustomItem, CustomItemList
+import ModManager, RWManager, CustomItem, CustomItemList, DownloadDB
 WorkshopPath = str()
 LocalPath = str()
 ConfigPath = str()
+Path = os.path.dirname(__file__)
+IconPath = '\\'.join([Path, 'Icon'])
+defaultImagePath = '\\'.join([Path, 'Icon', 'NoImage.png'])
 
 Style = '''
     QWidget {
@@ -67,14 +70,25 @@ class MainWindow(QtGui.QWidget):
         self.setStyleSheet(Style)
 
     def setinit(self):
-        self.AvailableList = CustomItemList.ModListWidget()
+        self.DB = dict()
+        self.DB = DownloadDB.download_DB()
+        InfoData = {
+            'TitleLabel' : self.Title,
+            'AuthorLabel' : self.Author,
+            'CVerLabel' : self.CVer,
+            'SortNumLabel' : self.SortNumLabel,
+            'ImageBrowser' : self.ImageBrowser,
+            'defaultImagePath' : defaultImagePath
+        }
+
+        self.AvailableList = CustomItemList.ModListWidget(InfoData, self.DB)
         self.AvailableListLayout.addWidget(self.AvailableList, 1)
-        self.ActiveList = CustomItemList.ModListWidget()
+        self.ActiveList = CustomItemList.ModListWidget(InfoData, self.DB)
         self.ActiveListLayout.addWidget(self.ActiveList, 1)
 
         self.ActiveKeyList = ModManager.LoadActMod("\\".join([self.configPath, 'Config', 'ModsConfig.xml']))
         CustomItem.LoadItemToList(self.ModList, self.AvailableList, self.ActiveList, self.ActiveKeyList) #왜 ActiveList가 작동 안하지?
-
+        
     def setConnection(self):
         self.OrderSaveBtn.clicked.connect(self.UpdateConfig)
 

@@ -9,6 +9,7 @@ class Mod:
         self.author = author
         self.currentVer = currentVer
         self.description = description
+        self.path = path
 
 def GetTextInXML(path, attribute):
     try:
@@ -17,7 +18,7 @@ def GetTextInXML(path, attribute):
         name = root.find(attribute).text
     
     except:
-        return 'ValueError'
+        return 'None'
     
     return name
 

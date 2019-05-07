@@ -1,6 +1,7 @@
 import CustomItem
 import os
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ET #TODO change whole code to lxml
+import lxml.etree as etree
 
 class Mod:
     def __init__(self, name, modkey, author, currentVer, description, path):
@@ -51,28 +52,40 @@ def LoadActMod(root):
         accept ET root for argument\n
         return list of mod key
     """
-    root = ET.parse(root)
-    ActiveMod = root.find("activeMods")
-    active_mod = list()
+    try:
+        root = ET.parse(root)
+        ActiveMod = root.find("activeMods")
+        active_mod = list()
 
-    for li in ActiveMod.findall("li"):
-        active_mod.append(str(li.text))
+        for li in ActiveMod.findall("li"):
+            active_mod.append(str(li.text))
 
-    return active_mod  # Modkey를 반환
+        return active_mod  # Modkey를 반환
+    
+    except:
+
+        return list()
 
 def SaveXML(KeyList, configPath):
     ConfigFilePath = '\\'.join([configPath, 'Config', 'ModsConfig.xml'])
-    doc = ET.parse(ConfigFilePath)
-    root = doc.getroot()
+    try:
+        doc = ET.parse(ConfigFilePath)
+        root = doc.getroot()
 
-    root.remove(root.find("activeMods")) #remove all mod list
+        root.remove(root.find("activeMods")) #remove all mod list
+    
+    except:
+        defaultfilepath = '\\'.join([os.path.dirname(__file__), 'ModsConfig.xml'])
+        doc = ET.parse(defaultfilepath)
+        root = doc.getroot()
+
     ActiveMods = ET.SubElement(root, "activeMods")
-
+    
     for x in KeyList:
         mod = ET.SubElement(ActiveMods, "li")
         mod.text = str(x)
 
-    doc.write("ModsConfig.xml", encoding='UTF-8', xml_declaration='False')
+    doc.write(ConfigFilePath, encoding='UTF-8', xml_declaration='False') #TODO Add pretty print.
 
 if __name__ == '__main__':
     pass

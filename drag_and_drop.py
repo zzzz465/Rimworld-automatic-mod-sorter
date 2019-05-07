@@ -1,13 +1,13 @@
 import sys, os
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore, QtWidgets
 
-class ThumbListWidget(QtGui.QListWidget):
+class ThumbListWidget(QtWidgets.QListWidget):
     def __init__(self, type, parent=None): #드래그 앤 드랍을 받을 리스트
         super(ThumbListWidget, self).__init__(parent)
         self.setIconSize(QtCore.QSize(124, 124))
-        self.setDragDropMode(QtGui.QAbstractItemView.DragDrop)
+        self.setDragDropMode(QtWidgets.QAbstractItemView.DragDrop)
         self.setDefaultDropAction(QtCore.Qt.MoveAction)
-        self.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
+        self.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
         self.setAcceptDrops(True)#드래그드랍허용
         self.model().rowsInserted.connect(
             self.handleRowsInserted, QtCore.Qt.QueuedConnection) #rowInserted(parent, first, last)를 갖는데, 이것이 connect 내의 self.handlerowsinserted으로 넘겨짐
@@ -25,13 +25,13 @@ class ThumbListWidget(QtGui.QListWidget):
                 item.setSizeHint(widget.sizeHint())
                 self.setItemWidget(item, widget)
 
-class Dialog_01(QtGui.QMainWindow):
+class Dialog_01(QtWidgets.QMainWindow):
     def __init__(self):
-        super(QtGui.QMainWindow,self).__init__()
+        super(QtWidgets.QMainWindow,self).__init__()
         self.listItems = {}
 
-        myQWidget = QtGui.QWidget()
-        myBoxLayout = QtGui.QVBoxLayout()
+        myQWidget = QtWidgets.QWidget()
+        myBoxLayout = QtWidgets.QVBoxLayout()
         myQWidget.setLayout(myBoxLayout)
         self.setCentralWidget(myQWidget)
 
@@ -43,7 +43,7 @@ class Dialog_01(QtGui.QMainWindow):
             ('No.1', 'Meyoko',  'icon.png'),
             ('No.2', 'Nyaruko', 'icon.png'),
             ('No.3', 'Louise',  'icon.png')]:
-            myQListWidgetItem = QtGui.QListWidgetItem(self.myQListWidget)
+            myQListWidgetItem = QtWidgets.QListWidgetItem(self.myQListWidget)
             # store the data needed to create/re-create the custom widget
             myQListWidgetItem.setData(QtCore.Qt.UserRole, data)
             self.myQListWidget.addItem(myQListWidgetItem)
@@ -51,16 +51,16 @@ class Dialog_01(QtGui.QMainWindow):
         self.listWidgetB = ThumbListWidget(self)
         myBoxLayout.addWidget(self.listWidgetB)
 
-class QCustomQWidget (QtGui.QWidget):
+class QCustomQWidget (QtWidgets.QWidget):
     def __init__ (self, parent = None):
         super(QCustomQWidget, self).__init__(parent)
-        self.textQVBoxLayout = QtGui.QVBoxLayout()
-        self.textUpQLabel    = QtGui.QLabel()
-        self.textDownQLabel  = QtGui.QLabel()
+        self.textQVBoxLayout = QtWidgets.QVBoxLayout()
+        self.textUpQLabel    = QtWidgets.QLabel()
+        self.textDownQLabel  = QtWidgets.QLabel()
         self.textQVBoxLayout.addWidget(self.textUpQLabel)
         self.textQVBoxLayout.addWidget(self.textDownQLabel)
-        self.allQHBoxLayout  = QtGui.QHBoxLayout()
-        self.iconQLabel      = QtGui.QLabel()
+        self.allQHBoxLayout  = QtWidgets.QHBoxLayout()
+        self.iconQLabel      = QtWidgets.QLabel()
         self.allQHBoxLayout.addWidget(self.iconQLabel, 0)
         self.allQHBoxLayout.addLayout(self.textQVBoxLayout, 1)
         self.setLayout(self.allQHBoxLayout)

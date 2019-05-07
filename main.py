@@ -1,8 +1,9 @@
 import sys, os
-from PyQt4 import QtCore, QtGui, uic
-from PyQt4.QtGui import QFileDialog, QApplication
+from PyQt5 import QtCore, QtGui, uic, QtWidgets
+from PyQt5.QtWidgets import QApplication, QFileDialog
+import ModManager, RWManager, CustomItem, CustomItemList, DownloadDB, RCC
 
-import ModManager, RWManager, CustomItem, CustomItemList, DownloadDB
+os.environ['QT_AUTO_SCREEN_SCALE_FACTOR'] = '1'
 WorkshopPath = str()
 LocalPath = str()
 ConfigPath = str()
@@ -15,7 +16,7 @@ Style = '''
         
     }'''
 
-class AskWindow(QtGui.QWidget):
+class AskWindow(QtWidgets.QWidget):
     global WorkshopPath, LocalPath, ConfigPath
 
     def __init__(self):
@@ -56,7 +57,7 @@ class AskWindow(QtGui.QWidget):
         RWManager.WriteConfig('ConfigPath', ConfigPath)
         self.close()
 
-class MainWindow(QtGui.QWidget):
+class MainWindow(QtWidgets.QWidget):
 
     def __init__(self, local, workshop, config):
         super().__init__()
@@ -66,41 +67,53 @@ class MainWindow(QtGui.QWidget):
         self.configPath = config
         self.ModList = ModManager.LoadMod(self.localPath) + ModManager.LoadMod(self.workshopPath) #get mod list
         self.setinit()
+        RCC.setConflictChecker(self)
+        self.setConnection()
 
         self.setStyleSheet(Style)
 
     def setinit(self):
-        self.DB = dict()
-        self.DB = DownloadDB.download_DB()
-        InfoData = {
+        self.InfoData = {
             'TitleLabel' : self.Title,
             'AuthorLabel' : self.Author,
             'CVerLabel' : self.CVer,
             'SortNumLabel' : self.SortNumLabel,
             'ImageBrowser' : self.ImageBrowser,
-            'defaultImagePath' : defaultImagePath
+            'defaultImagePath' : defaultImagePath,
+            'PreviewHeight' : self.ImageBrowser.height(),
+            'PreviewWidth' : self.ImageBrowser.width(),
+            'DescriptionLabel' : self.Description
         }
 
-        self.AvailableList = CustomItemList.ModListWidget(InfoData, self.DB)
+        self.AvailableList = CustomItemList.ModListWidget(self.InfoData)
         self.AvailableListLayout.addWidget(self.AvailableList, 1)
-        self.ActiveList = CustomItemList.ModListWidget(InfoData, self.DB)
+        self.ActiveList = CustomItemList.ModListWidget(self.InfoData)
         self.ActiveListLayout.addWidget(self.ActiveList, 1)
 
         self.ActiveKeyList = ModManager.LoadActMod("\\".join([self.configPath, 'Config', 'ModsConfig.xml']))
         CustomItem.LoadItemToList(self.ModList, self.AvailableList, self.ActiveList, self.ActiveKeyList) #왜 ActiveList가 작동 안하지?
+
+        self.ImageBrowser.setScaledContents(True)
         
     def setConnection(self):
         self.OrderSaveBtn.clicked.connect(self.UpdateConfig)
+        self.SortBtn.clicked.connect(lambda x : self.ActiveList.sortItems(QtCore.Qt.AscendingOrder))
+        self.CCRefresh.clicked.connect(self.setConflictData)
 
     def UpdateConfig(self):
-        length = self.A.count()
+        length = self.ActiveList.count()
         keyList = list()
         for count in range(0, length):
-            item = self.A.item(count)
-            key = item.data(QtCore.Qt.UserRole)[1] # this have mod key
+            item = self.ActiveList.item(count)
+            key = item.data(QtCore.Qt.UserRole)['key'] # this have mod key
             keyList.append(key)
         
         ModManager.SaveXML(keyList, self.configPath)
+    
+    def setConflictData(self):
+        RCC.main(self)
+
+
 
 def main():
     app = QApplication(sys.argv)
@@ -109,6 +122,7 @@ def main():
     app.exec_()
 
     MainApp = QApplication(sys.argv)
+    MainApp.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
     mainscreen = MainWindow(LocalPath, WorkshopPath, ConfigPath)
     mainscreen.show()
 

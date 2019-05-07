@@ -1,5 +1,4 @@
-from PyQt4 import QtGui
-from PyQt4 import QtCore
+from PyQt5 import QtGui, QtCore, QtWidgets
 
 StyleAuthor = '''
 QLabel {
@@ -12,20 +11,22 @@ QLabel {
     font-size : 16px;
 }'''
 
-class CustomWidget(QtGui.QWidget):
+class CustomWidget(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
 
-        self.VBoxLayout = QtGui.QVBoxLayout()
-        self.ModName = QtGui.QLabel()
+        self.VBoxLayout = QtWidgets.QVBoxLayout()
+        self.VBoxLayout.setSpacing(1)
+        self.VBoxLayout.setContentsMargins(2, 0, 0, 2)
+        #self.VBoxLayout.setSizeConstraint()
+        self.ModName = QtWidgets.QLabel()
+        self.ModName.setContentsMargins(0,0,0,0)
         self.ModName.setFixedWidth(300)
-        self.ModAuthor = QtGui.QLabel()
+        self.ModAuthor = QtWidgets.QLabel()
+        self.ModAuthor.setContentsMargins(0,0,0,0)
 
         self.VBoxLayout.addWidget(self.ModName, 0)
         self.VBoxLayout.addWidget(self.ModAuthor, 1)
-        self.VBoxLayout.setSpacing(4)
-        self.VBoxLayout.setContentsMargins(0, 0, 0, 0)
-        self.VBoxLayout.setSpacing(0)
         self.ModAuthor.setStyleSheet(StyleAuthor)
         self.ModName.setStyleSheet(StyleName)
 
@@ -44,17 +45,10 @@ class CustomWidget(QtGui.QWidget):
         else:
             pass
 
-def setCustomWidgetItem(QWidget : QtGui.QWidget, QListWidget : QtGui.QListWidget, Mod): #리스트에 아이템을(위젯설정하여) 등록
+def setCustomWidgetItem(QWidget : QtWidgets.QWidget, QListWidget : QtWidgets.QListWidget, Mod, kargs={}): #리스트에 아이템을(위젯설정하여) 등록
     '''
     Qwidget -> CustomWidget, QListWidget -> CustomListWidget
     '''
-    def GetDBValue(DB, name):
-        try:
-            num = DB[name]
-            return num
-        
-        except:
-            return None
 
     try:
         data = {
@@ -63,15 +57,16 @@ def setCustomWidgetItem(QWidget : QtGui.QWidget, QListWidget : QtGui.QListWidget
             'author' : Mod.author,
             'cver' : Mod.currentVer,
             'description' : Mod.description,
-            'Qsize' : QtCore.QSize(20,50),
+            'Qsize' : QtCore.QSize(20,40),
             'path' : Mod.path
         }
-        CustomItem = QtGui.QListWidgetItem(QListWidget)
+        data = {**data, **kargs}
+
+        CustomItem = QtWidgets.QListWidgetItem(QListWidget)
         CustomItem.setSizeHint(data['Qsize'])
 
         QListWidget.addItem(CustomItem)
         CustomItem.setData(QtCore.Qt.UserRole, data)
-        CustomItem.setData(QtCore.Qt.DisplayRole, GetDBValue(QListWidget.DB, data['name']))
 
         QListWidget.setItemWidget(CustomItem, QWidget)
 
@@ -100,3 +95,13 @@ def LoadItemToList(ModList, AvailableQwidget, ActiveQwidget, activeModList):
 
         else:
             setCustomWidgetItem(item, AvailableQwidget, Mod)
+
+####################
+
+def CCLoadItemToList(Mod, ActiveQwidget, ConflictDescription):
+    item = CustomWidget()
+    item.setModName(Mod.name)
+    item.setModAuthor(Mod.author)
+    #item.setIcon()
+    
+    setCustomWidgetItem(item, ActiveQwidget, Mod, {'ConfData' : ConflictDescription})

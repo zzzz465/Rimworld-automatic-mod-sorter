@@ -1,0 +1,1 @@
+RCC.exe C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\RimWorldWin64.exe
